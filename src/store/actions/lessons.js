@@ -1,9 +1,11 @@
 import service from "../../services/api";
 import { tokenConfig } from "./auth";
-import { GET_LESSONS } from "./types";
+import { GET_LESSONS, LOADING, LOADED } from "./types";
 import { returnErrors } from "./messages";
 
 export const getLessons = () => (dispatch, getState) => {
+  dispatch({ type: LOADING });
+
   const payload = tokenConfig(getState);
 
   service
@@ -17,5 +19,6 @@ export const getLessons = () => (dispatch, getState) => {
     })
     .catch((err) => {
       dispatch(returnErrors(err.error));
-    });
+    })
+    .finally(() => dispatch({ type: LOADED }));
 };

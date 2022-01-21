@@ -1,7 +1,7 @@
 import { LOADING, LOADED } from "../actions/types";
 
 const initialState = {
-  loading: true,
+  loading: false,
 };
 
 export default function (state = initialState, action) {
