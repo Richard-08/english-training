@@ -9,6 +9,7 @@ import {
 import SearchForm from "./SearchForm";
 import AddForm from "./AddForm";
 import WordsTable from "./WordsTable";
+import WithLoading from "../../components/WithLoading";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -32,15 +33,17 @@ const Dictionary = ({
       <Typography variant="h3" my={3}>
         Dictionary
       </Typography>
-      <Grid container spacing={4}>
-        <Grid item md={4} xs={12}>
-          <SearchForm categories={categories} />
-          <AddForm />
+      <WithLoading>
+        <Grid container spacing={4}>
+          <Grid item md={4} xs={12}>
+            <SearchForm categories={categories} />
+            <AddForm />
+          </Grid>
+          <Grid item md={8} xs={12}>
+            <WordsTable words={dictionary} />
+          </Grid>
         </Grid>
-        <Grid item md={8} xs={12}>
-          <WordsTable words={dictionary} />
-        </Grid>
-      </Grid>
+      </WithLoading>
     </Fragment>
   );
 };

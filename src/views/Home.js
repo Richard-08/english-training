@@ -23,6 +23,10 @@ function Home({ lessons, getLessons }) {
     getLessons();
   }, []);
 
+  const getProgress = (lesson) => {
+    return (lesson.count_repetitions * 100) / lesson.total_repetitions;
+  };
+
   return (
     <Box>
       <Typography variant="h3" my={3}>
@@ -56,10 +60,7 @@ function Home({ lessons, getLessons }) {
                     >
                       <LinearProgress
                         variant="determinate"
-                        value={
-                          (item.count_repetitions * 100) /
-                          item.total_repetitions
-                        }
+                        value={getProgress(item)}
                       />
                     </Box>
                   </Item>

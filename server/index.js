@@ -1,26 +1,19 @@
 const config = require("./config");
 const express = require("express");
-const cors = require("cors");
+const loaders = require("./loaders");
 
-const lessons = require("./routes/lessons");
-const lesson = require("./routes/lesson");
-const dictionary = require("./routes/dictionary");
-const users = require("./routes/users");
+async function startServer() {
+  const app = express();
 
-const authMiddleware = require("./middleware/auth");
+  await loaders({ expressApp: app });
 
-const PORT = config.PORT || 3300;
+  app
+    .listen(config.PORT, () =>
+      console.log(`Server listening on port: ${config.PORT}`)
+    )
+    .on("error", (err) => {
+      console.log(err);
+    });
+}
 
-const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cors());
-
-// Routes
-app.use("/auth", users);
-app.use("/lessons", authMiddleware, lessons);
-app.use("/lesson", authMiddleware, lesson);
-app.use("/dictionary", authMiddleware, dictionary);
-
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+startServer();
