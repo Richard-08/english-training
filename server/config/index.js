@@ -6,6 +6,6 @@ module.exports = {
   SQLITE_DATABASE: process.env.SQLITE_DATABASE,
   TOKEN_SECRET: process.env.TOKEN_SECRET,
   api: {
-    prefix: "",
+    prefix: "/api",
   },
 };

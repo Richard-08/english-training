@@ -1,15 +1,21 @@
-const config = require("../config");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
 
 class Database {
-  constructor(db_file) {
-    this.db = new sqlite3.Database(path.resolve(db_file), (err) => {
-      if (err) {
-        console.log("Connect error", error);
-      } else {
-        console.log("Connected to database");
-      }
+  constructor() {
+    this.db = null;
+  }
+
+  open(db_file) {
+    return new Promise((resolve, reject) => {
+      const connection = new sqlite3.Database(path.resolve(db_file), (err) => {
+        if (err) {
+          console.log("Connect error", error);
+        } else {
+          this.db = connection;
+          resolve(connection);
+        }
+      });
     });
   }
 
@@ -21,7 +27,7 @@ class Database {
           console.log(err);
           reject(err);
         } else {
-          resolve({id: this.lastID});
+          resolve({ id: this.lastID });
         }
       });
     });
@@ -55,8 +61,6 @@ class Database {
     });
   }
 
-  each(sql, params) {}
-
   close() {
     return new Promise((resolve, reject) => {
       this.db.close();
@@ -65,4 +69,4 @@ class Database {
   }
 }
 
-module.exports = new Database(config.SQLITE_DATABASE);
+module.exports = new Database();

@@ -35,7 +35,11 @@
     "redux-thunk": "^2.4.1",
     "sqlite3": "^5.0.2",
     "uuid": "^8.3.2",
-    "web-vitals": "^2.1.2"
+    "web-vitals": "^2.1.2",
+    "winston": "^3.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   },
   "eslintConfig": {
     "extends": [
@@ -54,8 +58,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
   }
 }
