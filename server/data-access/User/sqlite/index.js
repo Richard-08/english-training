@@ -1,4 +1,4 @@
-const db = require("../db/database");
+const db = require("../../../db/database");
 
 function create({ username, email, password }) {
   return db.run(

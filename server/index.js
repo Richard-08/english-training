@@ -12,12 +12,13 @@ async function startServer() {
     .listen(config.PORT, () => {
       Logger.info(`
         ****************************************
-        Server listening on port: ${config.PORT}
+        🚀 Server listening on port: ${config.PORT}
         ****************************************
       `);
     })
     .on("error", (err) => {
       Logger.error(err);
+      process.exit(1);
     });
 }
 

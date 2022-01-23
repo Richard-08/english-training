@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const authMiddleware = require("../../middleware/auth");
-const Dictionary = require("../../models/Dictionary");
+const Dictionary = require("../../data-access/Dictionary");
 const router = Router();
 
 module.exports = (app) => {
