@@ -10,4 +10,7 @@ export default {
   addWord(payload) {
     return request.post("/dictionary/add", payload);
   },
+  deleteWord(payload) {
+    return request.delete("/dictionary/delete", payload);
+  },
 };

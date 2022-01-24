@@ -20,6 +20,7 @@ export const GET_LESSONS = "GET_LESSONS";
 export const GET_DICTIONARY = "GET_DICTIONARY";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const ADD_WORD = "ADD_WORD";
+export const DELETE_WORD = "DELETE_WORD";
 
 export const LOADING = "LOADING";
 export const LOADED = "LOADED";

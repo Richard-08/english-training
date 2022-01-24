@@ -1,4 +1,9 @@
-import { GET_DICTIONARY, GET_CATEGORIES, ADD_WORD } from "../actions/types";
+import {
+  GET_DICTIONARY,
+  GET_CATEGORIES,
+  ADD_WORD,
+  DELETE_WORD,
+} from "../actions/types";
 
 const initialState = {
   dictionary: [],
@@ -22,6 +27,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         dictionary: [...state.dictionary, action.payload],
+      };
+    case DELETE_WORD:
+      return {
+        ...state,
+        dictionary: state.dictionary.fitler(
+          (word) => word.id === action.payload
+        ),
       };
 
     default:
