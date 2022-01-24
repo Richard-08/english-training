@@ -41,4 +41,14 @@ module.exports = (app) => {
         res.json({ error: { message: err.toString() } });
       });
   });
+
+  router.post("/delete", authMiddleware, (req, res) => {
+    Dictionary.deleteWord(req.body.id)
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.json({ error: { message: err.toString() } });
+      });
+  });
 };
