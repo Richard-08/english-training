@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {
   getDictionary,
   getDictionaryCategories,
+  deleteWord,
 } from "../../store/actions/dictionary";
 
 import SearchForm from "./SearchForm";
@@ -19,6 +20,7 @@ const Dictionary = ({
   categories,
   getDictionary,
   getDictionaryCategories,
+  deleteWord,
 }) => {
   useEffect(() => {
     getDictionaryCategories();
@@ -40,7 +42,7 @@ const Dictionary = ({
             <AddForm />
           </Grid>
           <Grid item md={8} xs={12}>
-            <WordsTable words={dictionary} />
+            <WordsTable words={dictionary} deleteWord={deleteWord} />
           </Grid>
         </Grid>
       </WithLoading>
@@ -56,4 +58,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getDictionary,
   getDictionaryCategories,
+  deleteWord,
 })(Dictionary);

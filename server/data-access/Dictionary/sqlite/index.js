@@ -21,13 +21,14 @@ function addWord({ category_id, en, ru }) {
   );
 }
 
-function addWord(word_id) {
+function deleteWord(word_id) {
   return db.run(`DELETE FROM dictionary WHERE id=${word_id}`);
 }
 
 module.exports = {
   getAll,
   addWord,
+  deleteWord,
   getCategories,
   getWordsByCategory,
 };

@@ -42,7 +42,7 @@ module.exports = (app) => {
       });
   });
 
-  router.post("/delete", authMiddleware, (req, res) => {
+  router.delete("/delete", authMiddleware, (req, res) => {
     Dictionary.deleteWord(req.body.id)
       .then((data) => {
         res.send(data);

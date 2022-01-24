@@ -68,13 +68,14 @@ export const deleteWord = (id) => (dispatch, getState) => {
     .deleteWord(payload)
     .then((res) => {
       if (res && !res.error) {
-        dispatch(createMessage({ message: "Word deleted", status: "success" }));
         dispatch({ type: DELETE_WORD, payload: id });
+        dispatch(createMessage({ message: "Word deleted", status: "success" }));
       } else {
         throw res;
       }
     })
     .catch((err) => {
+      console.log(err);
       dispatch(returnErrors(err.error));
     });
 };

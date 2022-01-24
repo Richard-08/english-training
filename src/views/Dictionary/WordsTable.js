@@ -10,7 +10,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-export default function WordsTable({ words }) {
+export default function WordsTable({ words, deleteWord }) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="table" size="small">
@@ -32,7 +32,7 @@ export default function WordsTable({ words }) {
               </TableCell>
               <TableCell>{word.ru}</TableCell>
               <TableCell align="right">
-                <IconButton aria-label="delete">
+                <IconButton aria-label="delete" onClick={() => deleteWord(word.id)}>
                   <DeleteIcon />
                 </IconButton>
               </TableCell>
