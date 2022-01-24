@@ -4,21 +4,25 @@ import { GET_LESSONS, LOADING, LOADED } from "./types";
 import { returnErrors } from "./messages";
 
 export const getLessons = () => (dispatch, getState) => {
-  dispatch({ type: LOADING });
+  const { lessons } = getState().lessons;
 
-  const payload = tokenConfig(getState);
+  if (!(lessons && lessons.length)) {
+    dispatch({ type: LOADING });
 
-  service
-    .getLessonsData(payload)
-    .then((res) => {
-      if (res && !res.error) {
-        dispatch({ type: GET_LESSONS, payload: res });
-      } else {
-        throw res;
-      }
-    })
-    .catch((err) => {
-      dispatch(returnErrors(err.error));
-    })
-    .finally(() => dispatch({ type: LOADED }));
+    const payload = tokenConfig(getState);
+
+    service
+      .getLessonsData(payload)
+      .then((res) => {
+        if (res && !res.error) {
+          dispatch({ type: GET_LESSONS, payload: res });
+        } else {
+          throw res;
+        }
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.error));
+      })
+      .finally(() => dispatch({ type: LOADED }));
+  }
 };

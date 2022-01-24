@@ -1,4 +1,4 @@
-const db = require("../../../db/database");
+const db = require("../../../db/sqlite/Database");
 
 function getAll() {
   return db.all(`SELECT * FROM lessons;`);

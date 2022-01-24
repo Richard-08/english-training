@@ -1,6 +1,6 @@
 const config = require("../config");
-const sqlite = require("../db/database");
+const sqliteDB = require("../db/sqlite/Database");
 
 module.exports = () => {
-  return sqlite.open(config.DATABASE_URL);
+  return sqliteDB.open(config.DATABASE_URL);
 };

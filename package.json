@@ -1,7 +1,6 @@
 {
   "name": "enlish-training",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "start": "PORT=3000 react-scripts start & node server/index.js",
     "dev": "PORT=3000 react-scripts start & nodemon server/index.js",
