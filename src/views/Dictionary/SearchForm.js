@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import FormGroup from "@mui/material/FormGroup";
 import Typography from "@mui/material/Typography";
 
-export default function SearchForm({ categories }) {
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState([]);
-
+export default function SearchForm({
+  categories,
+  category,
+  search,
+  setCategory,
+  setSearch,
+}) {
   const handleSearch = (event) => {
-    console.log(event.target.value);
+    setSearch(event.target.value);
   };
 
   return (

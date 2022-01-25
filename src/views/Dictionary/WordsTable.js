@@ -32,7 +32,10 @@ export default function WordsTable({ words, deleteWord }) {
               </TableCell>
               <TableCell>{word.ru}</TableCell>
               <TableCell align="right">
-                <IconButton aria-label="delete" onClick={() => deleteWord(word.id)}>
+                <IconButton
+                  aria-label="delete"
+                  onClick={() => deleteWord(word.id)}
+                >
                   <DeleteIcon />
                 </IconButton>
               </TableCell>

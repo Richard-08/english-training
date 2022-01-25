@@ -1,5 +1,4 @@
-import React, { Fragment } from "react";
-import { useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
   getDictionary,
@@ -22,6 +21,9 @@ const Dictionary = ({
   getDictionaryCategories,
   deleteWord,
 }) => {
+  const [searchFilter, setSearchFilter] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState([]);
+
   useEffect(() => {
     getDictionaryCategories();
   }, []);
@@ -29,6 +31,25 @@ const Dictionary = ({
   useEffect(() => {
     getDictionary();
   }, []);
+
+  const filtered_dictionary = () => {
+    let data = dictionary;
+
+    if (categoryFilter && categoryFilter.length) {
+      data = data.filter((word) =>
+        categoryFilter.some((cat) => cat.id === word.category_id)
+      );
+    }
+
+    if (searchFilter && searchFilter.trim().length) {
+      data = data.filter(
+        (word) =>
+          word.en.includes(searchFilter) || word.ru.includes(searchFilter)
+      );
+    }
+
+    return data;
+  };
 
   return (
     <Fragment>
@@ -38,11 +59,17 @@ const Dictionary = ({
       <WithLoading>
         <Grid container spacing={4}>
           <Grid item md={4} xs={12}>
-            <SearchForm categories={categories} />
+            <SearchForm
+              categories={categories}
+              search={searchFilter}
+              category={categoryFilter}
+              setSearch={setSearchFilter}
+              setCategory={setCategoryFilter}
+            />
             <AddForm />
           </Grid>
           <Grid item md={8} xs={12}>
-            <WordsTable words={dictionary} deleteWord={deleteWord} />
+            <WordsTable words={filtered_dictionary()} deleteWord={deleteWord} />
           </Grid>
         </Grid>
       </WithLoading>
