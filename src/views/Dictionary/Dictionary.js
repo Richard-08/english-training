@@ -9,6 +9,7 @@ import {
 import SearchForm from "./SearchForm";
 import AddForm from "./AddForm";
 import WordsTable from "./WordsTable";
+import TablePagination from "../../components/TablePagination";
 import WithLoading from "../../components/WithLoading";
 
 import Grid from "@mui/material/Grid";
@@ -70,6 +71,7 @@ const Dictionary = ({
           </Grid>
           <Grid item md={8} xs={12}>
             <WordsTable words={filtered_dictionary()} deleteWord={deleteWord} />
+            <TablePagination />
           </Grid>
         </Grid>
       </WithLoading>
