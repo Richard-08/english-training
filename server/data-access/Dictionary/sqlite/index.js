@@ -1,6 +1,6 @@
 const db = require("../../../db/sqlite/Database");
 
-function getAll() {
+function getDictionary() {
   return db.all(`SELECT * FROM dictionary`);
 }
 
@@ -26,9 +26,9 @@ function deleteWord(word_id) {
 }
 
 module.exports = {
-  getAll,
   addWord,
   deleteWord,
+  getDictionary,
   getCategories,
   getWordsByCategory,
 };

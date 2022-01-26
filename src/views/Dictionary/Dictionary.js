@@ -1,37 +1,36 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import {
-  getDictionary,
-  getDictionaryCategories,
-  deleteWord,
-} from "../../store/actions/dictionary";
+import { getAll, deleteWord } from "../../store/actions/dictionary";
 
 import SearchForm from "./SearchForm";
 import AddForm from "./AddForm";
 import WordsTable from "./WordsTable";
-import TablePagination from "../../components/TablePagination";
+import TablePagination from "@mui/material/TablePagination";
 import WithLoading from "../../components/WithLoading";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-const Dictionary = ({
-  dictionary,
-  categories,
-  getDictionary,
-  getDictionaryCategories,
-  deleteWord,
-}) => {
+const ROWS_PER_PAGE = 10;
+
+const Dictionary = ({ dictionary, categories, getAll, deleteWord }) => {
   const [searchFilter, setSearchFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState([]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(ROWS_PER_PAGE);
 
   useEffect(() => {
-    getDictionaryCategories();
+    getAll();
   }, []);
 
-  useEffect(() => {
-    getDictionary();
-  }, []);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const filtered_dictionary = () => {
     let data = dictionary;
@@ -71,7 +70,14 @@ const Dictionary = ({
           </Grid>
           <Grid item md={8} xs={12}>
             <WordsTable words={filtered_dictionary()} deleteWord={deleteWord} />
-            <TablePagination />
+            <TablePagination
+              component="div"
+              count={filtered_dictionary().length}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
           </Grid>
         </Grid>
       </WithLoading>
@@ -85,7 +91,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  getDictionary,
-  getDictionaryCategories,
+  getAll,
   deleteWord,
 })(Dictionary);

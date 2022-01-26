@@ -6,14 +6,14 @@ const router = Router();
 module.exports = (app) => {
   app.use("/dictionary", router);
 
-  router.get("/", authMiddleware, (req, res) => {
-    Dictionary.getAll()
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.json({ err });
-      });
+  router.get("/", authMiddleware, async (req, res) => {
+    try {
+      let dictionary = await Dictionary.getDictionary();
+      let categories = await Dictionary.getCategories();
+      res.json({ dictionary, categories });
+    } catch (error) {
+      res.json({ error });
+    }
   });
 
   router.get("/categories", authMiddleware, (req, res) => {

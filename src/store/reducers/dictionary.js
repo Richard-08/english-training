@@ -15,7 +15,8 @@ export default function (state = initialState, action) {
     case GET_DICTIONARY:
       return {
         ...state,
-        dictionary: action.payload,
+        dictionary: action.payload.dictionary,
+        categories: action.payload.categories,
       };
     case GET_CATEGORIES:
       return {

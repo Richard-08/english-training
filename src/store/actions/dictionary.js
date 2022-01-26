@@ -3,7 +3,7 @@ import { tokenConfig } from "./auth";
 import { GET_DICTIONARY, GET_CATEGORIES, ADD_WORD, DELETE_WORD } from "./types";
 import { returnErrors, createMessage } from "./messages";
 
-export const getDictionary = () => (dispatch, getState) => {
+export const getAll = () => (dispatch, getState) => {
   const payload = tokenConfig(getState);
 
   service
