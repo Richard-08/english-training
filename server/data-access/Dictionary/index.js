@@ -4,6 +4,7 @@ const {
   getWordsByCategory,
   getDictionary,
   getCategories,
+  addCategory,
   deleteWord,
   addWord,
 } = require("./sqlite");
@@ -14,6 +15,7 @@ module.exports = {
   getWordsByCategory,
   getDictionary,
   getCategories,
+  addCategory,
   deleteWord,
   addWord,
 };

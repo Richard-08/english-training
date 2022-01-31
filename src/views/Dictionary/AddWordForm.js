@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-const AddForm = ({ categories, addWord }) => {
+const AddWordForm = ({ categories, addWord }) => {
   const [enWord, setEnWord] = useState("");
   const [ruWord, setRuWord] = useState("");
   const [category, setCategory] = useState(null);
@@ -37,8 +37,10 @@ const AddForm = ({ categories, addWord }) => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit}>
-      <Typography variant="h6" gutterBottom>Add word</Typography>
+    <Box component="form" onSubmit={handleSubmit} sx={{ pb: 3 }}>
+      <Typography variant="h6" gutterBottom>
+        Add word
+      </Typography>
       <Autocomplete
         id="tags-outlined"
         required
@@ -88,4 +90,4 @@ const mapStateToProps = (state) => ({
   categories: state.dictionary.categories,
 });
 
-export default connect(mapStateToProps, { addWord })(AddForm);
+export default connect(mapStateToProps, { addWord })(AddWordForm);

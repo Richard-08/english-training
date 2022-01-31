@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { getAll, deleteWord } from "../../store/actions/dictionary";
 
 import SearchForm from "./SearchForm";
-import AddForm from "./AddForm";
+import AddWordForm from "./AddWordForm";
+import AddCategoryForm from "./AddCategoryForm";
 import WordsTable from "./WordsTable";
 import TablePagination from "@mui/material/TablePagination";
 import WithLoading from "../../components/WithLoading";
@@ -66,7 +67,8 @@ const Dictionary = ({ dictionary, categories, getAll, deleteWord }) => {
               setSearch={setSearchFilter}
               setCategory={setCategoryFilter}
             />
-            <AddForm />
+            <AddWordForm />
+            <AddCategoryForm />
           </Grid>
           <Grid item md={8} xs={12}>
             <WordsTable words={filtered_dictionary()} deleteWord={deleteWord} />

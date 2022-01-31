@@ -31,9 +31,14 @@ function deleteWord({ user_id, word_id }) {
   return db.run(`DELETE FROM words WHERE id=${word_id} AND user_id=${user_id}`);
 }
 
+function addCategory(name) {
+  return db.run(`INSERT INTO categories (name) VALUES (?)`, [name]);
+}
+
 module.exports = {
   addWord,
   deleteWord,
+  addCategory,
   getDictionary,
   getCategories,
   getWordsByCategory,

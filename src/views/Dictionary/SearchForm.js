@@ -17,7 +17,7 @@ export default function SearchForm({
   };
 
   return (
-    <FormGroup>
+    <FormGroup sx={{ pb: 2 }}>
       <Typography variant="h6" gutterBottom>
         Search word
       </Typography>

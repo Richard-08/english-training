@@ -10,7 +10,26 @@ module.exports = (app) => {
     try {
       let dictionary = await Dictionary.getDictionary();
       let categories = await Dictionary.getCategories();
-      res.json({ dictionary, categories });
+      let basic_dictionary = await Dictionary.getBasicDictionary();
+      let basic_categories = await Dictionary.getBasicCategories();
+
+      basic_dictionary = basic_dictionary.map((word) => {
+        return {
+          ...word,
+          type: "default",
+        };
+      });
+      basic_categories = basic_categories.map((cat) => {
+        return {
+          ...cat,
+          type: "default",
+        };
+      });
+
+      res.json({
+        dictionary: [...dictionary, ...basic_dictionary],
+        categories: [...categories, ...basic_categories],
+      });
     } catch (error) {
       res.json({ error });
     }
