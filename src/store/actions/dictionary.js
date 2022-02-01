@@ -38,9 +38,14 @@ export const getDictionaryCategories = () => (dispatch, getState) => {
 };
 
 export const addWord = (data) => (dispatch, getState) => {
+  let send_data = {
+    ...data,
+    user_id: getState().auth.user.id,
+  };
+
   const payload = {
     ...tokenConfig(getState),
-    body: data,
+    body: send_data,
   };
 
   service
@@ -48,7 +53,7 @@ export const addWord = (data) => (dispatch, getState) => {
     .then((res) => {
       if (res && !res.error) {
         dispatch(createMessage({ message: "Word added", status: "success" }));
-        dispatch({ type: ADD_WORD, payload: { ...data, ...res } });
+        dispatch({ type: ADD_WORD, payload: { ...send_data, ...res } });
       } else {
         throw res;
       }
@@ -61,7 +66,7 @@ export const addWord = (data) => (dispatch, getState) => {
 export const deleteWord = (id) => (dispatch, getState) => {
   const payload = {
     ...tokenConfig(getState),
-    body: { id },
+    body: { id, user_id: getState().auth.user.id },
   };
 
   service

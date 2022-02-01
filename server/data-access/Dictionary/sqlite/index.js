@@ -20,9 +20,9 @@ function getWordsByCategory(category_id) {
   return db.all(`SELECT * FROM words WHERE category_id = ?`, [category_id]);
 }
 
-function addWord({ category_id, en, ru }) {
+function addWord({ user_id, category_id, en, ru }) {
   return db.run(
-    `INSERT INTO words (user_id, category_id, en, ru) VALUES (?, ?, ?)`,
+    `INSERT INTO words (user_id, category_id, en, ru) VALUES (?, ?, ?, ?)`,
     [user_id, category_id, en, ru]
   );
 }

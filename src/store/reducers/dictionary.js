@@ -32,8 +32,8 @@ export default function (state = initialState, action) {
     case DELETE_WORD:
       return {
         ...state,
-        dictionary: state.dictionary.filter(
-          (word) => word.id !== action.payload
+        dictionary: state.dictionary.filter((word) =>
+          word.user_id ? word.id !== action.payload : true
         ),
       };
 

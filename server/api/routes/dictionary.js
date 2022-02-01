@@ -13,19 +13,6 @@ module.exports = (app) => {
       let basic_dictionary = await Dictionary.getBasicDictionary();
       let basic_categories = await Dictionary.getBasicCategories();
 
-      basic_dictionary = basic_dictionary.map((word) => {
-        return {
-          ...word,
-          type: "default",
-        };
-      });
-      basic_categories = basic_categories.map((cat) => {
-        return {
-          ...cat,
-          type: "default",
-        };
-      });
-
       res.json({
         dictionary: [...dictionary, ...basic_dictionary],
         categories: [...categories, ...basic_categories],
@@ -47,6 +34,7 @@ module.exports = (app) => {
 
   router.post("/add", authMiddleware, (req, res) => {
     let payload = {
+      user_id: req.body.user_id,
       category_id: req.body.category_id,
       en: req.body.en,
       ru: req.body.ru,
@@ -62,7 +50,12 @@ module.exports = (app) => {
   });
 
   router.delete("/delete", authMiddleware, (req, res) => {
-    Dictionary.deleteWord(req.body.id)
+    let payload = {
+      word_id: req.body.id,
+      user_id: req.body.user_id,
+    };
+
+    Dictionary.deleteWord(payload)
       .then((data) => {
         res.send(data);
       })

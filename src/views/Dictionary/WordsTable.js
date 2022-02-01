@@ -24,7 +24,7 @@ export default function WordsTable({ words, deleteWord }) {
         <TableBody>
           {words.map((word) => (
             <TableRow
-              key={word.id}
+              key={word.en}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -32,7 +32,7 @@ export default function WordsTable({ words, deleteWord }) {
               </TableCell>
               <TableCell>{word.ru}</TableCell>
               <TableCell align="right">
-                {word.type !== "default" && (
+                {word.user_id && (
                   <IconButton
                     aria-label="delete"
                     onClick={() => deleteWord(word.id)}
