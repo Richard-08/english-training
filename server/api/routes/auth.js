@@ -1,10 +1,8 @@
-const config = require("../../config");
 const { body, validationResult } = require("express-validator");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const { Router } = require("express");
 const authMiddleware = require("../../middleware/auth");
 
+const AuthService = require("../../services/AuthService");
 const User = require("../../data-access/User");
 
 const router = Router();
@@ -27,48 +25,26 @@ module.exports = (app) => {
     body("email").isEmail(),
     body("password").notEmpty(),
     async (req, res) => {
-      const { username, email, password } = req.body;
+      try {
+        const { username, email, password } = req.body;
 
-      let errors = validationResult(req);
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          const message = errors
+            .array()
+            .map((err) => `Param ${err.param} - ${err.msg}; `);
+          throw new Error(message);
+        }
 
-      if (!errors.isEmpty()) {
-        const message = errors
-          .array()
-          .map((err) => `Param ${err.param} - ${err.msg}; `);
-        return res.status(400).json({ error: { message } });
-      }
-
-      const emailExists = await User.findUserByEmail(email);
-      if (emailExists) {
-        return res.status(400).json({
-          error: "The user with the given email already exists",
-        });
-      }
-
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
-
-      const newUser = {
-        username,
-        email,
-        password: hashedPassword,
-      };
-
-      const response = await User.create(newUser);
-
-      if (response) {
-        const user = await User.findUserByEmail(email);
-
-        const token = jwt.sign(
-          {
-            id: user.id,
-            exp: Math.floor(Date.now() / 1000) + 60 * 10,
-          },
-          config.TOKEN_SECRET
+        const authServiceInstanse = new AuthService(User);
+        const { user, token } = await authServiceInstanse.signUp(
+          username,
+          email,
+          password
         );
-        res.status(200).send({ user, token });
-      } else {
-        res.status(500).json({ error: response });
+        res.status(201).json({ user, token });
+      } catch (error) {
+        res.status(400).json({ error: error });
       }
     }
   );
@@ -79,40 +55,23 @@ module.exports = (app) => {
     body("email").isEmail(),
     body("password").notEmpty(),
     async (req, res) => {
-      const { email, password } = req.body;
+      try {
+        const { email, password } = req.body;
 
-      let errors = validationResult(req);
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          const message = errors
+            .array()
+            .map((err) => `Param ${err.param} - ${err.msg}; `);
+          throw new Error(message);
+        }
 
-      if (!errors.isEmpty()) {
-        const message = errors
-          .array()
-          .map((err) => `Param ${err.param} - ${err.msg}; `);
-        return res.status(400).json({ error: { message } });
+        const authServiceInstanse = new AuthService(User);
+        const { user, token } = authServiceInstanse.signIn(email, password);
+        res.status(200).json({ user, token });
+      } catch (error) {
+        res.status(400).json({ error: error });
       }
-
-      const user = await User.findUserByEmail(email);
-      if (!user) {
-        return res.status(400).json({
-          error: {
-            message: "User with this email does not exist",
-          },
-        });
-      }
-
-      const validPassword = await bcrypt.compare(password, user.password);
-      if (!validPassword) {
-        return res.status(400).json({ error: { message: "Invalid password" } });
-      }
-
-      const token = jwt.sign(
-        {
-          id: user.id,
-          exp: Math.floor(Date.now() / 1000) + 60 * 60,
-        },
-        config.TOKEN_SECRET
-      );
-
-      res.status(200).json({ user, token });
     }
   );
 
