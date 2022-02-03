@@ -11,7 +11,7 @@ module.exports = (app) => {
   app.use("/auth", router);
 
   router.get("/user", authMiddleware, async (req, res) => {
-    const user = await User.findUserById(req.user.id);
+    const user = await User.findUserById(req.user.id); //////// Refactor
     if (!user) {
       return res.status(400).json({ error: { message: "User not found" } });
     }
@@ -44,7 +44,8 @@ module.exports = (app) => {
         );
         res.status(201).json({ user, token });
       } catch (error) {
-        res.status(400).json({ error: error });
+        console.log(error);
+        res.status(400).json({ error: { message: error.message } });
       }
     }
   );
@@ -67,10 +68,13 @@ module.exports = (app) => {
         }
 
         const authServiceInstanse = new AuthService(User);
-        const { user, token } = authServiceInstanse.signIn(email, password);
+        const { user, token } = await authServiceInstanse.signIn(
+          email,
+          password
+        );
         res.status(200).json({ user, token });
       } catch (error) {
-        res.status(400).json({ error: error });
+        res.status(400).json({ error: { message: error.message } });
       }
     }
   );

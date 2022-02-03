@@ -9,30 +9,30 @@ function getBasicCategories() {
 }
 
 function getDictionary() {
-  return db.all(`SELECT * FROM words`);
+  return db.all(`SELECT * FROM user_words`);
 }
 
 function getCategories() {
-  return db.all(`SELECT * FROM categories;`);
+  return db.all(`SELECT * FROM user_categories;`);
 }
 
 function getWordsByCategory(category_id) {
-  return db.all(`SELECT * FROM words WHERE category_id = ?`, [category_id]);
+  return db.all(`SELECT * FROM user_words WHERE category_id = ?`, [category_id]);
 }
 
 function addWord({ user_id, category_id, en, ru }) {
   return db.run(
-    `INSERT INTO words (user_id, category_id, en, ru) VALUES (?, ?, ?, ?)`,
+    `INSERT INTO user_words (user_id, category_id, en, ru) VALUES (?, ?, ?, ?)`,
     [user_id, category_id, en, ru]
   );
 }
 
 function deleteWord({ user_id, word_id }) {
-  return db.run(`DELETE FROM words WHERE id=${word_id} AND user_id=${user_id}`);
+  return db.run(`DELETE FROM user_words WHERE id=${word_id} AND user_id=${user_id}`);
 }
 
 function addCategory(name) {
-  return db.run(`INSERT INTO categories (name) VALUES (?)`, [name]);
+  return db.run(`INSERT INTO user_categories (name) VALUES (?)`, [name]);
 }
 
 module.exports = {

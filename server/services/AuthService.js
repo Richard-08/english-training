@@ -2,14 +2,14 @@ const config = require("../config");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-class AuthService {
+module.exports = class AuthService {
   constructor(userModel) {
     this.userModel = userModel;
   }
 
   async signUp(username, email, password) {
     try {
-      const emailExists = await User.findUserByEmail(email);
+      const emailExists = await this.userModel.findUserByEmail(email);
       if (emailExists) {
         throw new Error("The user with the given email already exists");
       }
@@ -27,14 +27,14 @@ class AuthService {
 
       if (userRecord) {
         const user = await this.userModel.findUserByEmail(email);
-        const token = this.#generateToken(userRecord);
+        const token = this.#generateToken(userRecord.id);
 
         return { user, token };
       } else {
         throw userRecord;
       }
     } catch (error) {
-      throw error;
+      throw new Error(error);
     }
   }
 
@@ -52,10 +52,10 @@ class AuthService {
         throw new Error("Invalid password");
       }
 
-      const token = this.#generateToken(userRecord);
+      const token = this.#generateToken(user.id);
       return { user, token };
     } catch (error) {
-      throw error;
+      throw new Error(error);
     }
   }
 
