@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const authMiddleware = require("../../middleware/auth");
 const Dictionary = require("../../data-access/Dictionary");
+const DictionaryService = require("../../services/DictionaryService");
+
 const router = Router();
 
 module.exports = (app) => {
@@ -8,17 +10,10 @@ module.exports = (app) => {
 
   router.get("/", authMiddleware, async (req, res) => {
     try {
-      let dictionary = await Dictionary.getDictionary();
-      let categories = await Dictionary.getCategories();
-      let basic_dictionary = await Dictionary.getBasicDictionary();
-      let basic_categories = await Dictionary.getBasicCategories();
-
-      res.json({
-        dictionary: [...dictionary, ...basic_dictionary],
-        categories: [...categories, ...basic_categories],
-      });
+      const dictionary = await DictionaryService.getDictionary();
+      res.json(dictionary);
     } catch (error) {
-      res.json({ error });
+      res.json({ error: { message: error.message } });
     }
   });
 

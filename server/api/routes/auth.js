@@ -3,7 +3,7 @@ const { Router } = require("express");
 const authMiddleware = require("../../middleware/auth");
 
 const AuthService = require("../../services/AuthService");
-const User = require("../../data-access/User");
+const UserService = require("../../services/UserService");
 
 const router = Router();
 
@@ -11,11 +11,15 @@ module.exports = (app) => {
   app.use("/auth", router);
 
   router.get("/user", authMiddleware, async (req, res) => {
-    const user = await User.findUserById(req.user.id); //////// Refactor
-    if (!user) {
-      return res.status(400).json({ error: { message: "User not found" } });
+    try {
+      const user = await UserService.getUserById(req.user.id);
+      if (!user) {
+        throw new Error("User not found");
+      }
+      res.send(user);
+    } catch (error) {
+      return res.status(400).json({ error: { message: error.message } });
     }
-    res.send(user);
   });
 
   router.post(
@@ -36,8 +40,7 @@ module.exports = (app) => {
           throw new Error(message);
         }
 
-        const authServiceInstanse = new AuthService(User);
-        const { user, token } = await authServiceInstanse.signUp(
+        const { user, token } = await AuthService.signUp(
           username,
           email,
           password
@@ -67,11 +70,7 @@ module.exports = (app) => {
           throw new Error(message);
         }
 
-        const authServiceInstanse = new AuthService(User);
-        const { user, token } = await authServiceInstanse.signIn(
-          email,
-          password
-        );
+        const { user, token } = await AuthService.signIn(email, password);
         res.status(200).json({ user, token });
       } catch (error) {
         res.status(400).json({ error: { message: error.message } });

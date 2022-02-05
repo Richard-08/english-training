@@ -2,7 +2,9 @@ const config = require("../config");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-module.exports = class AuthService {
+const User = require("../data-access/User");
+
+class AuthService {
   constructor(userModel) {
     this.userModel = userModel;
   }
@@ -69,3 +71,5 @@ module.exports = class AuthService {
     );
   }
 }
+
+module.exports = new AuthService(User);
