@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const authMiddleware = require("../../middleware/auth");
-const Dictionary = require("../../data-access/Dictionary");
+
 const DictionaryService = require("../../services/DictionaryService");
 
 const router = Router();
@@ -10,52 +10,49 @@ module.exports = (app) => {
 
   router.get("/", authMiddleware, async (req, res) => {
     try {
-      const dictionary = await DictionaryService.getDictionary();
+      const dictionary = await DictionaryService.getDictionary(req.user.id);
       res.json(dictionary);
     } catch (error) {
       res.json({ error: { message: error.message } });
     }
   });
 
-  router.get("/categories", authMiddleware, (req, res) => {
-    Dictionary.getCategories()
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.json({ err });
-      });
+  router.get("/categories", authMiddleware, async (req, res) => {
+    try {
+      const categories = await DictionaryService.getCategories(req.user.id);
+      res.json({ categories });
+    } catch (error) {
+      res.json({ error: { message: error.message } });
+    }
   });
 
-  router.post("/add", authMiddleware, (req, res) => {
-    let payload = {
-      user_id: req.body.user_id,
-      category_id: req.body.category_id,
-      en: req.body.en,
-      ru: req.body.ru,
-    };
+  router.post("/add", authMiddleware, async (req, res) => {
+    try {
+      let payload = {
+        user_id: req.body.user_id,
+        category_id: req.body.category_id,
+        en: req.body.en,
+        ru: req.body.ru,
+      };
 
-    Dictionary.addWord(payload)
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.json({ error: { message: err.toString() } });
-      });
+      const word_id = await DictionaryService.addWord(payload);
+      res.json(word_id);
+    } catch (error) {
+      res.json({ error: { message: error.message } });
+    }
   });
 
-  router.delete("/delete", authMiddleware, (req, res) => {
-    let payload = {
-      word_id: req.body.id,
-      user_id: req.body.user_id,
-    };
+  router.delete("/delete", authMiddleware, async (req, res) => {
+    try {
+      let payload = {
+        word_id: req.body.id,
+        user_id: req.body.user_id,
+      };
 
-    Dictionary.deleteWord(payload)
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.json({ error: { message: err.toString() } });
-      });
+      const word_id = await DictionaryService.deleteWord(payload);
+      res.json(word_id);
+    } catch (error) {
+      res.json({ error: { message: error.message } });
+    }
   });
 };
