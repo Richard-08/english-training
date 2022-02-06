@@ -16,8 +16,18 @@ function getCategories(user_id) {
   return db.all(`SELECT * FROM user_categories WHERE user_id = ?`, [user_id]);
 }
 
-function findWordByValues({ en, ru }) {
-  return db.get(`SELECT * FROM user_words WHERE en = ? AND ru = ?`, [en, ru]);
+function findUserWord(en, ru, category_id) {
+  return db.get(
+    `SELECT * FROM user_words WHERE en = ? AND ru = ? AND category_id = ?`,
+    [en, ru, category_id]
+  );
+}
+
+function findBasicWord(en, ru, category_id) {
+  return db.get(
+    `SELECT * FROM basic_words WHERE en = ? AND ru = ? AND category_id = ?`,
+    [en, ru, category_id]
+  );
 }
 
 function getWordsByCategory(category_id) {
@@ -47,7 +57,8 @@ module.exports = {
   addWord,
   deleteWord,
   addCategory,
-  findWordByValues,
+  findUserWord,
+  findBasicWord,
   getDictionary,
   getCategories,
   getWordsByCategory,

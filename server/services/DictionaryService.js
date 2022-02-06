@@ -1,4 +1,5 @@
-const User = require("../data-access/User");
+const axios = require("axios");
+const config = require("../config");
 const Dictionary = require("../data-access/Dictionary");
 
 class DictionaryService {
@@ -47,15 +48,27 @@ class DictionaryService {
     return Dictionary.getBasicCategories();
   }
 
-  async addWord(payload) {
+  async addWord({ en, ru, category, user_id }) {
     try {
-      const word = await Dictionary.findWordByValues(payload);
+      const user_word = await Dictionary.findUserWord(en, ru, category.id);
+      const basic_word = await Dictionary.findBasicWord(en, ru, category.id);
 
-      if (word) {
+      if (user_word || basic_word) {
         throw new Error("The word already exists");
       } else {
-        const dictionaryRecord = await Dictionary.addWord(payload);
-        return dictionaryRecord;
+        const isValidWord = await this.validateWord(en, category);
+
+        if (isValidWord) {
+          const dictionaryRecord = await Dictionary.addWord({
+            en,
+            ru,
+            category_id: category.id,
+            user_id,
+          });
+          return dictionaryRecord;
+        } else {
+          throw new Error("Word is invalid");
+        }
       }
     } catch (error) {
       throw new Error(error.message);
@@ -74,6 +87,28 @@ class DictionaryService {
   addCategory(payload) {}
 
   deleteCategory(payload) {}
+
+  async validateWord(word, category) {
+    try {
+      if (category.user_id) {
+        return true;
+      }
+      const wordInfo = await this.#findWord(word);
+      return wordInfo.def.some(
+        (item) => item.pos.toLowerCase() === category.id
+      );
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  #findWord(word, lang = "en-ru") {
+    return axios
+      .get(
+        `https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${config.YANDEX_API_KEY}&lang=${lang}&text=${word}`
+      )
+      .then((response) => response.data);
+  }
 }
 
 module.exports = new DictionaryService();

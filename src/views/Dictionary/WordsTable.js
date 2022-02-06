@@ -18,19 +18,21 @@ export default function WordsTable({ words, deleteWord }) {
           <TableRow>
             <TableCell sx={{ fontWeight: "bold" }}>EN</TableCell>
             <TableCell sx={{ fontWeight: "bold" }}>RU</TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Category</TableCell>
             <TableCell sx={{ fontWeight: "bold" }} align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {words.map((word) => (
             <TableRow
-              key={word.en}
+              key={word.en + word.ru}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
                 {word.en}
               </TableCell>
               <TableCell>{word.ru}</TableCell>
+              <TableCell>{word.category}</TableCell>
               <TableCell align="right">
                 {word.user_id && (
                   <IconButton

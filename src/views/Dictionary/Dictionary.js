@@ -49,7 +49,14 @@ const Dictionary = ({ dictionary, categories, getAll, deleteWord }) => {
       );
     }
 
-    return data;
+    return data.map((word) => {
+      return {
+        ...word,
+        category:
+          categories.find((cat) => cat.id === word.category_id)?.name ||
+          word.category_id,
+      };
+    });
   };
 
   return (

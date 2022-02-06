@@ -30,7 +30,7 @@ module.exports = (app) => {
     try {
       let payload = {
         user_id: req.body.user_id,
-        category_id: req.body.category_id,
+        category: req.body.category,
         en: req.body.en,
         ru: req.body.ru,
       };

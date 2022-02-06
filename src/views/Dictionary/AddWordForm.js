@@ -20,7 +20,7 @@ const AddWordForm = ({ categories, addWord }) => {
       addWord({
         en: enWord,
         ru: ruWord,
-        category_id: category.id,
+        category,
       });
       setEnWord("");
       setRuWord("");
