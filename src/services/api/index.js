@@ -1,14 +1,17 @@
 import RequestService from "../../utils/RequestService";
-import { BASE_CONFIG } from "./constants";
+import { BACK_URL } from "./constants";
 
-import lessons from "./lessons";
-import dictionary from "./dictionary";
-import auth from "./auth";
-
-export const request = new RequestService(BASE_CONFIG);
-
-export default {
-  ...auth,
-  ...lessons,
-  ...dictionary,
-};
+export default [
+  { name: "auth", url: "auth" },
+  { name: "lessons", url: "lessons" },
+  { name: "dictionary", url: "dictionary" },
+].reduce((total, item) => {
+  total[item.name] = new RequestService({
+    baseURL: BACK_URL + item.url,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+  return total;
+}, {});

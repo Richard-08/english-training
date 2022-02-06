@@ -1,13 +1,13 @@
-import { request } from "./index";
+import service from "./index";
 
 export default {
   getLessonsData(payload) {
-    return request.get("/lessons", payload);
+    return service.lessons.get("/", payload);
   },
   getLesson(id) {
-    return request.get("/lessons/" + id);
+    return service.lessons.get("/" + id);
   },
   updateLesson(id) {
-    return request.get("/lessons/" + id);
+    return service.lessons.get("/" + id);
   },
 };

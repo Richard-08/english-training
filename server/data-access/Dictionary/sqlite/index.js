@@ -49,16 +49,36 @@ function deleteWord({ user_id, word_id }) {
   );
 }
 
-function addCategory(name) {
-  return db.run(`INSERT INTO user_categories (name) VALUES (?)`, [name]);
+function addCategory({ name, user_id }) {
+  return db.run(`INSERT INTO user_categories (name, user_id) VALUES (?, ?)`, [
+    name,
+    user_id,
+  ]);
+}
+
+function deleteCategory({ id, user_id }) {
+  return db.run(
+    `DELETE FROM user_categories WHERE id=${id} AND user_id=${user_id}`
+  );
+}
+
+function findUserCategory(id) {
+  return db.get(`SELECT * FROM user_categories WHERE id = ?`, [id]);
+}
+
+function findBasicCategory(id) {
+  return db.get(`SELECT * FROM basic_categories WHERE id = ?`, [id]);
 }
 
 module.exports = {
   addWord,
   deleteWord,
   addCategory,
+  deleteCategory,
   findUserWord,
   findBasicWord,
+  findUserCategory,
+  findBasicCategory,
   getDictionary,
   getCategories,
   getWordsByCategory,

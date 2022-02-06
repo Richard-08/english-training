@@ -1,4 +1,4 @@
-import service from "../../services/api";
+import service from "../../services/api/lessons";
 import { tokenConfig } from "./auth";
 import { GET_LESSONS, LOADING, LOADED } from "./types";
 import { returnErrors } from "./messages";

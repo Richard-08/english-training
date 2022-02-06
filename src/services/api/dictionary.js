@@ -1,16 +1,22 @@
-import { request } from "./index";
+import service from "./index";
 
 export default {
   getDictionary(payload) {
-    return request.get("/dictionary", payload);
+    return service.dictionary.get("/", payload);
   },
   getDictionaryCategories(payload) {
-    return request.get("/dictionary/categories", payload);
+    return service.dictionary.get("/categories", payload);
   },
   addWord(payload) {
-    return request.post("/dictionary/add", payload);
+    return service.dictionary.post("/add", payload);
   },
   deleteWord(payload) {
-    return request.delete("/dictionary/delete", payload);
+    return service.dictionary.delete("/delete", payload);
+  },
+  addCategory(payload) {
+    return service.dictionary.post("/categories/add", payload);
+  },
+  deleteCategory(payload) {
+    return service.dictionary.post("/categories/delete", payload);
   },
 };

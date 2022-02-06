@@ -84,9 +84,30 @@ class DictionaryService {
     }
   }
 
-  addCategory(payload) {}
+  async addCategory(payload) {
+    try {
+      const user_category = await Dictionary.findUserCategory(payload.id);
+      const basic_category = await Dictionary.findBasicCategory(payload.id);
 
-  deleteCategory(payload) {}
+      if (user_category || basic_category) {
+        throw new Error("The category already exists");
+      } else {
+        const categoryRecord = await Dictionary.addCategory(payload);
+        return categoryRecord;
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  async deleteCategory(payload) {
+    try {
+      const categoryRecord = await Dictionary.deleteCategory(payload);
+      return categoryRecord;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 
   async validateWord(word, category) {
     try {

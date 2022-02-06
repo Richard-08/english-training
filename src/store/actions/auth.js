@@ -1,4 +1,4 @@
-import service from "../../services/api";
+import service from "../../services/api/auth";
 import { returnErrors } from "./messages";
 import {
   USER_LOADING,

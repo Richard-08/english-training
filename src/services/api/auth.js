@@ -1,16 +1,16 @@
-import { request } from "./index";
+import service from "./index";
 
 export default {
   register(payload) {
-    return request.post("/auth/register", payload);
+    return service.auth.post("/register", payload);
   },
   login(payload) {
-    return request.post("/auth/login", payload);
+    return service.auth.post("/login", payload);
   },
   logout(payload) {
-    return request.post("/auth/logout", payload);
+    return service.auth.post("/logout", payload);
   },
   getUser(payload) {
-    return request.get("/auth/user", payload);
+    return service.auth.get("/user", payload);
   },
 };
