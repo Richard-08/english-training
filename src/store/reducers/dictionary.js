@@ -3,6 +3,8 @@ import {
   GET_CATEGORIES,
   ADD_WORD,
   DELETE_WORD,
+  ADD_CATEGORY,
+  DELETE_CATEGORY,
 } from "../actions/types";
 
 const initialState = {
@@ -37,6 +39,18 @@ export default function (state = initialState, action) {
         ),
       };
 
+    case ADD_CATEGORY:
+      return {
+        ...state,
+        dictionary: [...state.categories, action.payload],
+      };
+    case DELETE_CATEGORY:
+      return {
+        ...state,
+        categories: state.categories.filter((category) =>
+          category.user_id ? category.id !== action.payload : true
+        ),
+      };
     default:
       return state;
   }
