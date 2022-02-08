@@ -1,6 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getAll, deleteWord } from "../../store/actions/dictionary";
+import {
+  getAll,
+  deleteWord,
+  deleteCategory,
+} from "../../store/actions/dictionary";
 
 import SearchForm from "./SearchForm";
 import AddWordForm from "./AddWordForm";
@@ -14,7 +18,13 @@ import Typography from "@mui/material/Typography";
 
 const ROWS_PER_PAGE = 10;
 
-const Dictionary = ({ dictionary, categories, getAll, deleteWord }) => {
+const Dictionary = ({
+  dictionary,
+  categories,
+  getAll,
+  deleteWord,
+  deleteCategory,
+}) => {
   const [searchFilter, setSearchFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState([]);
   const [page, setPage] = React.useState(0);
@@ -73,6 +83,7 @@ const Dictionary = ({ dictionary, categories, getAll, deleteWord }) => {
               category={categoryFilter}
               setSearch={setSearchFilter}
               setCategory={setCategoryFilter}
+              deleteCategory={deleteCategory}
             />
             <AddWordForm />
             <AddCategoryForm />
@@ -102,4 +113,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getAll,
   deleteWord,
+  deleteCategory,
 })(Dictionary);

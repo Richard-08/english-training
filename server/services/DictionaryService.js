@@ -1,9 +1,13 @@
 const axios = require("axios");
 const config = require("../config");
 const Dictionary = require("../data-access/Dictionary");
+const Logger = require("../loaders/logger");
 
 class DictionaryService {
-  constructor() {}
+  constructor(Dictionary, Logger) {
+    this.dictionaryModel = Dictionary;
+    this.logger = Logger;
+  }
 
   async getDictionary(user_id) {
     try {
@@ -17,6 +21,7 @@ class DictionaryService {
         categories: [...categories, ...basic_categories],
       };
     } catch (error) {
+      this.logger.error(error);
       throw new Error(error.message);
     }
   }
@@ -28,30 +33,39 @@ class DictionaryService {
 
       return [...categories, ...basic_categories];
     } catch (error) {
+      this.logger.error(error);
       throw new Error(error.message);
     }
   }
 
   getUserDictionary(user_id) {
-    return Dictionary.getDictionary(user_id);
+    return this.dictionaryModel.getDictionary(user_id);
   }
 
   getBasicDictionary() {
-    return Dictionary.getBasicDictionary();
+    return this.dictionaryModel.getBasicDictionary();
   }
 
   getUserCategories(user_id) {
-    return Dictionary.getCategories(user_id);
+    return this.dictionaryModel.getCategories(user_id);
   }
 
   getBasicCategoies() {
-    return Dictionary.getBasicCategories();
+    return this.dictionaryModel.getBasicCategories();
   }
 
   async addWord({ en, ru, category, user_id }) {
     try {
-      const user_word = await Dictionary.findUserWord(en, ru, category.id);
-      const basic_word = await Dictionary.findBasicWord(en, ru, category.id);
+      const user_word = await this.dictionaryModel.findUserWord(
+        en,
+        ru,
+        category.id
+      );
+      const basic_word = await this.dictionaryModel.findBasicWord(
+        en,
+        ru,
+        category.id
+      );
 
       if (user_word || basic_word) {
         throw new Error("The word already exists");
@@ -59,7 +73,7 @@ class DictionaryService {
         const isValidWord = await this.validateWord(en, category);
 
         if (isValidWord) {
-          const dictionaryRecord = await Dictionary.addWord({
+          const dictionaryRecord = await this.dictionaryModel.addWord({
             en,
             ru,
             category_id: category.id,
@@ -71,40 +85,48 @@ class DictionaryService {
         }
       }
     } catch (error) {
+      this.logger.error(error);
       throw new Error(error.message);
     }
   }
 
   async deleteWord(payload) {
     try {
-      const dictionaryRecord = await Dictionary.deleteWord(payload);
+      const dictionaryRecord = await this.dictionaryModel.deleteWord(payload);
       return dictionaryRecord;
     } catch (error) {
+      this.logger.error(error);
       throw new Error(error.message);
     }
   }
 
   async addCategory(payload) {
     try {
-      const user_category = await Dictionary.findUserCategory(payload.id);
-      const basic_category = await Dictionary.findBasicCategory(payload.id);
+      const user_category = await this.dictionaryModel.findUserCategory(
+        payload.name
+      );
+      const basic_category = await this.dictionaryModel.findBasicCategory(
+        payload.name
+      );
 
       if (user_category || basic_category) {
         throw new Error("The category already exists");
       } else {
-        const categoryRecord = await Dictionary.addCategory(payload);
+        const categoryRecord = await this.dictionaryModel.addCategory(payload);
         return categoryRecord;
       }
     } catch (error) {
+      this.logger.error(error);
       throw new Error(error.message);
     }
   }
 
   async deleteCategory(payload) {
     try {
-      const categoryRecord = await Dictionary.deleteCategory(payload);
+      const categoryRecord = await this.dictionaryModel.deleteCategory(payload);
       return categoryRecord;
     } catch (error) {
+      this.logger.error(error);
       throw new Error(error.message);
     }
   }
@@ -119,6 +141,7 @@ class DictionaryService {
         (item) => item.pos.toLowerCase() === category.id
       );
     } catch (error) {
+      this.logger.error(error);
       throw new Error(error.message);
     }
   }
@@ -132,4 +155,4 @@ class DictionaryService {
   }
 }
 
-module.exports = new DictionaryService();
+module.exports = new DictionaryService(Dictionary, Logger);

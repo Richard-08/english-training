@@ -1,9 +1,12 @@
 import React from "react";
 
+import Box from "@mui/material/Box";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import FormGroup from "@mui/material/FormGroup";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function SearchForm({
   categories,
@@ -11,9 +14,19 @@ export default function SearchForm({
   search,
   setCategory,
   setSearch,
+  deleteCategory,
 }) {
   const handleSearch = (event) => {
     setSearch(event.target.value);
+  };
+
+  const handleDelete = (category, event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (category && category.user_id) {
+      deleteCategory(category.id);
+    }
   };
 
   return (
@@ -34,6 +47,28 @@ export default function SearchForm({
         filterSelectedOptions
         renderInput={(params) => (
           <TextField {...params} label="Category" placeholder="Category" />
+        )}
+        renderOption={(props, option) => (
+          <li {...props}>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              {option.name}
+              {option.user_id && (
+                <IconButton
+                  aria-label="delete"
+                  onClick={(event) => handleDelete(option, event)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              )}
+            </Box>
+          </li>
         )}
       />
       <TextField

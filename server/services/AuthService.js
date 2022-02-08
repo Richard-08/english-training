@@ -2,11 +2,13 @@ const config = require("../config");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const Logger = require("../loaders/logger");
 const User = require("../data-access/User");
 
 class AuthService {
-  constructor(userModel) {
-    this.userModel = userModel;
+  constructor(User, Logger) {
+    this.userModel = User;
+    this.logger = Logger;
   }
 
   async signUp(username, email, password) {
@@ -36,6 +38,7 @@ class AuthService {
         throw userRecord;
       }
     } catch (error) {
+      this.logger.error(error);
       throw new Error(error);
     }
   }
@@ -57,6 +60,7 @@ class AuthService {
       const token = this.#generateToken(user.id);
       return { user, token };
     } catch (error) {
+      this.logger.error(error);
       throw new Error(error);
     }
   }
@@ -72,4 +76,4 @@ class AuthService {
   }
 }
 
-module.exports = new AuthService(User);
+module.exports = new AuthService(User, Logger);

@@ -62,12 +62,12 @@ function deleteCategory({ id, user_id }) {
   );
 }
 
-function findUserCategory(id) {
-  return db.get(`SELECT * FROM user_categories WHERE id = ?`, [id]);
+function findUserCategory(name) {
+  return db.get(`SELECT * FROM user_categories WHERE name = ?`, [name]);
 }
 
-function findBasicCategory(id) {
-  return db.get(`SELECT * FROM basic_categories WHERE id = ?`, [id]);
+function findBasicCategory(name) {
+  return db.get(`SELECT * FROM basic_categories WHERE name = ?`, [name]);
 }
 
 module.exports = {

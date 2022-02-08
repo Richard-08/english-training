@@ -64,7 +64,7 @@ module.exports = (app) => {
       };
 
       const category = await DictionaryService.addCategory(payload);
-      req.json(category);
+      res.json(category);
     } catch (error) {
       res.status(400).json({ error: { message: error.message } });
     }

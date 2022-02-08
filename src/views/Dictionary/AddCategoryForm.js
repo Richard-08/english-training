@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import {} from "../../store/actions/dictionary";
+import { addCategory } from "../../store/actions/dictionary";
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-export default function AddCategoryForm() {
+function AddCategoryForm({ addCategory }) {
   const [category, setCategory] = useState("");
 
   const onChange = (event) => {
@@ -16,6 +16,10 @@ export default function AddCategoryForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (category.trim()) {
+      addCategory({ name: category });
+      setCategory("");
+    }
   };
 
   return (
@@ -41,3 +45,5 @@ export default function AddCategoryForm() {
     </Box>
   );
 }
+
+export default connect(null, { addCategory })(AddCategoryForm);
