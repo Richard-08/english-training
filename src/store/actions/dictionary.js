@@ -126,7 +126,7 @@ export const deleteCategory = (id) => (dispatch, getState) => {
   };
 
   service
-    .deleteWord(payload)
+    .deleteCategory(payload)
     .then((res) => {
       if (res && !res.error) {
         dispatch({ type: DELETE_CATEGORY, payload: id });

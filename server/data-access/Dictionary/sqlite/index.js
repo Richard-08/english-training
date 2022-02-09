@@ -1,19 +1,17 @@
 const db = require("../../../db/sqlite/Database");
 
-function getBasicDictionary() {
-  return db.all(`SELECT * FROM basic_words`);
-}
-
-function getBasicCategories() {
-  return db.all(`SELECT * FROM basic_categories;`);
-}
-
 function getDictionary(user_id) {
-  return db.all(`SELECT * FROM user_words WHERE user_id = ?`, [user_id]);
+  return db.all(
+    `SELECT id, en, ru, category_id, NULL as user_id FROM basic_words UNION SELECT id, en, ru, category_id, user_id FROM user_words WHERE user_id = ? ORDER BY en`,
+    [user_id]
+  );
 }
 
 function getCategories(user_id) {
-  return db.all(`SELECT * FROM user_categories WHERE user_id = ?`, [user_id]);
+  return db.all(
+    `SELECT id, name, NULL as user_id FROM basic_categories UNION SELECT id, name, user_id FROM user_categories WHERE user_id = ? ORDER BY name`,
+    [user_id]
+  );
 }
 
 function findUserWord(en, ru, category_id) {
@@ -82,6 +80,4 @@ module.exports = {
   getDictionary,
   getCategories,
   getWordsByCategory,
-  getBasicDictionary,
-  getBasicCategories,
 };

@@ -11,15 +11,10 @@ class DictionaryService {
 
   async getDictionary(user_id) {
     try {
-      let dictionary = await this.getUserDictionary(user_id);
-      let categories = await this.getUserCategories(user_id);
-      let basic_dictionary = await this.getBasicDictionary();
-      let basic_categories = await this.getBasicCategoies();
+      let dictionary = await this.dictionaryModel.getDictionary(user_id);
+      let categories = await this.dictionaryModel.getCategories(user_id);
 
-      return {
-        dictionary: [...dictionary, ...basic_dictionary],
-        categories: [...categories, ...basic_categories],
-      };
+      return { dictionary, categories };
     } catch (error) {
       this.logger.error(error);
       throw new Error(error.message);
@@ -28,30 +23,13 @@ class DictionaryService {
 
   async getCategories(user_id) {
     try {
-      let categories = await this.getUserCategories(user_id);
-      let basic_categories = await this.getBasicCategoies();
+      let categories = await this.dictionaryModel.getCategories(user_id);
 
-      return [...categories, ...basic_categories];
+      return categories;
     } catch (error) {
       this.logger.error(error);
       throw new Error(error.message);
     }
-  }
-
-  getUserDictionary(user_id) {
-    return this.dictionaryModel.getDictionary(user_id);
-  }
-
-  getBasicDictionary() {
-    return this.dictionaryModel.getBasicDictionary();
-  }
-
-  getUserCategories(user_id) {
-    return this.dictionaryModel.getCategories(user_id);
-  }
-
-  getBasicCategoies() {
-    return this.dictionaryModel.getBasicCategories();
   }
 
   async addWord({ en, ru, category, user_id }) {

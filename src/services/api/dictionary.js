@@ -17,6 +17,6 @@ export default {
     return service.dictionary.post("/categories/add", payload);
   },
   deleteCategory(payload) {
-    return service.dictionary.post("/categories/delete", payload);
+    return service.dictionary.delete("/categories/delete", payload);
   },
 };
