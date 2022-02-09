@@ -6,14 +6,14 @@ import { Provider } from "react-redux";
 import store from "./store";
 import { loadUser } from "./store/actions/auth";
 
-import Header from "./layout/Header";
+import Header from "./components/layout/Header";
 import Login from "./views/Login";
 import Register from "./views/Register";
 import Home from "./views/Home";
 import Lesson from "./views/Lesson";
 import Dictionary from "./views/Dictionary/Dictionary";
-import PrivateRoute from "./components/PrivateRoute";
-import Notification from "./components/Notification";
+import PrivateRoute from "./components/routing/PrivateRoute";
+import Notification from "./components/common/Notification";
 import { SnackbarProvider } from "notistack";
 
 import localStorageService from "./services/localStorageService";

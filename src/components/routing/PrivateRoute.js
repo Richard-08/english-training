@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Outlet, Navigate } from "react-router-dom";
-import Loader from "./Loader";
+import Loader from "../common/Loader";
 
 const PrivateRoute = ({ auth }) => {
   if (auth.isLoading) {

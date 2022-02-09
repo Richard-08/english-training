@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { register } from "../store/actions/auth";
+import useDocumentTitle from "../components/hooks/useDocumentTitle";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -15,6 +16,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 const Register = ({ isAuthenticated, register }) => {
+  useDocumentTitle("Register");
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

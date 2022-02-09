@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getLessons } from "../store/actions/lessons";
-import WithLoading from "../components/WithLoading";
+import WithLoading from "../components/common/WithLoading";
+import useDocumentTitle from "../components/hooks/useDocumentTitle";
 
 import Box from "@mui/material/Box";
 import { experimentalStyled as styled } from "@mui/material/styles";
@@ -19,6 +20,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function Home({ lessons, getLessons }) {
+  useDocumentTitle("Home");
   useEffect(() => {
     getLessons();
   }, []);

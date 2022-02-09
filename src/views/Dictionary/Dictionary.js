@@ -11,7 +11,8 @@ import AddWordForm from "./AddWordForm";
 import AddCategoryForm from "./AddCategoryForm";
 import WordsTable from "./WordsTable";
 import TablePagination from "@mui/material/TablePagination";
-import WithLoading from "../../components/WithLoading";
+import WithLoading from "../../components/common/WithLoading";
+import useDocumentTitle from "../../components/hooks/useDocumentTitle";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -25,6 +26,8 @@ const Dictionary = ({
   deleteWord,
   deleteCategory,
 }) => {
+  useDocumentTitle("Dictionary");
+
   const [searchFilter, setSearchFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState([]);
   const [page, setPage] = React.useState(0);

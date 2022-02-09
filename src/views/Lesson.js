@@ -1,6 +1,6 @@
 import React from "react";
 
-import Lesson_1 from "../components/Lesson-1/Lesson";
+import Lesson_1 from "../components/lessons/Lesson";
 
 import Box from "@mui/material/Box";
 

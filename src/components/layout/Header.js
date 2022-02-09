@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { logout } from "../store/actions/auth";
+import { logout } from "../../store/actions/auth";
 
-import ModeToggler from "../components/ModeToggler";
+import ModeToggler from "../common/ModeToggler";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
