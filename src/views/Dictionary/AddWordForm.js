@@ -52,7 +52,12 @@ const AddWordForm = ({ categories, addWord }) => {
         }}
         filterSelectedOptions
         renderInput={(params) => (
-          <TextField {...params} label="Category" placeholder="Category" />
+          <TextField
+            required
+            {...params}
+            label="Category"
+            placeholder="Category"
+          />
         )}
       />
       <TextField
