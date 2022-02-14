@@ -1,4 +1,6 @@
 import React from "react";
+import ROWS from "./constants";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,96 +9,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-
-const PRONOUNS_1 = "I, YOU, WE, THEY";
-const PRONOUNS_2 = "HE, SHE";
-
-const ROWS = [
-  {
-    time: "FUTURE",
-    question: [
-      {
-        prefix: "WILL",
-        pronoun: `${PRONOUNS_1}, ${PRONOUNS_2}`,
-        verb: "LIVE",
-      },
-    ],
-    statement: [
-      {
-        prefix: "WILL",
-        pronoun: `${PRONOUNS_1}, ${PRONOUNS_2}`,
-        verb: "LIVE",
-      },
-    ],
-    negation: [
-      {
-        prefix: "WILL NOT",
-        pronoun: `${PRONOUNS_1}, ${PRONOUNS_2}`,
-        verb: "LIVE",
-      },
-    ],
-  },
-  {
-    time: "PRESENT",
-    question: [
-      {
-        prefix: "DO",
-        pronoun: PRONOUNS_1,
-        verb: "LIVE",
-      },
-      {
-        prefix: "DOES",
-        pronoun: PRONOUNS_2,
-        verb: "LIVE",
-      },
-    ],
-    statement: [
-      {
-        pronoun: PRONOUNS_1,
-        verb: "LIVE",
-      },
-      {
-        pronoun: PRONOUNS_2,
-        verb: "LIVES",
-      },
-    ],
-    negation: [
-      {
-        prefix: "DON'T",
-        pronoun: PRONOUNS_1,
-        verb: "LIVE",
-      },
-      {
-        prefix: "DOESN'T",
-        pronoun: PRONOUNS_2,
-        verb: "LIVE",
-      },
-    ],
-  },
-  {
-    time: "PAST",
-    question: [
-      {
-        prefix: "DID",
-        pronoun: `${PRONOUNS_1}, ${PRONOUNS_2}`,
-        verb: "LIVE",
-      },
-    ],
-    statement: [
-      {
-        pronoun: `${PRONOUNS_1}, ${PRONOUNS_2}`,
-        verb: "LIVED",
-      },
-    ],
-    negation: [
-      {
-        prefix: "DID NOT",
-        pronoun: `${PRONOUNS_1}, ${PRONOUNS_2}`,
-        verb: "LIVE",
-      },
-    ],
-  },
-];
 
 const ContentContainer = styled("div")({
   display: "flex",
