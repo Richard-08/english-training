@@ -1,31 +1,28 @@
 const { Router } = require("express");
 const authMiddleware = require("../../middleware/auth");
-
-const Lessons = require("../../data-access/Lessons");
+const LessonService = require("../../services/LessonService");
 
 const router = Router();
 
 module.exports = (app) => {
   app.use("/lessons", router);
 
-  router.get("/", authMiddleware, (req, res) => {
-    Lessons.getAll()
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.json({ err });
-      });
+  router.get("/", authMiddleware, async (req, res) => {
+    try {
+      const lessons = await LessonService.getLessons();
+      res.json(lessons);
+    } catch (error) {
+      res.json({ error: { message: error.message } });
+    }
   });
 
-  router.get("/:id", authMiddleware, (req, res) => {
-    const id = parseInt(req.params.id);
-    Lessons.getLessonById(id)
-      .then((lesson) => {
-        res.send(lesson);
-      })
-      .catch((err) => {
-        res.json({ err });
-      });
+  router.get("/:id", authMiddleware, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const lesson = await LessonService.getLesson(id);
+      res.json(lesson);
+    } catch (error) {
+      res.json({ error: { message: error.message } });
+    }
   });
 };
