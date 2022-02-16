@@ -18,8 +18,10 @@ module.exports = (app) => {
 
   router.get("/:id", authMiddleware, async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
-      const lesson = await LessonService.getLesson(id);
+      const lesson = await LessonService.getLesson({
+        lesson_id: parseInt(req.params.id),
+        user_id: req.user.id,
+      });
       res.json(lesson);
     } catch (error) {
       res.json({ error: { message: error.message } });

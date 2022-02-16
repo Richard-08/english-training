@@ -69,7 +69,7 @@ class AuthService {
     return jwt.sign(
       {
         id: user_id,
-        exp: Math.floor(Date.now() / 1000) + 60 * 10,
+        exp: Math.floor(Date.now() / 1000) + 60 * 20,
       },
       config.TOKEN_SECRET
     );

@@ -1,7 +1,9 @@
 const db = require("../../../db/sqlite/Database");
 
 function getAll() {
-  return db.all(`SELECT * FROM lessons;`);
+  return db.all(
+    `SELECT id, name, category_id, repetitions, progress,last_visit, started_at, end_at FROM lessons LEFT JOIN lessons_statistics ON lessons.id = lessons_statistics.lesson_id;;`
+  );
 }
 
 function getLessonById(id) {
@@ -12,15 +14,8 @@ function getLessonsByCategoryId(category_id) {
   return db.all(`SELECT * FROM lessons WHERE category_id = ?`, [category_id]);
 }
 
-function updateLesson({ lesson_id, repetitions }) {
-  return db.run(`UPDATE lessons SET repetitions = ? WHERE id=${lesson_id}`, [
-    repetitions,
-  ]);
-}
-
 module.exports = {
   getAll,
   getLessonById,
   getLessonsByCategoryId,
-  updateLesson
 };

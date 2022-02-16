@@ -1,25 +1,37 @@
 const Lesson = require("../../data-access/Lesson");
+const LessonStatistics = require("../../data-access/LessonStatistics");
 const LessonFactory = require("./LessonFactory");
 class LessonService {
-  constructor(LessonModel, LessonFacotory) {
+  constructor(LessonModel, LessonStatisticsModel, LessonFacotory) {
     this.lessonModel = LessonModel;
+    this.lessonStatsModel = LessonStatisticsModel;
     this.factory = LessonFacotory;
   }
 
-  async getLessons() {
+  getLessons() {
+    return this.lessonModel.getAll();
+  }
+
+  async getLesson(payload) {
     try {
-      const lessons = await this.lessonModel.getAll();
-      return lessons;
+      let lesson = this.factory.createLesson(payload.lesson_id);
+
+      if (!lesson) {
+        throw new Error(`There is no lesson for this id=${payload.lesson_id}`);
+      }
+
+      let stats = await this.getLessonStats(payload);
+      let lesson_data = await lesson.getLesson();
+      return { ...lesson_data, stats };
     } catch (error) {
       this.logger.error(error);
       throw new Error(error.message);
     }
   }
 
-  async getLesson(lessonId) {
-    let lesson = this.factory.createLesson(lessonId);
-    return lesson.getLesson();
+  getLessonStats(payload) {
+    return this.lessonStatsModel.getLessonStatistics(payload);
   }
 }
 
-module.exports = new LessonService(Lesson, LessonFactory);
+module.exports = new LessonService(Lesson, LessonStatistics, LessonFactory);
