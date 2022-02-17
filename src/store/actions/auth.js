@@ -1,4 +1,4 @@
-import service from "../../services/api/auth";
+import authService from "../../services/api/auth";
 import { returnErrors } from "./messages";
 import {
   USER_LOADING,
@@ -16,7 +16,7 @@ export const loadUser = () => (dispatch, getState) => {
 
   const payload = tokenConfig(getState);
 
-  service
+  authService
     .getUser(payload)
     .then((res) => {
       if (res && !res.error) {
@@ -32,7 +32,7 @@ export const loadUser = () => (dispatch, getState) => {
 };
 
 export const login = (payload) => (dispatch) => {
-  service
+  authService
     .login({
       body: payload,
     })
@@ -53,7 +53,7 @@ export const login = (payload) => (dispatch) => {
 export const logout = () => (dispatch, getState) => {
   const payload = tokenConfig(getState);
 
-  service
+  authService
     .logout(payload)
     .then((res) => {
       if (res && !res.error) {
@@ -69,7 +69,7 @@ export const logout = () => (dispatch, getState) => {
 };
 
 export const register = (payload) => (dispatch) => {
-  service
+  authService
     .register({
       body: payload,
     })

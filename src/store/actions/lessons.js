@@ -1,6 +1,6 @@
-import service from "../../services/api/lessons";
+import lessonService from "../../services/api/lessons";
 import { tokenConfig } from "./auth";
-import { GET_LESSONS, LOADING, LOADED } from "./types";
+import { GET_LESSONS, GET_LESSON, LOADING, LOADED } from "./types";
 import { returnErrors } from "./messages";
 
 export const getLessons = () => (dispatch, getState) => {
@@ -11,7 +11,7 @@ export const getLessons = () => (dispatch, getState) => {
 
     const payload = tokenConfig(getState);
 
-    service
+    lessonService
       .getLessonsData(payload)
       .then((res) => {
         if (res && !res.error) {
@@ -25,4 +25,27 @@ export const getLessons = () => (dispatch, getState) => {
       })
       .finally(() => dispatch({ type: LOADED }));
   }
+};
+
+export const getLesson = (data) => (dispatch, getState) => {
+  dispatch({ type: LOADING });
+
+  const payload = {
+    ...tokenConfig(getState),
+    params: data,
+  };
+
+  lessonService
+    .getLesson(payload)
+    .then((res) => {
+      if (res && !res.error) {
+        dispatch({ type: GET_LESSON, payload: res });
+      } else {
+        throw res;
+      }
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.error));
+    })
+    .finally(() => dispatch({ type: LOADED }));
 };

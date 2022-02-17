@@ -20,7 +20,7 @@ export default function LessonItem({ item }) {
   return (
     <Item elevation={3}>
       <Box sx={{ typography: "h5" }}>{item.name}</Box>
-      {item.stats && (
+      {item.started_at && (
         <Box>
           <Box sx={{ typography: "subtitle1" }}>
             {item.progress} / {item.repetitions}

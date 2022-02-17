@@ -6,7 +6,7 @@ export default class RequestService {
 
   getUrl(url, params) {
     if (params) {
-      return this.baseURL + url + new URLSearchParams(params).toString();
+      return this.baseURL + url + "?" + new URLSearchParams(params).toString();
     }
 
     return this.baseURL + url;
