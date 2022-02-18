@@ -27,16 +27,15 @@ export const getLessons = () => (dispatch, getState) => {
   }
 };
 
-export const getLesson = (data) => (dispatch, getState) => {
+export const getLesson = ({ id }) => (dispatch, getState) => {
   dispatch({ type: LOADING });
 
   const payload = {
     ...tokenConfig(getState),
-    params: data,
   };
 
   lessonService
-    .getLesson(payload)
+    .getLesson(id, payload)
     .then((res) => {
       if (res && !res.error) {
         dispatch({ type: GET_LESSON, payload: res });

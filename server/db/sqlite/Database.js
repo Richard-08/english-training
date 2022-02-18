@@ -10,7 +10,7 @@ class Database {
     return new Promise((resolve, reject) => {
       const connection = new sqlite3.Database(path.resolve('server', db_file), (err) => {
         if (err) {
-          console.log("Connect error", error);
+          console.log("Connect error", err);
         } else {
           this.db = connection;
           resolve(connection);
