@@ -18,7 +18,7 @@ export default function Lesson({ lesson }) {
 
   return (
     <Box>
-      <h1>Lesson {lesson.name}</h1>
+      <h1>{lesson.name}</h1>
       <p>
         Progress: {lesson.count_repetitions} / {lesson.total_repetitions}
       </p>
