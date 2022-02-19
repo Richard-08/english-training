@@ -27,24 +27,30 @@ export const getLessons = () => (dispatch, getState) => {
   }
 };
 
-export const getLesson = ({ id }) => (dispatch, getState) => {
-  dispatch({ type: LOADING });
+export const getLesson =
+  ({ id }) =>
+  (dispatch, getState) => {
+    const { currentLesson } = getState().lessons;
 
-  const payload = {
-    ...tokenConfig(getState),
+    if (!currentLesson && currentLesson?.id !== id) {
+      dispatch({ type: LOADING });
+
+      const payload = {
+        ...tokenConfig(getState),
+      };
+
+      lessonService
+        .getLesson(id, payload)
+        .then((res) => {
+          if (res && !res.error) {
+            dispatch({ type: GET_LESSON, payload: res });
+          } else {
+            throw res;
+          }
+        })
+        .catch((err) => {
+          dispatch(returnErrors(err.error));
+        })
+        .finally(() => dispatch({ type: LOADED }));
+    }
   };
-
-  lessonService
-    .getLesson(id, payload)
-    .then((res) => {
-      if (res && !res.error) {
-        dispatch({ type: GET_LESSON, payload: res });
-      } else {
-        throw res;
-      }
-    })
-    .catch((err) => {
-      dispatch(returnErrors(err.error));
-    })
-    .finally(() => dispatch({ type: LOADED }));
-};

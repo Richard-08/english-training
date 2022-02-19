@@ -10,21 +10,23 @@ export default function Practice({ data }) {
   const state = JSON.parse(localStorage.getItem("state"));
 
   const [index, setIndex] = useState((state && state.index) || 0);
-  const [answer, setAnswer] = useState((state && state.answer) || "");
+  const [en, setEn] = useState((state && state.en) || "");
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("state", JSON.stringify({ answer, index }));
-  }, [answer, index]);
+    localStorage.setItem("state", JSON.stringify({ en, index }));
+  }, [en, index]);
 
   const handleChange = (e) => {
-    setAnswer(e.target.value);
+    setEn(e.target.value);
   };
 
-  const setNext = () => {
-    if (answer.toLowerCase() === data[index].answer.toLowerCase()) {
+  const setNext = (e) => {
+    e.preventDefault();
+    
+    if (en.toLowerCase() === data[index].en.toLowerCase()) {
       setIndex(index + 1);
-      setAnswer("");
+      setEn("");
       setError(false);
     } else {
       setError(true);
@@ -33,7 +35,7 @@ export default function Practice({ data }) {
 
   const resetProgress = () => {
     setIndex(0);
-    setAnswer("");
+    setEn("");
     setError(false);
     localStorage.removeItem("state");
   };
@@ -50,10 +52,11 @@ export default function Practice({ data }) {
           pb: 2,
         }}
         autoComplete="off"
+        onSubmit={setNext}
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography variant="h6">
-            {data[index].question} ({index + 1} / {data.length})
+            {data[index].ru} ({index + 1} / {data.length})
           </Typography>
           <IconButton sx={{ ml: 1 }} onClick={resetProgress}>
             <RestartAltIcon />
@@ -65,7 +68,7 @@ export default function Practice({ data }) {
           label="Translate"
           variant="filled"
           error={error}
-          value={answer}
+          value={en}
           onChange={handleChange}
         />
         <Button sx={{ ml: "auto" }} variant="contained" onClick={setNext}>

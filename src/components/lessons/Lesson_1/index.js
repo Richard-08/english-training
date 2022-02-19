@@ -8,6 +8,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Button from "@mui/material/Button";
 import TabPanel from "../../common/TabPanel";
+import Typography from "@mui/material/Typography";
 
 export default function Lesson({ lesson }) {
   const [tab, setTab] = React.useState(0);
@@ -18,7 +19,6 @@ export default function Lesson({ lesson }) {
 
   return (
     <Box>
-      <h1>{lesson.name}</h1>
       <p>
         Progress: {lesson.count_repetitions} / {lesson.total_repetitions}
       </p>
@@ -34,7 +34,7 @@ export default function Lesson({ lesson }) {
         <Specification />
       </TabPanel>
       <TabPanel value={tab} index={1}>
-        <Practice data={lesson.quiz} />
+        <Practice data={lesson.data} />
       </TabPanel>
     </Box>
   );
