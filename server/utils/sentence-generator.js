@@ -1,14 +1,3 @@
-/* const DICTIONARY = [
-  {
-    en: "ask",
-    ru: "спрашивать",
-  },
-  {
-      en: "agree",
-      ru: "соглашаться",
-    },
-]; */
-
 const PRONOUNS = [
   {
     en: "i",
@@ -267,7 +256,7 @@ function getNegationForm(pronoun, form, word) {
     en: `${pronoun.en} ${
       isInThirdPerson(pronoun.en) && form.en_2 ? form.en_2 : form.en_1
     } ${word.en}`,
-    ru: `${pronoun.ru} ${word.ru}`,
+    ru: `${pronoun.ru} не ${word.ru}`,
   };
 }
 

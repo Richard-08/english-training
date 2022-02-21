@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -7,15 +8,17 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import IconButton from "@mui/material/IconButton";
 
 export default function Practice({ data }) {
-  const state = JSON.parse(localStorage.getItem("state"));
+  const state = JSON.parse(localStorage.getItem("lesson1"));
 
   const [index, setIndex] = useState((state && state.index) || 0);
-  const [en, setEn] = useState((state && state.en) || "");
+  const [en, setEn] = useState("");
   const [error, setError] = useState(false);
 
+  let navigate = useNavigate();
+
   useEffect(() => {
-    localStorage.setItem("state", JSON.stringify({ en, index }));
-  }, [en, index]);
+    localStorage.setItem("lesson1", JSON.stringify({ index }));
+  }, [index]);
 
   const handleChange = (e) => {
     setEn(e.target.value);
@@ -23,14 +26,23 @@ export default function Practice({ data }) {
 
   const setNext = (e) => {
     e.preventDefault();
-    
+
     if (en.toLowerCase() === data[index].en.toLowerCase()) {
-      setIndex(index + 1);
-      setEn("");
-      setError(false);
+      if (isLast()) {
+        navigate("/");
+        resetProgress();
+      } else {
+        setIndex(index + 1);
+        setEn("");
+        setError(false);
+      }
     } else {
       setError(true);
     }
+  };
+
+  const isLast = () => {
+    return index === data.length - 1;
   };
 
   const resetProgress = () => {
@@ -71,8 +83,8 @@ export default function Practice({ data }) {
           value={en}
           onChange={handleChange}
         />
-        <Button sx={{ ml: "auto" }} variant="contained" onClick={setNext}>
-          Next
+        <Button sx={{ ml: "auto" }} variant="contained" type="submit">
+          {isLast() ? "Finish" : "Next"}
         </Button>
       </Box>
     </Box>
