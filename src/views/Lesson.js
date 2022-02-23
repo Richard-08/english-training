@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 
 import WithLoading from "../components/common/WithLoading";
 import Lesson_1 from "../components/lessons/Lesson_1";
+import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 const Components = {
@@ -22,7 +23,14 @@ function Lesson({ lesson, getLesson }) {
 
   return (
     <WithLoading>
-      {lesson && <Box>{<LessonComponent lesson={lesson} />}</Box>}
+      {lesson && (
+        <Box>
+          <Typography variant="h3" my={3}>
+            {lesson.name}
+          </Typography>
+          {<LessonComponent lesson={lesson} />}
+        </Box>
+      )}
     </WithLoading>
   );
 }

@@ -29,7 +29,7 @@ function findBasicWord(en, ru, category_id) {
 }
 
 function getWordsByCategory(category_id) {
-  return db.all(`SELECT * FROM user_words WHERE category_id = ?`, [
+  return db.all(`SELECT * FROM basic_words WHERE category_id = ?`, [
     category_id,
   ]);
 }

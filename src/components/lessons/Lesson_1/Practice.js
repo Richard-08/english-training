@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -7,33 +8,46 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import IconButton from "@mui/material/IconButton";
 
 export default function Practice({ data }) {
-  const state = JSON.parse(localStorage.getItem("state"));
+  const state = JSON.parse(localStorage.getItem("lesson1"));
 
   const [index, setIndex] = useState((state && state.index) || 0);
-  const [answer, setAnswer] = useState((state && state.answer) || "");
+  const [en, setEn] = useState("");
   const [error, setError] = useState(false);
 
+  let navigate = useNavigate();
+
   useEffect(() => {
-    localStorage.setItem("state", JSON.stringify({ answer, index }));
-  }, [answer, index]);
+    localStorage.setItem("lesson1", JSON.stringify({ index }));
+  }, [index]);
 
   const handleChange = (e) => {
-    setAnswer(e.target.value);
+    setEn(e.target.value);
   };
 
-  const setNext = () => {
-    if (answer.toLowerCase() === data[index].answer.toLowerCase()) {
-      setIndex(index + 1);
-      setAnswer("");
-      setError(false);
+  const setNext = (e) => {
+    e.preventDefault();
+
+    if (en.toLowerCase() === data[index].en.toLowerCase()) {
+      if (isLast()) {
+        navigate("/");
+        resetProgress();
+      } else {
+        setIndex(index + 1);
+        setEn("");
+        setError(false);
+      }
     } else {
       setError(true);
     }
   };
 
+  const isLast = () => {
+    return index === data.length - 1;
+  };
+
   const resetProgress = () => {
     setIndex(0);
-    setAnswer("");
+    setEn("");
     setError(false);
     localStorage.removeItem("state");
   };
@@ -50,10 +64,11 @@ export default function Practice({ data }) {
           pb: 2,
         }}
         autoComplete="off"
+        onSubmit={setNext}
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography variant="h6">
-            {data[index].question} ({index + 1} / {data.length})
+            {data[index].ru} ({index + 1} / {data.length})
           </Typography>
           <IconButton sx={{ ml: 1 }} onClick={resetProgress}>
             <RestartAltIcon />
@@ -65,11 +80,11 @@ export default function Practice({ data }) {
           label="Translate"
           variant="filled"
           error={error}
-          value={answer}
+          value={en}
           onChange={handleChange}
         />
-        <Button sx={{ ml: "auto" }} variant="contained" onClick={setNext}>
-          Next
+        <Button sx={{ ml: "auto" }} variant="contained" type="submit">
+          {isLast() ? "Finish" : "Next"}
         </Button>
       </Box>
     </Box>

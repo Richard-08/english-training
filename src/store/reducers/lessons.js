@@ -18,18 +18,18 @@ export default function (state = initialState, action) {
         currentLesson: action.payload,
       };
     case UPDATE_LESSON_STATS:
-	return {
-	  ...state,
-	  lessons: state.lessons.map(lesson => {
-	    if (lesson.id === action.payload.id) {
-	      return {
-	      	...lesson,
-		...action.payload
-	      }
-	    }
-	    return lesson;
-	  })
-	};
+      return {
+        ...state,
+        lessons: state.lessons.map(lesson => {
+          if (lesson.id === action.payload.id) {
+            return {
+              ...lesson,
+              ...action.payload
+            }
+          }
+          return lesson;
+        })
+      };
     default:
       return state;
   }

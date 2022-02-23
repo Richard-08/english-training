@@ -27,40 +27,40 @@ export const getLessons = () => (dispatch, getState) => {
   }
 };
 
-export const getLesson = ({ id }) => (dispatch, getState) => {
-  dispatch({ type: LOADING });
+export const getLesson =
+  ({ id }) =>
+    (dispatch, getState) => {
+      dispatch({ type: LOADING });
 
-  const payload = {
-    ...tokenConfig(getState),
-  };
-
-  lessonService
-    .getLesson(id, payload)
-    .then((res) => {
-      if (res && !res.error) {
-        dispatch({ type: GET_LESSON, payload: res });
-      } else {
-        throw res;
-      }
-    })
-    .catch((err) => {
-      dispatch(returnErrors(err.error));
-    })
-    .finally(() => dispatch({ type: LOADED }));
-};
+      const payload = {
+        ...tokenConfig(getState),
+      };
+      lessonService
+        .getLesson(id, payload)
+        .then((res) => {
+          if (res && !res.error) {
+            dispatch({ type: GET_LESSON, payload: res });
+          } else {
+            throw res;
+          }
+        })
+        .catch((err) => {
+          dispatch(returnErrors(err.error));
+        })
+        .finally(() => dispatch({ type: LOADED }));
+    };
 
 export const updateLessonStats = (id) => (dispatch, getState) => {
-	const payload = {
-		...tokenConfig(getState),
-		body: {id}
-	}
-	
-	lessonService.updateStats(payload).then((res) => {
-		if (res && !res.error) {
-			dispatch({type: UPDATE_LESSON_STATS, payload: res});
-		} else {
-			throw res;
-		}
-	}).catch((err) => dispatch(returnErrors(err.error)));
-}
+  const payload = {
+    ...tokenConfig(getState),
+    body: { id }
+  }
 
+  lessonService.updateStats(payload).then((res) => {
+    if (res && !res.error) {
+      dispatch({ type: UPDATE_LESSON_STATS, payload: res });
+    } else {
+      throw res;
+    }
+  }).catch((err) => dispatch(returnErrors(err.error)));
+}

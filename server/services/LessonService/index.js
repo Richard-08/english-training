@@ -21,10 +21,9 @@ class LessonService {
       }
 
       let stats = await this.getLessonStats(payload);
-      let lesson_data = await lesson.getLesson();
+      let lesson_data = await lesson.getLesson(payload.lesson_id);
       return { ...lesson_data, stats };
     } catch (error) {
-      this.logger.error(error);
       throw new Error(error.message);
     }
   }
