@@ -17,6 +17,7 @@ export const REGISTER_FAIL = "REGISTER_FAIL";
 
 export const GET_LESSONS = "GET_LESSONS";
 export const GET_LESSON = "GET_LESSON";
+export const UPDATE_LESSON_STATS = "UPDATE_LESSON_STATS";
 
 export const GET_DICTIONARY = "GET_DICTIONARY";
 export const GET_CATEGORIES = "GET_CATEGORIES";

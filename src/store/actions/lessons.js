@@ -1,6 +1,6 @@
 import lessonService from "../../services/api/lessons";
 import { tokenConfig } from "./auth";
-import { GET_LESSONS, GET_LESSON, LOADING, LOADED } from "./types";
+import { GET_LESSONS, GET_LESSON, LOADING, LOADED, UPDATE_LESSON_STATS } from "./types";
 import { returnErrors } from "./messages";
 
 export const getLessons = () => (dispatch, getState) => {
@@ -48,3 +48,19 @@ export const getLesson = ({ id }) => (dispatch, getState) => {
     })
     .finally(() => dispatch({ type: LOADED }));
 };
+
+export const updateLessonStats = (id) => (dispatch, getState) => {
+	const payload = {
+		...tokenConfig(getState),
+		body: {id}
+	}
+	
+	lessonService.updateStats(payload).then((res) => {
+		if (res && !res.error) {
+			dispatch({type: UPDATE_LESSON_STATS, payload: res});
+		} else {
+			throw res;
+		}
+	}).catch((err) => dispatch(returnErrors(err.error)));
+}
+
