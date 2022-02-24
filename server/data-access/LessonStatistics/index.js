@@ -1,11 +1,11 @@
 const {
-  getLessonStatistics,
-  insertLessonStatistics,
-  updateLessonStatistics,
+  getLessonStats,
+  createLessonStats,
+  updateLessonStats,
 } = require("./sqlite");
 
 module.exports = {
-  getLessonStatistics,
-  insertLessonStatistics,
-  updateLessonStatistics,
+  getLessonStats,
+  createLessonStats,
+  updateLessonStats,
 };

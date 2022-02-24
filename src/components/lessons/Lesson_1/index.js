@@ -1,14 +1,13 @@
 import React from "react";
 
+import LessonStats from "../components/LessonStats";
 import Specification from "./Specification";
 import Practice from "./Practice";
 
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Button from "@mui/material/Button";
 import TabPanel from "../../common/TabPanel";
-import Typography from "@mui/material/Typography";
 
 export default function Lesson({ lesson }) {
   const [tab, setTab] = React.useState(0);
@@ -19,11 +18,7 @@ export default function Lesson({ lesson }) {
 
   return (
     <Box>
-      <p>
-        Progress: {lesson.count_repetitions} / {lesson.total_repetitions}
-      </p>
-      <p>Last visit: {lesson.last_visit || "no visit"}</p>
-      <Button variant="contained">Reset progress</Button>
+      <LessonStats stats={lesson.stats} />
       <Box sx={{ borderBottom: 1, borderColor: "divider", pt: 3 }}>
         <Tabs value={tab} onChange={handleChange}>
           <Tab label="Specification" />

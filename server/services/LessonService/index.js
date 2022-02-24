@@ -28,8 +28,20 @@ class LessonService {
     }
   }
 
-  getLessonStats(payload) {
-    return this.lessonStatsModel.getLessonStatistics(payload);
+  async getLessonStats(payload) {
+    let stats = await this.lessonStatsModel.getLessonStats(payload);
+
+    if (!stats) {
+      let statRecord = await this.lessonStatsModel.createLessonStats(payload);
+
+      if (statRecord) {
+        return this.lessonStatsModel.getLessonStats(payload);
+      } else {
+        throw Error("Error registering a statistics record");
+      }
+    }
+
+    return stats;
   }
 }
 
