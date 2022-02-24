@@ -16,8 +16,14 @@ function Lesson({ lesson, getLesson }) {
   let { lessonId } = useParams();
 
   useEffect(() => {
-    getLesson({ id: lessonId });
+    if (!lesson?.stats || canUpdateLessonData()) {
+      getLesson({ id: lessonId });
+    }
   }, []);
+
+  const canUpdateLessonData = () => {
+    return JSON.parse(localStorage.getItem("current_lesson"));
+  };
 
   const LessonComponent = Components["lesson_" + lessonId];
 

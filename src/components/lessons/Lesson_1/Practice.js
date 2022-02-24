@@ -8,7 +8,7 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import IconButton from "@mui/material/IconButton";
 
 export default function Practice({ data }) {
-  const state = JSON.parse(localStorage.getItem("lesson1"));
+  const state = JSON.parse(localStorage.getItem("current_lesson"));
 
   const [index, setIndex] = useState((state && state.index) || 0);
   const [en, setEn] = useState("");
@@ -17,7 +17,7 @@ export default function Practice({ data }) {
   let navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.setItem("lesson1", JSON.stringify({ index }));
+    localStorage.setItem("current_lesson", JSON.stringify({ index }));
   }, [index]);
 
   const handleChange = (e) => {
@@ -30,6 +30,7 @@ export default function Practice({ data }) {
     if (en.toLowerCase() === data[index].en.toLowerCase()) {
       if (isLast()) {
         navigate("/");
+        localStorage.removeItem("current_lesson");
         resetProgress();
       } else {
         setIndex(index + 1);

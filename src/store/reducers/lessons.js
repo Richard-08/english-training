@@ -1,4 +1,8 @@
-import { GET_LESSONS, GET_LESSON, UPDATE_LESSON_STATS } from "../actions/types.js";
+import {
+  GET_LESSONS,
+  GET_LESSON,
+  UPDATE_LESSON_STATS,
+} from "../actions/types.js";
 
 const initialState = {
   lessons: [],
@@ -20,15 +24,15 @@ export default function (state = initialState, action) {
     case UPDATE_LESSON_STATS:
       return {
         ...state,
-        lessons: state.lessons.map(lesson => {
+        lessons: state.lessons.map((lesson) => {
           if (lesson.id === action.payload.id) {
             return {
               ...lesson,
-              ...action.payload
-            }
+              ...action.payload,
+            };
           }
           return lesson;
-        })
+        }),
       };
     default:
       return state;
