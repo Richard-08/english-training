@@ -8,20 +8,20 @@ function getLessonStats({ lesson_id, user_id }) {
 }
 
 function createLessonStats(payload) {
-  let { lesson_id, user_id } = payload;
+  let { lesson_id, user_id, started_at } = payload;
 
   return db.run(
-    `INSERT INTO lessons_statistics (lesson_id, user_id) VALUES (?, ?)`,
-    [lesson_id, user_id]
+    `INSERT INTO lessons_statistics (lesson_id, user_id, started_at) VALUES (?, ?, ?)`,
+    [lesson_id, user_id, started_at]
   );
 }
 
 function updateLessonStats(payload) {
-  let { lesson_id, user_id, repetitions, progress, last_visit, started_at } =
+  let { lesson_id, user_id, repetitions, progress, last_visit, end_at } =
     payload;
   return db.run(
-    `UPDATE lessons_statistics SET (lesson_id, user_id, repetitions, progress, last_visit, started_at) VALUES (?, ?, ?, ?, ?, ?) WHERE lesson_id=${lesson_id} AND user_id = ${user_id}`,
-    [lesson_id, user_id, repetitions, progress, last_visit, started_at]
+    `UPDATE lessons_statistics SET repetitions = ?, progress = ?, last_visit = ?, end_at = ? WHERE lesson_id= ? AND user_id = ?`,
+    [repetitions, progress, last_visit, end_at, lesson_id, user_id]
   );
 }
 

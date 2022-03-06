@@ -7,7 +7,7 @@ export default {
   getLesson(id, payload) {
     return service.lessons.get("/" + id, payload);
   },
-  updateLesson(id) {
-    return service.lessons.get("/" + id);
+  updateStats(payload) {
+    return service.lessons.put("/", payload);
   },
 };

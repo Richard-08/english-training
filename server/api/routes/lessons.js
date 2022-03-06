@@ -27,4 +27,16 @@ module.exports = (app) => {
       res.json({ error: { message: error.message } });
     }
   });
+
+  router.put("/", authMiddleware, async (req, res) => {
+    try {
+      let payload = req.body;
+      payload.user_id = req.user.id;
+
+      const stats = await LessonService.updateLessonStats(payload);
+      res.json(stats);
+    } catch (error) {
+      res.json({ error: { message: error.message } });
+    }
+  });
 };

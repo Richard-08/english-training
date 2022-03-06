@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import IconButton from "@mui/material/IconButton";
 
-export default function Practice({ data }) {
+export default function Practice({ lesson, data, updateStats }) {
   const state = JSON.parse(localStorage.getItem("current_lesson"));
 
   const [index, setIndex] = useState((state && state.index) || 0);
@@ -29,9 +29,10 @@ export default function Practice({ data }) {
 
     if (en.toLowerCase() === data[index].en.toLowerCase()) {
       if (isLast()) {
-        navigate("/");
+        updateStats(lesson.stats);
         localStorage.removeItem("current_lesson");
         resetProgress();
+        navigate("/");
       } else {
         setIndex(index + 1);
         setEn("");

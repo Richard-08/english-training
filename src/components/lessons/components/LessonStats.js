@@ -14,7 +14,7 @@ const STAT_VALUES = [
   },
   {
     id: "last_visit",
-    name: "Last visit",
+    name: "Last practice",
     value: ({ last_visit }) => last_visit || "-/-",
   },
   {
@@ -58,7 +58,7 @@ export default function LessonStats({ stats }) {
         ))}
       </Grid>
 
-      <Button variant="contained">Reset progress</Button>
+      <Button variant="outlined">Reset progress</Button>
     </Box>
   );
 }

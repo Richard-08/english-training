@@ -25,7 +25,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         lessons: state.lessons.map((lesson) => {
-          if (lesson.id === action.payload.id) {
+          if (lesson.id === action.payload.lesson_id) {
             return {
               ...lesson,
               ...action.payload,

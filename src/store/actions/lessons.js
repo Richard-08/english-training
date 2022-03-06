@@ -56,10 +56,10 @@ export const getLesson =
       .finally(() => dispatch({ type: LOADED }));
   };
 
-export const updateLessonStats = (id) => (dispatch, getState) => {
+export const updateLessonStats = (data) => (dispatch, getState) => {
   const payload = {
     ...tokenConfig(getState),
-    body: { id },
+    body: { ...data },
   };
 
   lessonService

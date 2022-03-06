@@ -4,6 +4,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(9, 5),
@@ -19,15 +20,25 @@ export default function LessonItem({ item }) {
 
   return (
     <Item elevation={3}>
-      <Box sx={{ typography: "h5" }}>{item.name}</Box>
+      <Typography variant="h5" color="text.primary">
+        {item.name}
+      </Typography>
       {item.started_at && (
         <Box>
-          <Box sx={{ typography: "subtitle1" }}>
-            {item.progress} / {item.repetitions}
-          </Box>
-          <Box sx={{ typography: "subtitle1" }}>{item.last_visit}</Box>
-          <Box sx={{ typography: "subtitle1" }}>{item.started_at}</Box>
-          <Box sx={{ typography: "subtitle1" }}>{item.end_at}</Box>
+          <Typography variant="body2">
+            Progress: {item.progress} / {item.repetitions}
+          </Typography>
+          {item.last_visit && (
+            <Typography variant="body2">
+              Last practice: {item.last_visit}
+            </Typography>
+          )}
+          {item.started_at && (
+            <Typography variant="body2">Started: {item.started_at}</Typography>
+          )}
+          {item.end_at && (
+            <Typography variant="body2">End: {item.end_at}</Typography>
+          )}
           <Box
             sx={{
               position: "absolute",

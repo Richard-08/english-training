@@ -32,7 +32,11 @@ class LessonService {
     let stats = await this.lessonStatsModel.getLessonStats(payload);
 
     if (!stats) {
-      let statRecord = await this.lessonStatsModel.createLessonStats(payload);
+      let started_at = new Date().toLocaleDateString();
+      let statRecord = await this.lessonStatsModel.createLessonStats({
+        ...payload,
+        started_at,
+      });
 
       if (statRecord) {
         return this.lessonStatsModel.getLessonStats(payload);
@@ -42,6 +46,30 @@ class LessonService {
     }
 
     return stats;
+  }
+
+  async updateLessonStats(payload) {
+    try {
+      const data = {
+        ...payload,
+        progress: payload.progress ? payload.progress + 1 : 1,
+        last_visit: new Date().toLocaleDateString(),
+      };
+
+      if (payload.progress === payload.repetitions) {
+        data.end_at = new Date().toLocaleDateString();
+      }
+
+      const stats_record = await this.lessonStatsModel.updateLessonStats(data);
+
+      if (stats_record) {
+        return this.getLessonStats(payload);
+      } else {
+        throw Error("Statistics update error");
+      }
+    } catch (error) {
+      throw Error(error.message);
+    }
   }
 }
 

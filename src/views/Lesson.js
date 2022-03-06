@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getLesson } from "../store/actions/lessons";
+import { getLesson, updateLessonStats } from "../store/actions/lessons";
 import { useParams } from "react-router-dom";
 
 import WithLoading from "../components/common/WithLoading";
@@ -12,7 +12,7 @@ const Components = {
   lesson_1: Lesson_1,
 };
 
-function Lesson({ lesson, getLesson }) {
+function Lesson({ lesson, getLesson, updateLessonStats }) {
   let { lessonId } = useParams();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function Lesson({ lesson, getLesson }) {
           <Typography variant="h3" my={3}>
             {lesson.name}
           </Typography>
-          {<LessonComponent lesson={lesson} />}
+          {<LessonComponent lesson={lesson} updateStats={updateLessonStats} />}
         </Box>
       )}
     </WithLoading>
@@ -45,4 +45,6 @@ const mapStateToProps = (state) => ({
   lesson: state.lessons.currentLesson,
 });
 
-export default connect(mapStateToProps, { getLesson })(Lesson);
+export default connect(mapStateToProps, { getLesson, updateLessonStats })(
+  Lesson
+);
