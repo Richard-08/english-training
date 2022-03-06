@@ -19,7 +19,7 @@ export default function LessonItem({ item }) {
   };
 
   return (
-    <Item elevation={3}>
+    <Item elevation={3} sx={{ minHeight: 235 }}>
       <Typography variant="h5" color="text.primary">
         {item.name}
       </Typography>

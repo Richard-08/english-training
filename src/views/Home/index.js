@@ -31,7 +31,7 @@ function Home({ lessons, getLessons }) {
             columns={{ xs: 1, sm: 8, md: 12 }}
           >
             {lessons.map((item) => (
-              <Grid item xs={2} sm={4} md={3} key={item.id}>
+              <Grid item xs={2} sm={4} md={4} key={item.id}>
                 <Link to={"/" + item.id}>
                   <LessonItem item={item}></LessonItem>
                 </Link>

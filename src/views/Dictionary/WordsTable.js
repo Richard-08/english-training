@@ -12,8 +12,8 @@ import Paper from "@mui/material/Paper";
 
 export default function WordsTable({ words, deleteWord }) {
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="table" size="small">
+    <TableContainer component={Paper} sx={{ maxHeight: 650 }}>
+      <Table stickyHeader aria-label="sticky table" size="small">
         <TableHead>
           <TableRow>
             <TableCell sx={{ fontWeight: "bold" }}>EN</TableCell>

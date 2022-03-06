@@ -17,7 +17,7 @@ import useDocumentTitle from "../../components/hooks/useDocumentTitle";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-const ROWS_PER_PAGE = 10;
+const ROWS_PER_PAGE = 25;
 
 const Dictionary = ({
   dictionary,
@@ -72,6 +72,13 @@ const Dictionary = ({
     });
   };
 
+  const paginated_dictionary = () => {
+    return filtered_dictionary().slice(
+      page * rowsPerPage,
+      page * rowsPerPage + rowsPerPage
+    );
+  };
+
   return (
     <Fragment>
       <Typography variant="h3" my={3}>
@@ -92,7 +99,10 @@ const Dictionary = ({
             <AddCategoryForm />
           </Grid>
           <Grid item md={8} xs={12}>
-            <WordsTable words={filtered_dictionary()} deleteWord={deleteWord} />
+            <WordsTable
+              words={paginated_dictionary()}
+              deleteWord={deleteWord}
+            />
             <TablePagination
               component="div"
               count={filtered_dictionary().length}
