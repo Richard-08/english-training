@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ls from "../../../services/ls";
+
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -8,16 +10,21 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import IconButton from "@mui/material/IconButton";
 
 export default function Practice({ lesson, data, updateStats }) {
-  const state = JSON.parse(localStorage.getItem("current_lesson"));
+  const savedLesson = ls.getLesson(lesson.id);
 
-  const [index, setIndex] = useState((state && state.index) || 0);
+  const [index, setIndex] = useState(
+    (savedLesson && savedLesson.progress) || 0
+  );
   const [en, setEn] = useState("");
   const [error, setError] = useState(false);
 
   let navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.setItem("current_lesson", JSON.stringify({ index }));
+    ls.setLesson({
+      id: lesson.id,
+      progress: index,
+    });
   }, [index]);
 
   const handleChange = (e) => {
@@ -30,7 +37,6 @@ export default function Practice({ lesson, data, updateStats }) {
     if (en.toLowerCase() === data[index].en.toLowerCase()) {
       if (isLast()) {
         updateStats(lesson.stats);
-        localStorage.removeItem("current_lesson");
         resetProgress();
         navigate("/");
       } else {
@@ -48,10 +54,10 @@ export default function Practice({ lesson, data, updateStats }) {
   };
 
   const resetProgress = () => {
+    ls.removeLesson(lesson.id);
     setIndex(0);
     setEn("");
     setError(false);
-    localStorage.removeItem("state");
   };
 
   return (

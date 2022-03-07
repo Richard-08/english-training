@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { getLesson, updateLessonStats } from "../store/actions/lessons";
 import { useParams } from "react-router-dom";
+import ls from "../services/ls";
 
 import WithLoading from "../components/common/WithLoading";
 import Lesson_1 from "../components/lessons/Lesson_1";
@@ -24,7 +25,7 @@ function Lesson({ lesson, getLesson, updateLessonStats }) {
   }, []);
 
   const canUpdateLessonData = () => {
-    return JSON.parse(localStorage.getItem("current_lesson"));
+    return ls.getLesson(lessonId);
   };
 
   const LessonComponent = Components["lesson_" + lessonId];
