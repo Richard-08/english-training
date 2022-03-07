@@ -2,6 +2,7 @@ const Lesson1 = require("./lessons/Lesson1");
 const Lesson2 = require("./lessons/Lesson2");
 const LessonModel = require("../../data-access/Lesson");
 const DictionaryModel = require("../../data-access/Dictionary");
+const SentencesModel = require("../../data-access/Sentences");
 
 module.exports = class LessonFactory {
   static createLesson(id) {
@@ -10,7 +11,7 @@ module.exports = class LessonFactory {
     if (id === 1) {
       lesson = new Lesson1(LessonModel, DictionaryModel);
     } else if (id === 2) {
-      lesson = new Lesson2(LessonModel);
+      lesson = new Lesson2(LessonModel, SentencesModel);
     }
 
     return lesson;
