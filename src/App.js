@@ -16,18 +16,19 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import Notification from "./components/common/Notification";
 import { SnackbarProvider } from "notistack";
 
-import localStorageService from "./services/localStorageService";
+import ls from "./services/ls";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 function App() {
-  const savedMode = localStorageService.get("theme");
+  const savedMode = ls.theme.get();
   const [mode, setMode] = useState(savedMode || "light");
 
   useEffect(() => {
     store.dispatch(loadUser());
+    ls.lessons.clear();
   }, []);
 
   const theme = React.useMemo(
@@ -43,7 +44,7 @@ function App() {
   const toggleColorMode = () => {
     const nextMode = mode === "light" ? "dark" : "light";
     setMode(nextMode);
-    localStorageService.set("theme", nextMode);
+    ls.theme.set(nextMode);
   };
 
   return (

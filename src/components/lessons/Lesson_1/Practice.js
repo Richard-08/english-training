@@ -10,7 +10,7 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import IconButton from "@mui/material/IconButton";
 
 export default function Practice({ lesson, data, updateStats }) {
-  const savedLesson = ls.getLesson(lesson.id);
+  const savedLesson = ls.lessons.get(lesson.id);
 
   const [index, setIndex] = useState(
     (savedLesson && savedLesson.progress) || 0
@@ -21,7 +21,7 @@ export default function Practice({ lesson, data, updateStats }) {
   let navigate = useNavigate();
 
   useEffect(() => {
-    ls.setLesson({
+    ls.lessons.set({
       id: lesson.id,
       progress: index,
     });
@@ -38,6 +38,7 @@ export default function Practice({ lesson, data, updateStats }) {
       if (isLast()) {
         updateStats(lesson.stats);
         resetProgress();
+        ls.lessons.remove(lesson.id);
         navigate("/");
       } else {
         setIndex(index + 1);
@@ -54,7 +55,6 @@ export default function Practice({ lesson, data, updateStats }) {
   };
 
   const resetProgress = () => {
-    ls.removeLesson(lesson.id);
     setIndex(0);
     setEn("");
     setError(false);

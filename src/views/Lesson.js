@@ -15,17 +15,18 @@ const Components = {
   lesson_2: Lesson_2,
 };
 
-function Lesson({ lesson, getLesson, updateLessonStats }) {
+function Lesson({ lessons, getLesson, updateLessonStats }) {
   let { lessonId } = useParams();
+  let lesson = lessons.find((lesson) => lesson.id === parseInt(lessonId));
 
   useEffect(() => {
-    if (!lesson?.stats || canUpdateLessonData()) {
+    if (!lesson?.stats || !lessonInProgress()) {
       getLesson({ id: lessonId });
     }
   }, []);
 
-  const canUpdateLessonData = () => {
-    return ls.getLesson(lessonId);
+  const lessonInProgress = () => {
+    return ls.lessons.get(parseInt(lessonId));
   };
 
   const LessonComponent = Components["lesson_" + lessonId];
@@ -45,7 +46,7 @@ function Lesson({ lesson, getLesson, updateLessonStats }) {
 }
 
 const mapStateToProps = (state) => ({
-  lesson: state.lessons.currentLesson,
+  lessons: state.lessons.currentLessons,
 });
 
 export default connect(mapStateToProps, { getLesson, updateLessonStats })(

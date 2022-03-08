@@ -4,6 +4,7 @@ module.exports = class Lesson1 {
     this.lessonModel = LessonModel;
     this.dictionaryModel = DictionaryModel;
     this.word_category_id = "verb";
+    this.words_limit = 3;
   }
 
   async getLesson(id) {
@@ -18,6 +19,9 @@ module.exports = class Lesson1 {
   }
 
   getWords(category_id) {
-    return this.dictionaryModel.getWordsByCategory(category_id);
+    return this.dictionaryModel.getWordsByCategory(
+      category_id,
+      this.words_limit
+    );
   }
 };

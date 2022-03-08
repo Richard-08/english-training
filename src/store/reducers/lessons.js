@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   lessons: [],
-  currentLesson: null,
+  currentLessons: [],
 };
 
 export default function (state = initialState, action) {
@@ -19,7 +19,7 @@ export default function (state = initialState, action) {
     case GET_LESSON:
       return {
         ...state,
-        currentLesson: action.payload,
+        currentLessons: [...state.currentLessons, action.payload],
       };
     case UPDATE_LESSON_STATS:
       return {

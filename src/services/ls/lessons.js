@@ -7,14 +7,14 @@ export default {
     return LS.get(KEY) || [];
   },
 
-  getLesson(id) {
-    return this.lessons.find((item) => item, id === id);
+  get(id) {
+    return this.lessons.find((item) => item.id === id);
   },
 
-  setLesson(payload) {
+  set(payload) {
     let lessons = this.lessons;
 
-    if (lessons.find((item) => item, id === payload.id)) {
+    if (lessons.find((item) => item.id === payload.id)) {
       lessons = lessons.map((item) => {
         if (item.id === payload.id) {
           return {
@@ -31,10 +31,14 @@ export default {
     LS.set(KEY, lessons);
   },
 
-  removeLesson(id) {
+  remove(id) {
     LS.set(
       KEY,
       this.lessons.filter((item) => item.id !== id)
     );
+  },
+
+  clear() {
+    LS.remove(KEY);
   },
 };

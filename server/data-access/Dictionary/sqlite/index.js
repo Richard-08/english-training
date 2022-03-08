@@ -28,8 +28,8 @@ function findBasicWord(en, ru, category_id) {
   );
 }
 
-function getWordsByCategory(category_id) {
-  return db.all(`SELECT * FROM basic_words WHERE category_id = ?`, [
+function getWordsByCategory(category_id, limit) {
+  return db.all(`SELECT * FROM basic_words WHERE category_id = ? ORDER BY random() LIMIT ${limit}`, [
     category_id,
   ]);
 }
