@@ -14,11 +14,11 @@ export default function Practice({ lesson, data, updateStats }) {
     data.length - 1
   );
 
-  const [en, setEn] = useState("");
+  const [answer, setAnswer] = useState("");
   const [error, setError] = useState(false);
 
   const handleChange = (e) => {
-    setEn(e.target.value);
+    setAnswer(e.target.value);
   };
 
   const setNext = (e) => {
@@ -32,7 +32,7 @@ export default function Practice({ lesson, data, updateStats }) {
         navigate("/");
       } else {
         updateProgress(progress + 1);
-        setEn("");
+        setAnswer("");
         setError(false);
       }
     } else {
@@ -41,12 +41,12 @@ export default function Practice({ lesson, data, updateStats }) {
   };
 
   const isValidAnswer = () => {
-    return en.toLowerCase() === data[progress].en.toLowerCase();
+    return answer.toLowerCase() === data[progress].en.toLowerCase();
   };
 
   const resetProgress = () => {
     updateProgress(0);
-    setEn("");
+    setAnswer("");
     setError(false);
   };
 
@@ -68,7 +68,7 @@ export default function Practice({ lesson, data, updateStats }) {
         label="Translate"
         variant="filled"
         error={error}
-        value={en}
+        value={answer}
         onChange={handleChange}
       />
     </QuizForm>
