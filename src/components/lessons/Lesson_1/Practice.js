@@ -11,7 +11,7 @@ export default function Practice({ lesson, data, updateStats }) {
   let navigate = useNavigate();
   const { progress, updateProgress, isLast } = useQuizProgress(
     lesson.id,
-    data.length
+    data.length - 1
   );
 
   const [en, setEn] = useState("");
@@ -50,8 +50,17 @@ export default function Practice({ lesson, data, updateStats }) {
     setError(false);
   };
 
+  const currentProgress = () => {
+    return `${progress + 1} / ${data.length}`;
+  };
+
   return (
-    <QuizForm lesson={lesson} data={data}>
+    <QuizForm
+      onSubmit={setNext}
+      resetProgress={resetProgress}
+      isLastQuiz={isLast()}
+      progress={currentProgress()}
+    >
       <Typography variant="h6">{data[progress].ru}</Typography>
       <TextField
         sx={{ width: "100%", mt: 1, mb: 1 }}
