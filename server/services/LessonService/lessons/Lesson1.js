@@ -11,7 +11,12 @@ module.exports = class Lesson1 {
     try {
       let lesson = await this.lessonModel.getLessonById(id);
       let words_list = await this.getWords(this.word_category_id);
-      let sentenses_data = sentenceGenerator(words_list);
+      let sentenses_data = sentenceGenerator(words_list).map((item) => {
+        return {
+          question: item.ru,
+          answer: item.en,
+        };
+      });
       return { ...lesson, data: sentenses_data };
     } catch (error) {
       throw new Error(error.message);

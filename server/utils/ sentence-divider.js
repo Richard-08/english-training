@@ -6,7 +6,7 @@ function sentenceDivider(sentence, dividers) {
     .map((str) => {
       if (dividers.includes(str.toLowerCase())) {
         return {
-          type: "quiz",
+          type: "option",
           value: str,
         };
       }

@@ -15,7 +15,6 @@ export default function Lesson({ lesson, updateStats }) {
         <Specification />
         <Practice
           lesson={lesson}
-          data={lesson.data}
           updateStats={updateStats}
         />
       </LessonTabs>
