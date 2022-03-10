@@ -29,9 +29,9 @@ export default function Specification() {
           <TableHead>
             <TableRow>
               <TableCell align="left"></TableCell>
-              <TableCell align="center">ВОПРОС</TableCell>
-              <TableCell align="center">УТВЕРЖДЕНИЕ</TableCell>
-              <TableCell align="center">ОТРИЦАНИЕ</TableCell>
+              <TableCell align="center">QUESTION</TableCell>
+              <TableCell align="center">STATEMENT</TableCell>
+              <TableCell align="center">NEGATION</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

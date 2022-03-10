@@ -27,7 +27,6 @@ export default function OptionsForm({ lesson, handleFinish }) {
   }, [progress]);
 
   const handleChange = (index, event) => {
-    console.log(index, event.target.value);
     setAnswer(
       lesson.data[progress].map((item, idx) => {
         if (index === idx) {
@@ -47,20 +46,34 @@ export default function OptionsForm({ lesson, handleFinish }) {
         handleFinish();
       } else {
         updateProgress(progress + 1);
-        // CLEAR FORM
       }
     } else {
-      // SET ERROR
+      setError();
     }
   };
 
   const isValidAnswer = () => {
-    // VALIDATION
+    return answers.every((item) => {
+      if (item.type === "option") {
+        return item.value.toLowerCase() === item.answer.toLowerCase();
+      }
+      return true;
+    });
+  };
+
+  const setError = () => {
+    setAnswer(
+      answers.map((item, index) => {
+        if (item.type === "option") {
+          item.error = item.value.toLowerCase() !== item.answer.toLowerCase();
+        }
+        return item;
+      })
+    );
   };
 
   const resetProgress = () => {
     updateProgress(0);
-    // CLEAR FORM
   };
 
   const currentProgress = () => {
@@ -78,6 +91,7 @@ export default function OptionsForm({ lesson, handleFinish }) {
         sx={{
           display: "flex",
           alignItems: "flex-end",
+          flexWrap: "wrap",
           pb: 2,
           mb: 2,
           borderBottom: 1,
@@ -93,6 +107,8 @@ export default function OptionsForm({ lesson, handleFinish }) {
               <Dropdown
                 value={item.answer}
                 label={"option"}
+                required={true}
+                error={item.error}
                 options={lesson.options}
                 handleChange={(e) => handleChange(i, e)}
               />
