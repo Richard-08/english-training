@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getLessons } from "../../store/actions/lessons";
@@ -11,12 +11,25 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 
 function Home({ lessons, categories, getLessons }) {
   useDocumentTitle("Home");
+
+  const [category, setCategory] = useState(null);
+
   useEffect(() => {
     getLessons();
   }, []);
+
+  const filteredCategories = () => {
+    if (category) {
+      return lessons.filter((lesson) => lesson.category_id === category.id);
+    }
+
+    return lessons;
+  };
 
   return (
     <Box>
@@ -24,13 +37,32 @@ function Home({ lessons, categories, getLessons }) {
         Lessons
       </Typography>
       <WithLoading>
+        <Box sx={{ flexGrow: 1, pb: 5 }}>
+          <Autocomplete
+            options={categories}
+            getOptionLabel={(option) => option.name}
+            value={category}
+            onChange={(event, newValue) => {
+              setCategory(newValue);
+            }}
+            filterSelectedOptions
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Lesson category"
+                placeholder="Category"
+              />
+            )}
+          />
+        </Box>
+
         <Box sx={{ flexGrow: 1 }}>
           <Grid
             container
             spacing={{ xs: 2, md: 3 }}
             columns={{ xs: 1, sm: 8, md: 12 }}
           >
-            {lessons.map((item) => (
+            {filteredCategories().map((item) => (
               <Grid item xs={2} sm={4} md={4} key={item.id}>
                 <Link to={"/" + item.id}>
                   <LessonItem item={item}></LessonItem>
