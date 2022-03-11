@@ -23,7 +23,7 @@ function Home({ lessons, categories, getLessons }) {
     getLessons();
   }, []);
 
-  const filteredCategories = () => {
+  const filteredLessons = () => {
     if (category) {
       return lessons.filter((lesson) => lesson.category_id === category.id);
     }
@@ -62,7 +62,7 @@ function Home({ lessons, categories, getLessons }) {
             spacing={{ xs: 2, md: 3 }}
             columns={{ xs: 1, sm: 8, md: 12 }}
           >
-            {filteredCategories().map((item) => (
+            {filteredLessons().map((item) => (
               <Grid item xs={2} sm={4} md={4} key={item.id}>
                 <Link to={"/" + item.id}>
                   <LessonItem item={item}></LessonItem>
