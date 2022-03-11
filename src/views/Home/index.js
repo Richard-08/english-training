@@ -12,7 +12,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-function Home({ lessons, getLessons }) {
+function Home({ lessons, categories, getLessons }) {
   useDocumentTitle("Home");
   useEffect(() => {
     getLessons();
@@ -46,7 +46,8 @@ function Home({ lessons, getLessons }) {
 }
 
 const mapStateToProps = (state) => ({
-  lessons: state.lessons.lessons,
+  lessons: state.lessons.data.lessons,
+  categories: state.lessons.data.categories,
 });
 
 export default connect(mapStateToProps, { getLessons })(Home);

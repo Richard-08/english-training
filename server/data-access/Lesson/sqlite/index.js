@@ -14,8 +14,13 @@ function getLessonsByCategoryId(category_id) {
   return db.all(`SELECT * FROM lessons WHERE category_id = ?`, [category_id]);
 }
 
+function getLessonsCategories() {
+  return db.all("SELECT * FROM lessons_categories");
+}
+
 module.exports = {
   getAll,
   getLessonById,
+  getLessonsCategories,
   getLessonsByCategoryId,
 };

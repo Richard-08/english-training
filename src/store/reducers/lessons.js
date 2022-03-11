@@ -5,7 +5,10 @@ import {
 } from "../actions/types.js";
 
 const initialState = {
-  lessons: [],
+  data: {
+    lessons: [],
+    categories: [],
+  },
   currentLessons: [],
 };
 
@@ -14,7 +17,7 @@ export default function (state = initialState, action) {
     case GET_LESSONS:
       return {
         ...state,
-        lessons: action.payload,
+        data: { ...action.payload },
       };
     case GET_LESSON:
       return {

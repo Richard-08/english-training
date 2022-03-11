@@ -1,7 +1,13 @@
-const { getAll, getLessonById, getLessonsByCategoryId } = require("./sqlite");
+const {
+  getAll,
+  getLessonById,
+  getLessonsCategories,
+  getLessonsByCategoryId,
+} = require("./sqlite");
 
 module.exports = {
   getAll,
   getLessonById,
+  getLessonsCategories,
   getLessonsByCategoryId,
 };

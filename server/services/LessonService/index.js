@@ -12,6 +12,10 @@ class LessonService {
     return this.lessonModel.getAll();
   }
 
+  getLessonsCategories() {
+    return this.lessonModel.getLessonsCategories();
+  }
+
   async getLesson(payload) {
     try {
       let lesson = this.factory.createLesson(payload.lesson_id);

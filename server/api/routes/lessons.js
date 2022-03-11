@@ -10,7 +10,8 @@ module.exports = (app) => {
   router.get("/", authMiddleware, async (req, res) => {
     try {
       const lessons = await LessonService.getLessons();
-      res.json(lessons);
+      const categories = await LessonService.getLessonsCategories();
+      res.json({ lessons, categories });
     } catch (error) {
       res.json({ error: { message: error.message } });
     }

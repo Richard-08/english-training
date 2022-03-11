@@ -10,7 +10,7 @@ import {
 import { returnErrors } from "./messages";
 
 export const getLessons = () => (dispatch, getState) => {
-  const { lessons } = getState().lessons;
+  const { lessons } = getState().lessons.data;
 
   if (!(lessons && lessons.length)) {
     dispatch({ type: LOADING });
