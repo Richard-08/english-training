@@ -6,13 +6,11 @@ import WithLoading from "../../components/common/WithLoading";
 import useDocumentTitle from "../../components/hooks/useDocumentTitle";
 
 import LessonItem from "./LessonItem";
-
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
+import DropdownSearch from "../../components/common/DropdownSearch";
 
 function Home({ lessons, categories, getLessons }) {
   useDocumentTitle("Home");
@@ -22,6 +20,10 @@ function Home({ lessons, categories, getLessons }) {
   useEffect(() => {
     getLessons();
   }, []);
+
+  const changeFilter = (value) => {
+    setCategory(value);
+  };
 
   const filteredLessons = () => {
     if (category) {
@@ -38,21 +40,12 @@ function Home({ lessons, categories, getLessons }) {
       </Typography>
       <WithLoading>
         <Box sx={{ flexGrow: 1, pb: 5 }}>
-          <Autocomplete
+          <DropdownSearch
             options={categories}
-            getOptionLabel={(option) => option.name}
             value={category}
-            onChange={(event, newValue) => {
-              setCategory(newValue);
-            }}
-            filterSelectedOptions
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Lesson category"
-                placeholder="Category"
-              />
-            )}
+            onChange={changeFilter}
+            label="Lesson category"
+            placeholder="Category"
           />
         </Box>
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { addWord } from "../../store/actions/dictionary";
 
-import Autocomplete from "@mui/material/Autocomplete";
+import DropdownSearch from "../../components/common/DropdownSearch";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -28,6 +28,10 @@ const AddWordForm = ({ categories, addWord }) => {
     }
   };
 
+  const changeCategory = (value) => {
+    setCategory(value);
+  };
+
   const onChange = (event) => {
     if (event.target.name === "en") {
       setEnWord(event.target.value);
@@ -41,24 +45,13 @@ const AddWordForm = ({ categories, addWord }) => {
       <Typography variant="h6" gutterBottom>
         Add word
       </Typography>
-      <Autocomplete
-        id="tags-outlined"
-        required
+      <DropdownSearch
         options={categories}
-        getOptionLabel={(option) => option.name}
         value={category}
-        onChange={(event, newValue) => {
-          setCategory(newValue);
-        }}
-        filterSelectedOptions
-        renderInput={(params) => (
-          <TextField
-            required
-            {...params}
-            label="Category"
-            placeholder="Category"
-          />
-        )}
+        onChange={changeCategory}
+        label="Category"
+        placeholder="Category"
+        required={true}
       />
       <TextField
         sx={{ flexGrow: 1 }}
