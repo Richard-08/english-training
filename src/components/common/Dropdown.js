@@ -6,10 +6,10 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 export default function Dropdown({
-  label,
+  label = "Label",
   value,
-  required,
-  error,
+  required = false,
+  error = false,
   options,
   handleChange,
 }) {

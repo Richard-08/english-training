@@ -9,9 +9,10 @@ import { loadUser } from "./store/actions/auth";
 import Header from "./components/layout/Header";
 import Login from "./views/Login";
 import Register from "./views/Register";
-import Home from "./views/Home/";
+import Lessons from "./views/Lessons";
 import Lesson from "./views/Lesson";
 import Dictionary from "./views/Dictionary";
+import Dashboard from "./views/Dashboard";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Notification from "./components/common/Notification";
 import { SnackbarProvider } from "notistack";
@@ -71,7 +72,7 @@ function App() {
               <Notification />
               <Routes>
                 <Route path="/" element={<PrivateRoute />}>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/" element={<Lessons />} />
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
@@ -80,6 +81,9 @@ function App() {
                 </Route>
                 <Route path="/dictionary" element={<PrivateRoute />}>
                   <Route path="/dictionary" element={<Dictionary />} />
+                </Route>
+                <Route path="/dashboard" element={<PrivateRoute />}>
+                  <Route path="/dashboard" element={<Dashboard />} />
                 </Route>
               </Routes>
             </Container>

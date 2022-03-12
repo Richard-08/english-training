@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { getLessons } from "../../store/actions/lessons";
 import WithLoading from "../../components/common/WithLoading";
 import useDocumentTitle from "../../components/hooks/useDocumentTitle";
+import { FILTERS } from "./constants";
 
 import LessonItem from "./LessonItem";
 import Box from "@mui/material/Box";
@@ -12,25 +13,49 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import DropdownSearch from "../../components/common/DropdownSearch";
 
-function Home({ lessons, categories, getLessons }) {
-  useDocumentTitle("Home");
+function Lessons({ lessons, categories, getLessons }) {
+  useDocumentTitle("Lessons");
 
   const [category, setCategory] = useState(null);
+  const [filter, setFilter] = useState(null);
 
   useEffect(() => {
     getLessons();
   }, []);
 
-  const changeFilter = (value) => {
+  const handleCategory = (value) => {
     setCategory(value);
   };
 
+  const handleFilter = (value) => {
+    setFilter(value);
+  };
+
+  const formattedLessons = () => {
+    return lessons.map((lesson) => {
+      if (lesson.started_at) {
+        lesson.status = "progress";
+      } else if (lesson.progress >= lesson.repetitions) {
+        lesson.status = "completed";
+      } else {
+        lesson.status = "new";
+      }
+      return lesson;
+    });
+  };
+
   const filteredLessons = () => {
+    let ret = formattedLessons();
+
     if (category) {
-      return lessons.filter((lesson) => lesson.category_id === category.id);
+      ret = ret.filter((lesson) => lesson.category_id === category.id);
     }
 
-    return lessons;
+    if (filter) {
+      ret = ret.filter((lesson) => lesson.status === filter.alias);
+    }
+
+    return ret;
   };
 
   return (
@@ -39,13 +64,20 @@ function Home({ lessons, categories, getLessons }) {
         Lessons
       </Typography>
       <WithLoading>
-        <Box sx={{ flexGrow: 1, pb: 5, maxWidth: 300 }}>
+        <Box sx={{ display: "flex", flexGrow: 1, pb: 5 }}>
           <DropdownSearch
             options={categories}
             value={category}
-            onChange={changeFilter}
-            label="Lesson category"
+            onChange={handleCategory}
+            label="Category"
             placeholder="Category"
+          />
+          <DropdownSearch
+            options={FILTERS}
+            value={filter}
+            onChange={handleFilter}
+            label="Status"
+            placeholder="Status"
           />
         </Box>
 
@@ -75,4 +107,4 @@ const mapStateToProps = (state) => ({
   categories: state.lessons.data.categories,
 });
 
-export default connect(mapStateToProps, { getLessons })(Home);
+export default connect(mapStateToProps, { getLessons })(Lessons);
