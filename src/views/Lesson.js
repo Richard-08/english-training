@@ -7,12 +7,14 @@ import ls from "../services/ls";
 import WithLoading from "../components/common/WithLoading";
 import Lesson_1 from "../components/lessons/Lesson_1";
 import Lesson_2 from "../components/lessons/Lesson_2";
+import Lesson_3 from "../components/lessons/Lesson_3";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 const Components = {
   lesson_1: Lesson_1,
   lesson_2: Lesson_2,
+  lesson_3: Lesson_3,
 };
 
 function Lesson({ lessons, getLesson, updateLessonStats }) {

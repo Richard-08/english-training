@@ -42,20 +42,22 @@ export default function LessonItem({ item }) {
           {item.end_at && (
             <Typography variant="body2">End: {item.end_at}</Typography>
           )}
-          <Box
-            sx={{
-              position: "absolute",
-              left: 0,
-              bottom: 0,
-              width: "100%",
-            }}
-          >
-            <LinearProgress
-              sx={{ height: "8px" }}
-              variant="determinate"
-              value={getProgress(item)}
-            />
-          </Box>
+          {Boolean(item.progress) && (
+            <Box
+              sx={{
+                position: "absolute",
+                left: 0,
+                bottom: 0,
+                width: "100%",
+              }}
+            >
+              <LinearProgress
+                sx={{ height: "8px" }}
+                variant="determinate"
+                value={getProgress(item)}
+              />
+            </Box>
+          )}
         </Box>
       )}
     </Item>
