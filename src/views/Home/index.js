@@ -39,7 +39,7 @@ function Home({ lessons, categories, getLessons }) {
         Lessons
       </Typography>
       <WithLoading>
-        <Box sx={{ flexGrow: 1, pb: 5 }}>
+        <Box sx={{ flexGrow: 1, pb: 5, maxWidth: 300 }}>
           <DropdownSearch
             options={categories}
             value={category}

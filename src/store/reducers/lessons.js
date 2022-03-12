@@ -27,15 +27,18 @@ export default function (state = initialState, action) {
     case UPDATE_LESSON_STATS:
       return {
         ...state,
-        lessons: state.lessons.map((lesson) => {
-          if (lesson.id === action.payload.lesson_id) {
-            return {
-              ...lesson,
-              ...action.payload,
-            };
-          }
-          return lesson;
-        }),
+        data: {
+          ...state.data,
+          lessons: state.data.lessons.map((lesson) => {
+            if (lesson.id === action.payload.lesson_id) {
+              return {
+                ...lesson,
+                ...action.payload,
+              };
+            }
+            return lesson;
+          }),
+        },
       };
     default:
       return state;
