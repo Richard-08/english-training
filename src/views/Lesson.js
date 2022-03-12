@@ -35,7 +35,7 @@ function Lesson({ lessons, getLesson, updateLessonStats }) {
     <WithLoading>
       {lesson && (
         <Box>
-          <Typography variant="h3" my={3}>
+          <Typography variant="h4" my={3}>
             {lesson.name}
           </Typography>
           {<LessonComponent lesson={lesson} updateStats={updateLessonStats} />}

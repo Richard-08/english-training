@@ -19,7 +19,10 @@ export default function LessonItem({ item }) {
   };
 
   return (
-    <Item elevation={3} sx={{ minHeight: 235 }}>
+    <Item
+      elevation={3}
+      sx={{ height: "100%", minHeight: 235, overflow: "hidden" }}
+    >
       <Typography variant="h5" color="text.primary">
         {item.name}
       </Typography>
@@ -47,7 +50,11 @@ export default function LessonItem({ item }) {
               width: "100%",
             }}
           >
-            <LinearProgress variant="determinate" value={getProgress(item)} />
+            <LinearProgress
+              sx={{ height: "8px" }}
+              variant="determinate"
+              value={getProgress(item)}
+            />
           </Box>
         </Box>
       )}
