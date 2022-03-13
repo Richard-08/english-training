@@ -59,27 +59,34 @@ function Lessons({ lessons, categories, getLessons }) {
   };
 
   return (
-    <Box>
-      <Typography variant="h3" my={3}>
-        Lessons
-      </Typography>
+    <Box py={3}>
+      <Typography variant="h3">Lessons</Typography>
       <WithLoading>
-        <Box sx={{ display: "flex", flexGrow: 1, pb: 5 }}>
-          <DropdownSearch
-            options={categories}
-            value={category}
-            onChange={handleCategory}
-            label="Category"
-            placeholder="Category"
-          />
-          <DropdownSearch
-            options={FILTERS}
-            value={filter}
-            onChange={handleFilter}
-            label="Status"
-            placeholder="Status"
-          />
-        </Box>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 3 }}
+          columns={{ xs: 1, sm: 8, md: 12 }}
+          py={4}
+        >
+          <Grid item xs={2} sm={4} md={4}>
+            <DropdownSearch
+              options={categories}
+              value={category}
+              onChange={handleCategory}
+              label="Category"
+              placeholder="Category"
+            />
+          </Grid>
+          <Grid item xs={2} sm={4} md={4}>
+            <DropdownSearch
+              options={FILTERS}
+              value={filter}
+              onChange={handleFilter}
+              label="Status"
+              placeholder="Status"
+            />
+          </Grid>
+        </Grid>
 
         <Box sx={{ flexGrow: 1 }}>
           <Grid

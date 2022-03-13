@@ -14,7 +14,7 @@ export default function DropdownSearch({
 }) {
   return (
     <Autocomplete
-      sx={{ mx: 1, minWidth: 200 }}
+      sx={{ minWidth: 200 }}
       multiple={multiple}
       options={options}
       getOptionLabel={(option) => option.name}

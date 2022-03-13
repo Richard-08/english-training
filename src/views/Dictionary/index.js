@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
   getAll,
@@ -14,10 +14,11 @@ import TablePagination from "@mui/material/TablePagination";
 import WithLoading from "../../components/common/WithLoading";
 import useDocumentTitle from "../../components/hooks/useDocumentTitle";
 
+import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-const ROWS_PER_PAGE = 25;
+const ROWS_PER_PAGE = 10;
 
 const Dictionary = ({
   dictionary,
@@ -80,8 +81,8 @@ const Dictionary = ({
   };
 
   return (
-    <Fragment>
-      <Typography variant="h3" my={3}>
+    <Box py={3}>
+      <Typography variant="h3" mb={3}>
         Dictionary
       </Typography>
       <WithLoading>
@@ -114,7 +115,7 @@ const Dictionary = ({
           </Grid>
         </Grid>
       </WithLoading>
-    </Fragment>
+    </Box>
   );
 };
 
