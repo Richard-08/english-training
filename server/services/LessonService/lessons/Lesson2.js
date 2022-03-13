@@ -14,7 +14,7 @@ module.exports = class Lesson2 {
       let sentences = await this.getSentencesData(id);
       let data = this.getFormattedSentences(sentences);
 
-      return { ...lesson, options: this.articles, data };
+      return { ...lesson, options: [this.articles], data };
     } catch (error) {
       throw new Error(error.message);
     }

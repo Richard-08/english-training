@@ -80,6 +80,10 @@ export default function OptionsForm({ lesson, handleFinish }) {
     return `${progress + 1} / ${lesson.data.length}`;
   };
 
+  const getAnswerOptions = (answer) => {
+    return lesson.options.find((items) => items.includes(answer.toLowerCase()));
+  };
+
   return (
     <QuizForm
       onSubmit={handleSubmit}
@@ -109,7 +113,7 @@ export default function OptionsForm({ lesson, handleFinish }) {
                 label={"option"}
                 required={true}
                 error={item.error}
-                options={lesson.options}
+                options={getAnswerOptions(item.value)}
                 handleChange={(e) => handleChange(i, e)}
               />
             )}
