@@ -35,7 +35,11 @@ function Lessons({ lessons, categories, getLessons }) {
     return lessons.map((lesson) => {
       if (lesson.started_at) {
         lesson.status = "progress";
-      } else if (lesson.progress >= lesson.repetitions) {
+      } else if (
+        lesson.progress &&
+        lesson.repetitions &&
+        lesson.progress >= lesson.repetitions
+      ) {
         lesson.status = "completed";
       } else {
         lesson.status = "new";

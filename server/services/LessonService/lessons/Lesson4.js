@@ -17,6 +17,7 @@ module.exports = class Lesson4 {
       "their",
     ];
     this.options = PRONOUNS;
+    this.type = "options";
   }
 
   async getLesson(id) {
@@ -25,7 +26,7 @@ module.exports = class Lesson4 {
       let sentences = await this.getSentencesData(id);
       let data = this.getFormattedSentences(sentences);
 
-      return { ...lesson, options: this.options, data };
+      return { ...lesson, type: this.type, options: this.options, data };
     } catch (error) {
       throw new Error(error.message);
     }

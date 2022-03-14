@@ -6,6 +6,7 @@ module.exports = class Lesson2 {
     this.sentencesModel = SentencesModel;
     this.dataLimit = 20;
     this.articles = ["a", "an", "the", "some", "x"];
+    this.type = "options";
   }
 
   async getLesson(id) {
@@ -14,7 +15,7 @@ module.exports = class Lesson2 {
       let sentences = await this.getSentencesData(id);
       let data = this.getFormattedSentences(sentences);
 
-      return { ...lesson, options: [this.articles], data };
+      return { ...lesson, type: this.type, options: [this.articles], data };
     } catch (error) {
       throw new Error(error.message);
     }

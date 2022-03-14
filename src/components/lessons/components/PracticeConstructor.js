@@ -2,7 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import ls from "../../../services/ls";
 
-import OptionsForm from "../components/OptionsForm";
+import OptionsForm from "./OptionsForm";
+import TranslateForm from "./TranslateForm";
 
 export default function Practice({ lesson, updateStats }) {
   let navigate = useNavigate();
@@ -13,5 +14,9 @@ export default function Practice({ lesson, updateStats }) {
     navigate("/");
   };
 
-  return <OptionsForm lesson={lesson} handleFinish={handleFinish} />;
+  if (lesson.type === "translate") {
+    return <TranslateForm lesson={lesson} handleFinish={handleFinish} />;
+  } else if (lesson.type === "options") {
+    return <OptionsForm lesson={lesson} handleFinish={handleFinish} />;
+  }
 }

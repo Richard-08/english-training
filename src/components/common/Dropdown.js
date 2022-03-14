@@ -27,8 +27,8 @@ export default function Dropdown({
         value={value}
         onChange={handleChange}
       >
-        {options.map((option) => (
-          <MenuItem value={option} key={option}>
+        {options.map((option, i) => (
+          <MenuItem value={option} key={i}>
             {option}
           </MenuItem>
         ))}
