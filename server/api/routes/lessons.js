@@ -40,4 +40,16 @@ module.exports = (app) => {
       res.json({ error: { message: error.message } });
     }
   });
+
+  router.get("/reset/:id", authMiddleware, async (req, res) => {
+    try {
+      const lesson = await LessonService.resetLessonStats({
+        lesson_id: parseInt(req.params.id),
+        user_id: req.user.id,
+      });
+      res.json(lesson);
+    } catch (error) {
+      res.json({ error: { message: error.message } });
+    }
+  });
 };

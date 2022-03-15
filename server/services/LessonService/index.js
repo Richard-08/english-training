@@ -75,6 +75,28 @@ class LessonService {
       throw Error(error.message);
     }
   }
+
+  async resetLessonStats(payload) {
+    try {
+      const data = {
+        ...payload,
+        progress: 0,
+        started_at: new Date().toLocaleDateString(),
+        last_visit: null,
+        end_at: null,
+      };
+
+      const stats_record = await this.lessonStatsModel.resetLessonStats(data);
+
+      if (stats_record) {
+        return this.getLessonStats(payload);
+      } else {
+        throw Error("Statistics reset error");
+      }
+    } catch (error) {
+      throw Error(error.message);
+    }
+  }
 }
 
 module.exports = new LessonService(Lesson, LessonStatistics, LessonFactory);

@@ -25,8 +25,18 @@ function updateLessonStats(payload) {
   );
 }
 
+function resetLessonStats(payload) {
+  let { lesson_id, user_id, progress, last_visit, started_at, end_at } =
+    payload;
+  return db.run(
+    `UPDATE lessons_statistics SET started_at = ?, progress = ?, last_visit = ?, end_at = ? WHERE lesson_id= ? AND user_id = ?`,
+    [started_at, progress, last_visit, end_at, lesson_id, user_id]
+  );
+}
+
 module.exports = {
   getLessonStats,
   createLessonStats,
   updateLessonStats,
+  resetLessonStats
 };
