@@ -1,7 +1,7 @@
-const Lesson1 = require("./lessons/Lesson1");
-const Lesson2 = require("./lessons/Lesson2");
-const Lesson3 = require("./lessons/Lesson3");
-const Lesson4 = require("./lessons/Lesson4");
+const TensesSimple = require("./lessons/TensesSimple");
+const Articles = require("./lessons/Articles");
+const DemoDeterminers = require("./lessons/DemoDeterminers");
+const PossessiveDeterminers = require("./lessons/PossessiveDeterminers");
 const LessonModel = require("../../data-access/Lesson");
 const DictionaryModel = require("../../data-access/Dictionary");
 const SentencesModel = require("../../data-access/Sentences");
@@ -11,13 +11,13 @@ module.exports = class LessonFactory {
     let lesson = null;
 
     if (id === 1) {
-      lesson = new Lesson1(LessonModel, DictionaryModel);
+      lesson = new TensesSimple(LessonModel, DictionaryModel);
     } else if (id === 2) {
-      lesson = new Lesson2(LessonModel, SentencesModel);
+      lesson = new Articles(LessonModel, SentencesModel);
     } else if (id === 3) {
-      lesson = new Lesson3(LessonModel, SentencesModel);
+      lesson = new DemoDeterminers(LessonModel, SentencesModel);
     } else if (id === 4) {
-      lesson = new Lesson4(LessonModel, SentencesModel);
+      lesson = new PossessiveDeterminers(LessonModel, SentencesModel);
     }
 
     return lesson;

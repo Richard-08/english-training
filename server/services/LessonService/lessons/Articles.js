@@ -1,10 +1,11 @@
 const sentenceDivider = require("../../../utils/ sentence-divider");
-module.exports = class Lesson3 {
+
+module.exports = class Articles {
   constructor(LessonModel, SentencesModel) {
     this.lessonModel = LessonModel;
     this.sentencesModel = SentencesModel;
     this.dataLimit = 20;
-    this.determiners = ["this", "that", "these", "those"];
+    this.articles = ["a", "an", "the", "some", "x"];
     this.type = "options";
   }
 
@@ -14,7 +15,7 @@ module.exports = class Lesson3 {
       let sentences = await this.getSentencesData(id);
       let data = this.getFormattedSentences(sentences);
 
-      return { ...lesson, type: this.type, options: [this.determiners], data };
+      return { ...lesson, type: this.type, options: [this.articles], data };
     } catch (error) {
       throw new Error(error.message);
     }
@@ -29,7 +30,7 @@ module.exports = class Lesson3 {
 
   getFormattedSentences(data) {
     return data.map((sentence) => {
-      return sentenceDivider(sentence.text, this.determiners);
+      return sentenceDivider(sentence.text, this.articles);
     });
   }
 };

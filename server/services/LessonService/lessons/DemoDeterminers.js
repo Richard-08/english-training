@@ -1,22 +1,10 @@
 const sentenceDivider = require("../../../utils/ sentence-divider");
-const { PRONOUNS } = require("../constants");
-
-module.exports = class Lesson4 {
+module.exports = class DemoDeterminers {
   constructor(LessonModel, SentencesModel) {
     this.lessonModel = LessonModel;
     this.sentencesModel = SentencesModel;
     this.dataLimit = 20;
-    this.determiners = [
-      "my",
-      "your",
-      "his",
-      "her",
-      "its",
-      "our",
-      "your",
-      "their",
-    ];
-    this.options = PRONOUNS;
+    this.determiners = ["this", "that", "these", "those"];
     this.type = "options";
   }
 
@@ -26,7 +14,7 @@ module.exports = class Lesson4 {
       let sentences = await this.getSentencesData(id);
       let data = this.getFormattedSentences(sentences);
 
-      return { ...lesson, type: this.type, options: this.options, data };
+      return { ...lesson, type: this.type, options: [this.determiners], data };
     } catch (error) {
       throw new Error(error.message);
     }

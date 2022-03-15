@@ -1,5 +1,6 @@
 const sentenceGenerator = require("../../../utils/sentence-generator");
-module.exports = class Lesson1 {
+
+module.exports = class TensesSimple {
   constructor(LessonModel, DictionaryModel) {
     this.lessonModel = LessonModel;
     this.dictionaryModel = DictionaryModel;
