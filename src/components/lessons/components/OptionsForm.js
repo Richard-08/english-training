@@ -6,17 +6,17 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Dropdown from "../../common/Dropdown";
 
-export default function OptionsForm({ lesson, handleFinish }) {
+export default function OptionsForm({ lesson, practice, handleFinish }) {
   const { progress, updateProgress, isLast } = useQuizProgress(
     lesson.id,
-    lesson.data.length - 1
+    practice.data.length - 1
   );
 
   const [answers, setAnswer] = useState([]);
 
   useEffect(() => {
     setAnswer(
-      lesson.data[progress].map((item) => {
+      practice.data[progress].map((item) => {
         if (item.type === "option") {
           item.answer = "";
           item.error = false;
@@ -28,7 +28,7 @@ export default function OptionsForm({ lesson, handleFinish }) {
 
   const handleChange = (index, event) => {
     setAnswer(
-      lesson.data[progress].map((item, idx) => {
+      practice.data[progress].map((item, idx) => {
         if (index === idx) {
           item.answer = event.target.value;
         }
@@ -77,11 +77,13 @@ export default function OptionsForm({ lesson, handleFinish }) {
   };
 
   const currentProgress = () => {
-    return `${progress + 1} / ${lesson.data.length}`;
+    return `${progress + 1} / ${practice.data.length}`;
   };
 
   const getAnswerOptions = (answer) => {
-    return lesson.options.find((items) => items.includes(answer.toLowerCase()));
+    return practice.options.find((items) =>
+      items.includes(answer.toLowerCase())
+    );
   };
 
   return (

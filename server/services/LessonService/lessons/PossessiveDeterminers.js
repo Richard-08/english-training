@@ -26,7 +26,16 @@ module.exports = class PossessiveDeterminers {
       let sentences = await this.getSentencesData(id);
       let data = this.getFormattedSentences(sentences);
 
-      return { ...lesson, type: this.type, options: this.options, data };
+      let practice = [
+        {
+          name: "Practice-1",
+          type: this.type,
+          options: this.options,
+          data,
+        },
+      ];
+
+      return { ...lesson, practice };
     } catch (error) {
       throw new Error(error.message);
     }

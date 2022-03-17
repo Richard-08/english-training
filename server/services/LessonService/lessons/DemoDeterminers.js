@@ -14,7 +14,16 @@ module.exports = class DemoDeterminers {
       let sentences = await this.getSentencesData(id);
       let data = this.getFormattedSentences(sentences);
 
-      return { ...lesson, type: this.type, options: [this.determiners], data };
+      let practice = [
+        {
+          name: "Practice-1",
+          type: this.type,
+          options: [this.determiners],
+          data,
+        },
+      ];
+
+      return { ...lesson, practice };
     } catch (error) {
       throw new Error(error.message);
     }

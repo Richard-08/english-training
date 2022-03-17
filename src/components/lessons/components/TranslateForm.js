@@ -5,10 +5,10 @@ import QuizForm from "./QuizForm";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
-export default function TranslateForm({ lesson, handleFinish }) {
+export default function TranslateForm({ lesson, practice, handleFinish }) {
   const { progress, updateProgress, isLast } = useQuizProgress(
     lesson.id,
-    lesson.data.length - 1
+    practice.data.length - 1
   );
 
   const [answer, setAnswer] = useState("");
@@ -36,7 +36,9 @@ export default function TranslateForm({ lesson, handleFinish }) {
   };
 
   const isValidAnswer = () => {
-    return answer.toLowerCase() === lesson.data[progress].answer.toLowerCase();
+    return (
+      answer.toLowerCase() === practice.data[progress].answer.toLowerCase()
+    );
   };
 
   const resetProgress = () => {
@@ -46,7 +48,7 @@ export default function TranslateForm({ lesson, handleFinish }) {
   };
 
   const currentProgress = () => {
-    return `${progress + 1} / ${lesson.data.length}`;
+    return `${progress + 1} / ${practice.data.length}`;
   };
 
   return (
@@ -56,7 +58,7 @@ export default function TranslateForm({ lesson, handleFinish }) {
       isLastQuiz={isLast()}
       progress={currentProgress()}
     >
-      <Typography variant="h6">{lesson.data[progress].question}</Typography>
+      <Typography variant="h6">{practice.data[progress].question}</Typography>
       <TextField
         sx={{ width: "100%", mt: 1, mb: 1 }}
         id="filled-basic"

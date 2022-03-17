@@ -19,7 +19,16 @@ module.exports = class TensesSimple {
           answer: item.en,
         };
       });
-      return { ...lesson, type: this.type, data: sentenses_data };
+
+      let practice = [
+        {
+          name: "Practice-1",
+          type: this.type,
+          data: sentenses_data,
+        },
+      ];
+
+      return { ...lesson, practice };
     } catch (error) {
       throw new Error(error.message);
     }

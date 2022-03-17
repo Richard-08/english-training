@@ -29,7 +29,7 @@ const STAT_VALUES = [
   },
 ];
 
-export default function LessonStats({ stats }) {
+export default function LessonStats({ stats, resetProgress }) {
   return (
     <Box>
       <Grid
@@ -58,7 +58,9 @@ export default function LessonStats({ stats }) {
         ))}
       </Grid>
 
-      <Button variant="outlined">Reset progress</Button>
+      <Button variant="outlined" onClick={resetProgress}>
+        Reset progress
+      </Button>
     </Box>
   );
 }

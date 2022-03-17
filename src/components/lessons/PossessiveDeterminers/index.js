@@ -1,20 +1,16 @@
 import React from "react";
 
-import LessonStats from "../components/LessonStats";
-import LessonTabs from "../components/LessonTabs";
+import LessonComponent from "../components/LessonComponent";
 import Specification from "./Specification";
-import Practice from "../components/PracticeConstructor";
-import Box from "@mui/material/Box";
 
-export default function Lesson({ lesson, updateStats }) {
-  const tabs = [{ name: "Specification" }, { name: "Practice" }];
+export default function Lesson({ lesson, updateStats, resetProgress }) {
+  const spec = [{ name: "Specification", component: Specification }];
   return (
-    <Box>
-      <LessonStats stats={lesson.stats} />
-      <LessonTabs tabs={tabs}>
-        <Specification />
-        <Practice lesson={lesson} updateStats={updateStats} />
-      </LessonTabs>
-    </Box>
+    <LessonComponent
+      spec={spec}
+      lesson={lesson}
+      updateStats={updateStats}
+      resetProgress={resetProgress}
+    ></LessonComponent>
   );
 }

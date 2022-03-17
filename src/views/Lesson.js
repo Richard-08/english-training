@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getLesson, updateLessonStats } from "../store/actions/lessons";
+import {
+  getLesson,
+  updateLessonStats,
+  resetProgress,
+} from "../store/actions/lessons";
 import { useParams } from "react-router-dom";
 import ls from "../services/ls";
 
@@ -9,6 +13,7 @@ import TensesSimple from "../components/lessons/TensesSimple";
 import Articles from "../components/lessons/Articles";
 import DemoDeterminers from "../components/lessons/DemoDeterminers";
 import PossessiveDeterminers from "../components/lessons/PossessiveDeterminers";
+
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
@@ -19,7 +24,7 @@ const Components = {
   lesson_4: PossessiveDeterminers,
 };
 
-function Lesson({ lessons, getLesson, updateLessonStats }) {
+function Lesson({ lessons, getLesson, updateLessonStats, resetProgress }) {
   let { lessonId } = useParams();
   let lesson = lessons.find((lesson) => lesson.id === parseInt(lessonId));
 
@@ -42,7 +47,13 @@ function Lesson({ lessons, getLesson, updateLessonStats }) {
           <Typography variant="h4" my={3}>
             {lesson.name}
           </Typography>
-          {<LessonComponent lesson={lesson} updateStats={updateLessonStats} />}
+          {
+            <LessonComponent
+              lesson={lesson}
+              updateStats={updateLessonStats}
+              resetProgress={resetProgress}
+            />
+          }
         </Box>
       )}
     </WithLoading>
@@ -53,6 +64,8 @@ const mapStateToProps = (state) => ({
   lessons: state.lessons.currentLessons,
 });
 
-export default connect(mapStateToProps, { getLesson, updateLessonStats })(
-  Lesson
-);
+export default connect(mapStateToProps, {
+  getLesson,
+  updateLessonStats,
+  resetProgress,
+})(Lesson);

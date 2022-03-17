@@ -4,7 +4,7 @@ module.exports = class Articles {
   constructor(LessonModel, SentencesModel) {
     this.lessonModel = LessonModel;
     this.sentencesModel = SentencesModel;
-    this.dataLimit = 20;
+    this.dataLimit = 20; // GET FROM LESSON STATS ????????????????????????????????
     this.articles = ["a", "an", "the", "some", "x"];
     this.type = "options";
   }
@@ -15,7 +15,16 @@ module.exports = class Articles {
       let sentences = await this.getSentencesData(id);
       let data = this.getFormattedSentences(sentences);
 
-      return { ...lesson, type: this.type, options: [this.articles], data };
+      let practice = [
+        {
+          name: "Practice-1",
+          type: this.type,
+          options: [this.articles],
+          data,
+        },
+      ];
+
+      return { ...lesson, practice };
     } catch (error) {
       throw new Error(error.message);
     }
