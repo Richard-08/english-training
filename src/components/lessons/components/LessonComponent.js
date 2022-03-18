@@ -1,11 +1,24 @@
 import React from "react";
-import { Route, Routes, Link, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import ls from "../../../services/ls";
 
 import LessonStats from "./LessonStats";
 import LessonTabs from "./LessonTabs";
+import LessonNav from "./LessonNav";
 import Practice from "../components/PracticeConstructor";
 import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+
+const NAV_LINKS = [
+  {
+    link: "",
+    name: "Specifications",
+  },
+  {
+    link: "practice",
+    name: "Practices",
+  },
+];
 
 export default function LessonComponent({
   spec,
@@ -24,8 +37,8 @@ export default function LessonComponent({
   return (
     <Box>
       <LessonStats stats={lesson.stats} resetProgress={resetProgress} />
-      <Link to="">spec</Link>
-      <Link to="practice">practice</Link>
+      <Divider />
+      <LessonNav links={NAV_LINKS} />
       <Routes>
         <Route
           path=""

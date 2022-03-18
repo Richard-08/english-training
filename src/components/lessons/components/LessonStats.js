@@ -31,7 +31,7 @@ const STAT_VALUES = [
 
 export default function LessonStats({ stats, resetProgress }) {
   return (
-    <Box>
+    <Box sx={{ pb: 3 }}>
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
@@ -43,14 +43,18 @@ export default function LessonStats({ stats, resetProgress }) {
             <Paper
               elevation={3}
               sx={{
-                p: 2,
+                p: 4,
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between",
+                flexDirection: "column",
               }}
             >
-              <Typography variant="subtitle1">{item.name}</Typography>
-              <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+              <Typography variant="h6">{item.name}</Typography>
+              <Typography
+                color="primary.main"
+                variant="h5"
+                sx={{ fontWeight: "bold" }}
+              >
                 {item.value(stats)}
               </Typography>
             </Paper>
