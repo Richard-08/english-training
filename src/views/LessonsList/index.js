@@ -13,7 +13,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import DropdownSearch from "../../components/common/DropdownSearch";
 
-function Lessons({ lessons, categories, getLessons }) {
+function LessonsList({ lessons, categories, getLessons }) {
   useDocumentTitle("Lessons");
 
   const [category, setCategory] = useState(null);
@@ -100,7 +100,7 @@ function Lessons({ lessons, categories, getLessons }) {
           >
             {filteredLessons().map((item) => (
               <Grid item xs={2} sm={4} md={4} key={item.id}>
-                <Link to={"/" + item.id}>
+                <Link to={"/lessons/" + item.id}>
                   <LessonItem item={item}></LessonItem>
                 </Link>
               </Grid>
@@ -118,4 +118,4 @@ const mapStateToProps = (state) => ({
   categories: state.lessons.data.categories,
 });
 
-export default connect(mapStateToProps, { getLessons })(Lessons);
+export default connect(mapStateToProps, { getLessons })(LessonsList);

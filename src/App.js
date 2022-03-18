@@ -10,7 +10,6 @@ import Header from "./components/layout/Header";
 import Login from "./views/Login";
 import Register from "./views/Register";
 import Lessons from "./views/Lessons";
-import Lesson from "./views/Lesson";
 import Dictionary from "./views/Dictionary";
 import Dashboard from "./views/Dashboard";
 import PrivateRoute from "./components/routing/PrivateRoute";
@@ -71,20 +70,32 @@ function App() {
               <Header mode={mode} toggleColorMode={toggleColorMode} />
               <Notification />
               <Routes>
-                <Route path="/" element={<PrivateRoute />}>
-                  <Route path="/" element={<Lessons />} />
-                </Route>
+                <Route
+                  path="/lessons/*"
+                  element={
+                    <PrivateRoute>
+                      <Lessons />
+                    </PrivateRoute>
+                  }
+                />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/:lessonId" element={<PrivateRoute />}>
-                  <Route path="/:lessonId" element={<Lesson />} />
-                </Route>
-                <Route path="/dictionary" element={<PrivateRoute />}>
-                  <Route path="/dictionary" element={<Dictionary />} />
-                </Route>
-                <Route path="/dashboard" element={<PrivateRoute />}>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                </Route>
+                <Route
+                  path="/dictionary"
+                  element={
+                    <PrivateRoute>
+                      <Dictionary />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/"
+                  element={
+                    <PrivateRoute>
+                      <Dashboard />
+                    </PrivateRoute>
+                  }
+                />
               </Routes>
             </Container>
           </Router>

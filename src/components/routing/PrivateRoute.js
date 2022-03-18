@@ -1,15 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Outlet, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Loader from "../common/Loader";
 
-const PrivateRoute = ({ auth }) => {
+const PrivateRoute = ({ auth, children }) => {
   if (auth.isLoading) {
     return <Loader />;
   } else if (!auth.isAuthenticated) {
     return <Navigate to="/login" />;
   } else {
-    return <Outlet />;
+    return children;
   }
 };
 

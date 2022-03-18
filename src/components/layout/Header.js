@@ -16,15 +16,15 @@ import MenuItem from "@mui/material/MenuItem";
 const PAGES = [
   {
     path: "/",
+    name: "Home",
+  },
+  {
+    path: "/lessons",
     name: "Lessons",
   },
   {
     path: "/dictionary",
     name: "Dictionary",
-  },
-  {
-    path: "/dashboard",
-    name: "Dashboard",
   },
 ];
 
