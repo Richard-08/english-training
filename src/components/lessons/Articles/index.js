@@ -1,13 +1,22 @@
 import React from "react";
 
 import LessonComponent from "../components/LessonComponent";
-import Specification from "./Specification";
+import SpecTable from "./SpecTable";
+import Spec1 from "./Spec1";
+import Spec2 from "./Spec2";
+import Spec3 from "./Spec3";
+
+const SPEC = [
+  { name: "General", component: SpecTable },
+  { name: "a/an, some", component: Spec1 },
+  { name: "the", component: Spec2 },
+  { name: "No article", component: Spec3 },
+];
 
 export default function Lesson({ lesson, updateStats, resetProgress }) {
-  const spec = [{ name: "Specification", component: Specification }];
   return (
     <LessonComponent
-      spec={spec}
+      spec={SPEC}
       lesson={lesson}
       updateStats={updateStats}
       resetProgress={resetProgress}

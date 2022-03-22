@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import ls from "../../../services/ls";
 
 import LessonStats from "./LessonStats";
@@ -7,11 +7,14 @@ import LessonTabs from "./LessonTabs";
 import LessonNav from "./LessonNav";
 import Practice from "../components/PracticeConstructor";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
 
 const NAV_LINKS = [
   {
     link: "",
+    name: "Stats",
+  },
+  {
+    link: "spec",
     name: "Specifications",
   },
   {
@@ -28,6 +31,9 @@ export default function LessonComponent({
 }) {
   let navigate = useNavigate();
 
+  let params = useParams();
+  let currentPath = params["*"];
+
   const handleFinish = () => {
     updateStats(lesson.stats);
     ls.lessons.remove(lesson.id);
@@ -36,16 +42,20 @@ export default function LessonComponent({
 
   return (
     <Box>
-      <LessonStats stats={lesson.stats} resetProgress={resetProgress} />
-      <Divider />
-      <LessonNav links={NAV_LINKS} />
+      <LessonNav links={NAV_LINKS} currentPath={currentPath} />
       <Routes>
         <Route
           path=""
           element={
+            <LessonStats stats={lesson.stats} resetProgress={resetProgress} />
+          }
+        ></Route>
+        <Route
+          path="spec"
+          element={
             spec &&
             spec.length && (
-              <LessonTabs tabs={spec}>
+              <LessonTabs key={currentPath} tabs={spec}>
                 {spec.map((item) => {
                   const Component = item.component;
                   return <Component key={item.name} />;
@@ -57,7 +67,7 @@ export default function LessonComponent({
         <Route
           path="practice"
           element={
-            <LessonTabs tabs={lesson.practice}>
+            <LessonTabs key={currentPath} tabs={lesson.practice}>
               {lesson.practice.map((item) => (
                 <Practice
                   lesson={lesson}

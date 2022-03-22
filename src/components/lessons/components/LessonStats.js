@@ -43,18 +43,16 @@ export default function LessonStats({ stats, resetProgress }) {
             <Paper
               elevation={3}
               sx={{
-                p: 4,
+                p: 3,
                 display: "flex",
                 alignItems: "center",
                 flexDirection: "column",
               }}
             >
-              <Typography variant="h6">{item.name}</Typography>
-              <Typography
-                color="primary.main"
-                variant="h5"
-                sx={{ fontWeight: "bold" }}
-              >
+              <Typography color="text.secondary" variant="subtitle">
+                {item.name}
+              </Typography>
+              <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                 {item.value(stats)}
               </Typography>
             </Paper>

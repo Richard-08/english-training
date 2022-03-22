@@ -1,13 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import Box from "@mui/material/Box";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-export default function LessonNav({ links }) {
+export default function LessonNav({ links, currentPath }) {
   let navigate = useNavigate();
-  const [link, setLink] = React.useState(links[0].link);
+  const [link, setLink] = React.useState(currentPath || links[0].link);
 
   const handleChange = (event, value) => {
     if (value !== null) {
@@ -22,7 +21,7 @@ export default function LessonNav({ links }) {
       value={link}
       exclusive
       onChange={handleChange}
-      sx={{ pt: 3 }}
+      sx={{ pb: 4 }}
     >
       {links.map((item) => (
         <ToggleButton value={item.link} key={item.name}>

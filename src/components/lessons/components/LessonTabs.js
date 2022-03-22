@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
@@ -14,8 +14,13 @@ export default function LessonTabs({ tabs, children }) {
 
   return (
     <Box>
-      <Box sx={{ borderBottom: 1, borderColor: "divider", pt: 3 }}>
-        <Tabs value={tab} onChange={handleChange}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          variant="scrollable"
+          scrollButtons="auto"
+          value={tab}
+          onChange={handleChange}
+        >
           {tabs.map((item) => (
             <Tab label={item.name} key={item.name} />
           ))}
