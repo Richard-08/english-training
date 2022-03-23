@@ -28,28 +28,4 @@ module.exports = (app) => {
       res.json({ error: { message: error.message } });
     }
   });
-
-  router.put("/", authMiddleware, async (req, res) => {
-    try {
-      let payload = req.body;
-      payload.user_id = req.user.id;
-
-      const stats = await LessonService.updateLessonStats(payload);
-      res.json(stats);
-    } catch (error) {
-      res.json({ error: { message: error.message } });
-    }
-  });
-
-  router.get("/reset/:id", authMiddleware, async (req, res) => {
-    try {
-      const lesson = await LessonService.resetLessonStats({
-        lesson_id: parseInt(req.params.id),
-        user_id: req.user.id,
-      });
-      res.json(lesson);
-    } catch (error) {
-      res.json({ error: { message: error.message } });
-    }
-  });
 };

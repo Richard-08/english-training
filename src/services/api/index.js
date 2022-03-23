@@ -5,6 +5,7 @@ export default [
   { name: "auth", url: "auth" },
   { name: "lessons", url: "lessons" },
   { name: "dictionary", url: "dictionary" },
+  { name: "stats", url: "stats" },
 ].reduce((total, item) => {
   total[item.name] = new RequestService({
     baseURL: BACK_URL + item.url,

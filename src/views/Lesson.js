@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import {
-  getLesson,
-  updateLessonStats,
-  resetProgress,
-} from "../store/actions/lessons";
+import { getLesson } from "../store/actions/lessons";
+import { updateLessonStats, resetProgress } from "../store/actions/lessonStats";
 import { useParams } from "react-router-dom";
 import ls from "../services/ls";
 

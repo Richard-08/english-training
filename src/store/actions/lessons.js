@@ -1,13 +1,6 @@
 import lessonService from "../../services/api/lessons";
 import { tokenConfig } from "./auth";
-import {
-  GET_LESSONS,
-  GET_LESSON,
-  LOADING,
-  LOADED,
-  UPDATE_LESSON_STATS,
-  RESET_PROGRESS,
-} from "./types";
+import { GET_LESSONS, GET_LESSON, LOADING, LOADED } from "./types";
 import { returnErrors } from "./messages";
 
 export const getLessons = () => (dispatch, getState) => {
@@ -56,38 +49,3 @@ export const getLesson =
       })
       .finally(() => dispatch({ type: LOADED }));
   };
-
-export const updateLessonStats = (data) => (dispatch, getState) => {
-  const payload = {
-    ...tokenConfig(getState),
-    body: { ...data },
-  };
-
-  lessonService
-    .updateStats(payload)
-    .then((res) => {
-      if (res && !res.error) {
-        dispatch({ type: UPDATE_LESSON_STATS, payload: res });
-      } else {
-        throw res;
-      }
-    })
-    .catch((err) => dispatch(returnErrors(err.error)));
-};
-
-export const resetProgress = (id) => (dispatch, getState) => {
-  const payload = {
-    ...tokenConfig(getState),
-  };
-
-  lessonService
-    .resetProgress(id, payload)
-    .then((res) => {
-      if (res && !res.error) {
-        dispatch({ type: RESET_PROGRESS, payload: res });
-      } else {
-        throw res;
-      }
-    })
-    .catch((err) => dispatch(returnErrors(err.error)));
-};

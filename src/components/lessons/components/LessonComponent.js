@@ -37,7 +37,11 @@ export default function LessonComponent({
   const handleFinish = () => {
     updateStats(lesson.stats);
     ls.lessons.remove(lesson.id);
-    navigate("/");
+    navigate("/lessons");
+  };
+
+  const handleReset = () => {
+    resetProgress(lesson.id);
   };
 
   return (
@@ -47,7 +51,7 @@ export default function LessonComponent({
         <Route
           path=""
           element={
-            <LessonStats stats={lesson.stats} resetProgress={resetProgress} />
+            <LessonStats stats={lesson.stats} resetProgress={handleReset} />
           }
         ></Route>
         <Route

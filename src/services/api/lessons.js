@@ -7,10 +7,4 @@ export default {
   getLesson(id, payload) {
     return service.lessons.get("/" + id, payload);
   },
-  updateStats(payload) {
-    return service.lessons.put("/", payload);
-  },
-  resetProgress(id, payload) {
-    return service.lessons.get("/reset" + id, payload);
-  },
 };
