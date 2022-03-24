@@ -5,6 +5,7 @@ import ls from "../../../services/ls";
 import LessonStats from "./LessonStats";
 import LessonTabs from "./LessonTabs";
 import LessonNav from "./LessonNav";
+import LessonControls from "./LessonControls";
 import Practice from "../components/PracticeConstructor";
 import Box from "@mui/material/Box";
 
@@ -46,14 +47,20 @@ export default function LessonComponent({
 
   return (
     <Box>
-      <LessonNav links={NAV_LINKS} currentPath={currentPath} />
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap-reverse",
+          pb: 4,
+        }}
+      >
+        <LessonNav links={NAV_LINKS} currentPath={currentPath} />
+        <LessonControls />
+      </Box>
       <Routes>
-        <Route
-          path=""
-          element={
-            <LessonStats stats={lesson.stats} resetProgress={handleReset} />
-          }
-        ></Route>
+        <Route path="" element={<LessonStats stats={lesson.stats} />}></Route>
         <Route
           path="spec"
           element={

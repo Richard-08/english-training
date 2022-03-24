@@ -1,7 +1,6 @@
 import React from "react";
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -29,7 +28,7 @@ const STAT_VALUES = [
   },
 ];
 
-export default function LessonStats({ stats, resetProgress }) {
+export default function LessonStats({ stats }) {
   return (
     <Box sx={{ pb: 3 }}>
       <Grid
@@ -59,10 +58,6 @@ export default function LessonStats({ stats, resetProgress }) {
           </Grid>
         ))}
       </Grid>
-
-      <Button variant="outlined" onClick={resetProgress}>
-        Reset progress
-      </Button>
     </Box>
   );
 }

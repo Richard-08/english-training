@@ -21,7 +21,6 @@ export default function LessonNav({ links, currentPath }) {
       value={link}
       exclusive
       onChange={handleChange}
-      sx={{ pb: 4 }}
     >
       {links.map((item) => (
         <ToggleButton value={item.link} key={item.name}>
