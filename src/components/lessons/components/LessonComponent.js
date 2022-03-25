@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import ls from "../../../services/ls";
 
+import Button from "@mui/material/Button";
 import LessonStats from "./LessonStats";
 import LessonTabs from "./LessonTabs";
 import LessonNav from "./LessonNav";
 import LessonControls from "./LessonControls";
 import Practice from "../components/PracticeConstructor";
 import Box from "@mui/material/Box";
+import Modal from "../../common/Modal";
 
 const NAV_LINKS = [
   {
@@ -35,15 +37,27 @@ export default function LessonComponent({
   let params = useParams();
   let currentPath = params["*"];
 
+  const [showSettings, setShowSettings] = useState(false);
+
   const handleFinish = () => {
     updateStats(lesson.stats);
     ls.lessons.remove(lesson.id);
     navigate("/lessons");
   };
 
-  const handleReset = () => {
-    resetProgress(lesson.id);
+  const handleControl = (type) => {
+    if (type === "reset") {
+      resetProgress(lesson.id);
+    } else if (type === "settings") {
+      setShowSettings(true);
+    }
   };
+
+  const handleSettingClose = () => {
+    setShowSettings(false);
+  };
+
+  const handleSettingsSave = () => {};
 
   return (
     <Box>
@@ -57,7 +71,7 @@ export default function LessonComponent({
         }}
       >
         <LessonNav links={NAV_LINKS} currentPath={currentPath} />
-        <LessonControls />
+        <LessonControls handleControl={handleControl} />
       </Box>
       <Routes>
         <Route path="" element={<LessonStats stats={lesson.stats} />}></Route>
@@ -91,6 +105,21 @@ export default function LessonComponent({
           }
         />
       </Routes>
+      <Modal
+        open={showSettings}
+        title="Lesson settings"
+        handleClose={handleSettingClose}
+        actions={
+          <>
+            <Button variant="outlined" onClick={handleSettingClose}>
+              Cancel
+            </Button>
+            <Button variant="contained" onClick={handleSettingsSave}>
+              Save
+            </Button>
+          </>
+        }
+      ></Modal>
     </Box>
   );
 }
