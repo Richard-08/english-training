@@ -1,30 +1,15 @@
 import React, { useState } from "react";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import ls from "../../../services/ls";
+import { NAV_LINKS, SETTINGS_FIELDS } from "./constants";
 
-import Button from "@mui/material/Button";
 import LessonStats from "./LessonStats";
 import LessonTabs from "./LessonTabs";
 import LessonNav from "./LessonNav";
 import LessonControls from "./LessonControls";
+import LessonSettings from "./LessonSettings";
 import Practice from "../components/PracticeConstructor";
 import Box from "@mui/material/Box";
-import Modal from "../../common/Modal";
-
-const NAV_LINKS = [
-  {
-    link: "",
-    name: "Stats",
-  },
-  {
-    link: "spec",
-    name: "Specifications",
-  },
-  {
-    link: "practice",
-    name: "Practices",
-  },
-];
 
 export default function LessonComponent({
   spec,
@@ -38,6 +23,16 @@ export default function LessonComponent({
   let currentPath = params["*"];
 
   const [showSettings, setShowSettings] = useState(false);
+
+  const settings_data = () => {
+    let settings = lesson.stats;
+    return SETTINGS_FIELDS.map((field) => {
+      return {
+        ...field,
+        value: settings[field.alias] || field.value,
+      };
+    });
+  };
 
   const handleFinish = () => {
     updateStats(lesson.stats);
@@ -57,7 +52,9 @@ export default function LessonComponent({
     setShowSettings(false);
   };
 
-  const handleSettingsSave = () => {};
+  const handleSettingsSave = (data) => {
+    console.log(data);
+  };
 
   return (
     <Box>
@@ -72,6 +69,12 @@ export default function LessonComponent({
       >
         <LessonNav links={NAV_LINKS} currentPath={currentPath} />
         <LessonControls handleControl={handleControl} />
+        <LessonSettings
+          open={showSettings}
+          data={settings_data()}
+          save={handleSettingsSave}
+          cancel={handleSettingClose}
+        />
       </Box>
       <Routes>
         <Route path="" element={<LessonStats stats={lesson.stats} />}></Route>
@@ -105,21 +108,6 @@ export default function LessonComponent({
           }
         />
       </Routes>
-      <Modal
-        open={showSettings}
-        title="Lesson settings"
-        handleClose={handleSettingClose}
-        actions={
-          <>
-            <Button variant="outlined" onClick={handleSettingClose}>
-              Cancel
-            </Button>
-            <Button variant="contained" onClick={handleSettingsSave}>
-              Save
-            </Button>
-          </>
-        }
-      ></Modal>
     </Box>
   );
 }
