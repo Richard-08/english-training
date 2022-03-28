@@ -13,13 +13,19 @@ const SPEC = [
   { name: "No article", component: Spec3 },
 ];
 
-export default function Lesson({ lesson, updateStats, resetProgress }) {
+export default function Lesson({
+  lesson,
+  updateStats,
+  resetProgress,
+  updateSettings,
+}) {
   return (
     <LessonComponent
       spec={SPEC}
       lesson={lesson}
       updateStats={updateStats}
       resetProgress={resetProgress}
+      updateSettings={updateSettings}
     ></LessonComponent>
   );
 }

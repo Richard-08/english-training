@@ -121,9 +121,10 @@ class LessonService {
 
   async updateLessonSettings(payload) {
     try {
-      const setting_record = await this.lessonStatsModel.updateLessonStats(data);
+      const setting_record =
+        await this.lessonSettingsModel.updateLessonSettings(payload);
       if (setting_record) {
-        return this.getLessonStats(payload);
+        return this.getLessonSettings(payload);
       } else {
         throw Error("Settings update error");
       }

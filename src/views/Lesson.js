@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { getLesson } from "../store/actions/lessons";
 import { updateLessonStats, resetProgress } from "../store/actions/lessonStats";
+import { updateLessonSettings } from "../store/actions/lessonSettings";
 import { useParams } from "react-router-dom";
 import ls from "../services/ls";
 
@@ -21,7 +22,13 @@ const Components = {
   lesson_4: PossessiveDeterminers,
 };
 
-function Lesson({ lessons, getLesson, updateLessonStats, resetProgress }) {
+function Lesson({
+  lessons,
+  getLesson,
+  updateLessonStats,
+  resetProgress,
+  updateLessonSettings,
+}) {
   let { lessonId } = useParams();
   let lesson = lessons.find((lesson) => lesson.id === parseInt(lessonId));
 
@@ -49,6 +56,7 @@ function Lesson({ lessons, getLesson, updateLessonStats, resetProgress }) {
               lesson={lesson}
               updateStats={updateLessonStats}
               resetProgress={resetProgress}
+              updateSettings={updateLessonSettings}
             />
           }
         </Box>
@@ -65,4 +73,5 @@ export default connect(mapStateToProps, {
   getLesson,
   updateLessonStats,
   resetProgress,
+  updateLessonSettings,
 })(Lesson);

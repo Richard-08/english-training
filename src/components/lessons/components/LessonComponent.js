@@ -16,6 +16,7 @@ export default function LessonComponent({
   lesson,
   updateStats,
   resetProgress,
+  updateSettings,
 }) {
   let navigate = useNavigate();
 
@@ -53,7 +54,16 @@ export default function LessonComponent({
   };
 
   const handleSettingsSave = (data) => {
-    console.log(data);
+    let send_data = {
+      lesson_id: lesson.id,
+    };
+
+    data.forEach((item) => {
+      send_data[item.alias] = item.value;
+    });
+
+    updateSettings(send_data);
+    handleSettingClose();
   };
 
   return (

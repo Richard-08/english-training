@@ -3,6 +3,7 @@ import {
   GET_LESSON,
   UPDATE_LESSON_STATS,
   RESET_PROGRESS,
+  UPDATE_LESSON_SETTINGS,
 } from "../actions/types.js";
 
 const initialState = {
@@ -13,7 +14,7 @@ const initialState = {
   currentLessons: [],
 };
 
-function updateLessonStatsById(data, id, payload) {
+function updateLessons(data, id, payload) {
   return data.map((lesson) => {
     if (lesson.id === id) {
       return {
@@ -35,18 +36,19 @@ export default function (state = initialState, action) {
     case GET_LESSON:
       return {
         ...state,
-        currentLessons: [...state.currentLessons, action.payload],
+        currentLessons: [
+          ...state.currentLessons.filter(
+            (lesson) => lesson.id !== action.payload.id
+          ),
+          action.payload,
+        ],
       };
     case UPDATE_LESSON_STATS:
       return {
         ...state,
         data: {
           ...state.data,
-          lessons: updateLessonStatsById(
-            state.data.lessons,
-            action.payload.lesson_id,
-            action.payload
-          ),
+          lessons: updateLessons(state.data.lessons, action.payload),
         },
       };
     case RESET_PROGRESS:
@@ -54,16 +56,37 @@ export default function (state = initialState, action) {
         ...state,
         data: {
           ...state.data,
-          lessons: updateLessonStatsById(
+          lessons: updateLessons(
             state.data.lessons,
             action.payload.lesson_id,
             action.payload
           ),
         },
-        currentLessons: updateLessonStatsById(
+        currentLessons: updateLessons(
           state.currentLessons,
           action.payload.lesson_id,
-          { stats: action.payload }
+          {
+            stats: action.payload,
+          }
+        ),
+      };
+    case UPDATE_LESSON_SETTINGS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          lessons: updateLessons(
+            state.data.lessons,
+            action.payload.lesson_id,
+            action.payload
+          ),
+        },
+        currentLessons: updateLessons(
+          state.currentLessons,
+          action.payload.lesson_id,
+          {
+            settings: action.payload,
+          }
         ),
       };
     default:
