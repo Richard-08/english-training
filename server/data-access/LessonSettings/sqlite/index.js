@@ -11,7 +11,7 @@ function createLessonSettings(payload) {
   let { lesson_id, user_id } = payload;
 
   return db.run(
-    `INSERT INTO lessons_statistics (lesson_id, user_id) VALUES (?, ?)`,
+    `INSERT INTO lessons_settings (lesson_id, user_id) VALUES (?, ?)`,
     [lesson_id, user_id]
   );
 }
@@ -19,7 +19,7 @@ function createLessonSettings(payload) {
 function updateLessonSettings(payload) {
   let { lesson_id, user_id, repetitions } = payload;
   return db.run(
-    `UPDATE lessons_statistics SET repetitions = ? WHERE lesson_id= ? AND user_id = ?`,
+    `UPDATE lessons_settings SET repetitions = ? WHERE lesson_id= ? AND user_id = ?`,
     [repetitions, lesson_id, user_id]
   );
 }

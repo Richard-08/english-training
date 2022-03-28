@@ -33,7 +33,7 @@ export default function LessonStats({ stats }) {
         m={3}
       >
         {STAT_VALUES.map((item) => (
-          <Grid item xs={2} sm={4} md={3} key={item.id}>
+          <Grid item xs={2} sm={4} md={4} key={item.id}>
             <Paper
               elevation={3}
               sx={{

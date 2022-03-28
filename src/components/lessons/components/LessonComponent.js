@@ -25,7 +25,7 @@ export default function LessonComponent({
   const [showSettings, setShowSettings] = useState(false);
 
   const settings_data = () => {
-    let settings = lesson.stats;
+    let settings = lesson.settings;
     return SETTINGS_FIELDS.map((field) => {
       return {
         ...field,
@@ -77,7 +77,12 @@ export default function LessonComponent({
         />
       </Box>
       <Routes>
-        <Route path="" element={<LessonStats stats={lesson.stats} />}></Route>
+        <Route
+          path=""
+          element={
+            <LessonStats stats={{ ...lesson.stats, ...lesson.settings }} />
+          }
+        ></Route>
         <Route
           path="spec"
           element={

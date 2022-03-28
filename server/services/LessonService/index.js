@@ -1,10 +1,17 @@
 const Lesson = require("../../data-access/Lesson");
 const LessonStatistics = require("../../data-access/LessonStatistics");
+const LessonSettings = require("../../data-access/LessonSettings");
 const LessonFactory = require("./LessonFactory");
 class LessonService {
-  constructor(LessonModel, LessonStatisticsModel, LessonFacotory) {
+  constructor(
+    LessonModel,
+    LessonStatisticsModel,
+    LessonSettings,
+    LessonFacotory
+  ) {
     this.lessonModel = LessonModel;
     this.lessonStatsModel = LessonStatisticsModel;
+    this.lessonSettingsModel = LessonSettings;
     this.factory = LessonFacotory;
   }
 
@@ -25,8 +32,9 @@ class LessonService {
       }
 
       let stats = await this.getLessonStats(payload);
+      let settings = await this.getLessonSettings(payload);
       let lesson_data = await lesson.getLesson(payload.lesson_id);
-      return { ...lesson_data, stats };
+      return { ...lesson_data, stats, settings };
     } catch (error) {
       throw new Error(error.message);
     }
@@ -92,6 +100,42 @@ class LessonService {
       throw Error(error.message);
     }
   }
+
+  async getLessonSettings(payload) {
+    let settings = await this.lessonSettingsModel.getLessonSettings(payload);
+
+    if (!settings) {
+      let settingRecord = await this.lessonSettingsModel.createLessonSettings(
+        payload
+      );
+
+      if (settingRecord) {
+        return this.lessonSettingsModel.getLessonSettings(payload);
+      } else {
+        throw Error("Settings initialization error");
+      }
+    }
+
+    return settings;
+  }
+
+  async updateLessonSettings(payload) {
+    try {
+      const setting_record = await this.lessonStatsModel.updateLessonStats(data);
+      if (setting_record) {
+        return this.getLessonStats(payload);
+      } else {
+        throw Error("Settings update error");
+      }
+    } catch (error) {
+      throw Error(error.message);
+    }
+  }
 }
 
-module.exports = new LessonService(Lesson, LessonStatistics, LessonFactory);
+module.exports = new LessonService(
+  Lesson,
+  LessonStatistics,
+  LessonSettings,
+  LessonFactory
+);
