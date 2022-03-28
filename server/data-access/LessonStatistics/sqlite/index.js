@@ -17,20 +17,18 @@ function createLessonStats(payload) {
 }
 
 function updateLessonStats(payload) {
-  let { lesson_id, user_id, repetitions, progress, last_visit, end_at } =
-    payload;
+  let { lesson_id, user_id, progress, last_visit } = payload;
   return db.run(
-    `UPDATE lessons_statistics SET repetitions = ?, progress = ?, last_visit = ?, end_at = ? WHERE lesson_id= ? AND user_id = ?`,
-    [repetitions, progress, last_visit, end_at, lesson_id, user_id]
+    `UPDATE lessons_statistics SET progress = ?, last_visit = ? WHERE lesson_id= ? AND user_id = ?`,
+    [progress, last_visit, lesson_id, user_id]
   );
 }
 
 function resetLessonStats(payload) {
-  let { lesson_id, user_id, progress, last_visit, started_at, end_at } =
-    payload;
+  let { lesson_id, user_id, progress, last_visit, started_at } = payload;
   return db.run(
-    `UPDATE lessons_statistics SET started_at = ?, progress = ?, last_visit = ?, end_at = ? WHERE lesson_id= ? AND user_id = ?`,
-    [started_at, progress, last_visit, end_at, lesson_id, user_id]
+    `UPDATE lessons_statistics SET started_at = ?, progress = ?, last_visit = ? WHERE lesson_id= ? AND user_id = ?`,
+    [started_at, progress, last_visit, lesson_id, user_id]
   );
 }
 
@@ -38,5 +36,5 @@ module.exports = {
   getLessonStats,
   createLessonStats,
   updateLessonStats,
-  resetLessonStats
+  resetLessonStats,
 };

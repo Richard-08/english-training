@@ -21,11 +21,6 @@ const STAT_VALUES = [
     name: "Started at",
     value: ({ started_at }) => started_at || "-/-",
   },
-  {
-    id: "end_at",
-    name: "End at",
-    value: ({ end_at }) => end_at || "-/-",
-  },
 ];
 
 export default function LessonStats({ stats }) {

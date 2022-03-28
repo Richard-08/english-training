@@ -60,10 +60,6 @@ class LessonService {
         last_visit: new Date().toLocaleDateString(),
       };
 
-      if (payload.progress === payload.repetitions) {
-        data.end_at = new Date().toLocaleDateString();
-      }
-
       const stats_record = await this.lessonStatsModel.updateLessonStats(data);
 
       if (stats_record) {
@@ -83,7 +79,6 @@ class LessonService {
         progress: 0,
         started_at: new Date().toLocaleDateString(),
         last_visit: null,
-        end_at: null,
       };
 
       const stats_record = await this.lessonStatsModel.resetLessonStats(data);

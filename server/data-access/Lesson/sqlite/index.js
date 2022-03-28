@@ -2,7 +2,7 @@ const db = require("../../../db/sqlite/Database");
 
 function getAll() {
   return db.all(
-    `SELECT id, name, category_id, repetitions, progress,last_visit, started_at, end_at FROM lessons LEFT JOIN lessons_statistics ON lessons.id = lessons_statistics.lesson_id;;`
+    "SELECT * FROM lessons LEFT JOIN lessons_statistics ON lessons.id = lessons_statistics.lesson_id LEFT JOIN lessons_settings ON lessons.id = lessons_settings.lesson_id;"
   );
 }
 

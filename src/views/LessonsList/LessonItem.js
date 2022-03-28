@@ -39,9 +39,6 @@ export default function LessonItem({ item }) {
           {item.started_at && (
             <Typography variant="body2">Started: {item.started_at}</Typography>
           )}
-          {item.end_at && (
-            <Typography variant="body2">End: {item.end_at}</Typography>
-          )}
           {Boolean(item.progress) && (
             <Box
               sx={{
