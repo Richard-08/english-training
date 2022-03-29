@@ -6,21 +6,25 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 export default function Dropdown({
-  label = "Label",
+  label,
   value,
   required = false,
   error = false,
   options,
+  minWidth = 120,
+  variant = "filled",
   handleChange,
 }) {
   return (
     <FormControl
       required={required}
       error={error}
-      variant="filled"
-      sx={{ m: 1, minWidth: 120 }}
+      variant={variant}
+      sx={{ m: 1, minWidth: minWidth }}
     >
-      <InputLabel id="demo-simple-select-filled-label">{label}</InputLabel>
+      {label && (
+        <InputLabel id="demo-simple-select-filled-label">{label}</InputLabel>
+      )}
       <Select
         labelId="demo-simple-select-filled-label"
         id="demo-simple-select-filled"

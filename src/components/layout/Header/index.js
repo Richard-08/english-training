@@ -1,9 +1,12 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { logout } from "../../store/actions/auth";
+import { useTranslation } from "react-i18next";
+import { logout } from "../../../store/actions/auth";
+import { PAGES, LOCALES } from "./constants";
 
-import ModeToggler from "../common/ModeToggler";
+import Dropdown from "../../common/Dropdown";
+import ModeToggler from "../../common/ModeToggler";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,22 +16,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-const PAGES = [
-  {
-    path: "/",
-    name: "Home",
-  },
-  {
-    path: "/lessons",
-    name: "Lessons",
-  },
-  {
-    path: "/dictionary",
-    name: "Dictionary",
-  },
-];
-
 const Header = ({ mode, toggleColorMode, auth, logout }) => {
+  const locales = LOCALES.map((locale) => locale.name);
+  const { t, i18n } = useTranslation();
+  const [locale, setLocale] = useState(locales[0]);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const { isAuthenticated, user } = auth;
@@ -38,8 +30,27 @@ const Header = ({ mode, toggleColorMode, auth, logout }) => {
       setAnchorEl(event.currentTarget);
     }
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const changeLocale = (e) => {
+    const locale = LOCALES.find((loc) => loc.name === e.target.value);
+
+    if (locale) {
+      setLocale(locale.name);
+      i18n.changeLanguage(locale.alias);
+    }
+  };
+
+  const pagesLinks = () => {
+    return PAGES.map((page) => {
+      return {
+        ...page,
+        name: t("nav." + page.alias),
+      };
+    });
   };
 
   return (
@@ -69,7 +80,7 @@ const Header = ({ mode, toggleColorMode, auth, logout }) => {
                 "aria-labelledby": "basic-button",
               }}
             >
-              {PAGES.map((page) => (
+              {pagesLinks().map((page) => (
                 <Link to={page.path} key={page.path}>
                   <MenuItem onClick={handleClose}>{page.name}</MenuItem>
                 </Link>
@@ -77,7 +88,7 @@ const Header = ({ mode, toggleColorMode, auth, logout }) => {
             </Menu>
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {PAGES.map((page) => (
+            {pagesLinks().map((page) => (
               <Link to={page.path} key={page.path}>
                 <Button color="inherit">{page.name}</Button>
               </Link>
@@ -87,18 +98,25 @@ const Header = ({ mode, toggleColorMode, auth, logout }) => {
           {!isAuthenticated ? (
             <Fragment>
               <Link to="/login">
-                <Button color="inherit">Login</Button>
+                <Button color="inherit">{t("nav.login")}</Button>
               </Link>
               <Link to="/register">
-                <Button color="inherit">Register</Button>
+                <Button color="inherit">{t("nav.register")}</Button>
               </Link>
             </Fragment>
           ) : (
             <Button color="inherit" onClick={logout}>
-              Logout
+              {t("nav.logout")}
             </Button>
           )}
 
+          <Dropdown
+            value={locale}
+            options={locales}
+            minWidth={70}
+            variant="standard"
+            handleChange={changeLocale}
+          />
           <ModeToggler mode={mode} toggleColorMode={toggleColorMode} />
         </Toolbar>
       </AppBar>

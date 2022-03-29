@@ -1,0 +1,10 @@
+{
+    "nav": {
+        "home": "Home",
+        "dictionary": "Dictionary",
+        "lessons": "Lessons",
+        "login": "Login",
+        "register": "Register",
+        "logout": "Logout"
+    }
+}

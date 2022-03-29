@@ -1,0 +1,10 @@
+{
+    "nav": {
+        "home": "Өй",
+        "dictionary": "Сүзлек",
+        "lessons": "Дәресләр",
+        "login": "Керу",
+        "register": "Теркәлү",
+        "logout": "Чыгу"
+    }
+}

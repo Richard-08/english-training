@@ -1,23 +1,22 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
+import translationEn from "./locales/en-US.json";
+import translationRu from "./locales/ru-RU.json";
+import translationTt from "./locales/tt-RU.json";
+
 // the translations
 // (tip move them in a JSON file and import them,
 // or even better, manage them separated from your code: https://react.i18next.com/guides/multiple-translation-files)
 const resources = {
   en: {
-    translation: {
-      Home: "Home",
-      Dictionary: "Dictionary",
-      Lessons: "Lessons",
-    },
+    translation: translationEn,
   },
   ru: {
-    translation: {
-      Home: "Главная",
-      Dictionary: "Словарь",
-      Lessons: "Уроки",
-    },
+    translation: translationRu,
+  },
+  tt: {
+    translation: translationTt,
   },
 };
 
