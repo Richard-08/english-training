@@ -1,10 +1,9 @@
 {
-    "nav": {
-        "home": "Главная",
-        "dictionary": "Словарь",
-        "lessons": "Уроки",
-        "login": "Войти",
-        "register": "Регистрация",
-        "logout": "Выйти"
-    }
+    "home": "Главная",
+    "dictionary": "Словарь",
+    "lessons": "Уроки",
+    "login": "Войти",
+    "register": "Регистрация",
+    "logout": "Выйти",
+    "dashboard": "Дашборд"
 }

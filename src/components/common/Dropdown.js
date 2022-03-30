@@ -22,12 +22,10 @@ export default function Dropdown({
       variant={variant}
       sx={{ m: 1, minWidth: minWidth }}
     >
-      {label && (
-        <InputLabel id="demo-simple-select-filled-label">{label}</InputLabel>
-      )}
+      {label && <InputLabel id="select">{label}</InputLabel>}
       <Select
-        labelId="demo-simple-select-filled-label"
-        id="demo-simple-select-filled"
+        labelId="select"
+        id="select"
         value={value}
         onChange={handleChange}
       >

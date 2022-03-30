@@ -48,7 +48,7 @@ const Header = ({ mode, toggleColorMode, auth, logout }) => {
     return PAGES.map((page) => {
       return {
         ...page,
-        name: t("nav." + page.alias),
+        name: t(page.alias),
       };
     });
   };
@@ -63,7 +63,7 @@ const Header = ({ mode, toggleColorMode, auth, logout }) => {
               edge="start"
               color="inherit"
               aria-label="menu"
-              aria-controls={open ? "basic-menu" : undefined}
+              aria-controls={open ? "menu" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
@@ -72,12 +72,12 @@ const Header = ({ mode, toggleColorMode, auth, logout }) => {
               <MenuIcon />
             </IconButton>
             <Menu
-              id="basic-menu"
+              id="menu"
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
               MenuListProps={{
-                "aria-labelledby": "basic-button",
+                "aria-labelledby": "button",
               }}
             >
               {pagesLinks().map((page) => (
@@ -98,18 +98,19 @@ const Header = ({ mode, toggleColorMode, auth, logout }) => {
           {!isAuthenticated ? (
             <Fragment>
               <Link to="/login">
-                <Button color="inherit">{t("nav.login")}</Button>
+                <Button color="inherit">{t("login")}</Button>
               </Link>
               <Link to="/register">
-                <Button color="inherit">{t("nav.register")}</Button>
+                <Button color="inherit">{t("register")}</Button>
               </Link>
             </Fragment>
           ) : (
             <Button color="inherit" onClick={logout}>
-              {t("nav.logout")}
+              {t("logout")}
             </Button>
           )}
 
+          <ModeToggler mode={mode} toggleColorMode={toggleColorMode} />
           <Dropdown
             value={locale}
             options={locales}
@@ -117,7 +118,6 @@ const Header = ({ mode, toggleColorMode, auth, logout }) => {
             variant="standard"
             handleChange={changeLocale}
           />
-          <ModeToggler mode={mode} toggleColorMode={toggleColorMode} />
         </Toolbar>
       </AppBar>
     </Box>

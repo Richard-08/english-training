@@ -5,6 +5,7 @@ import {
   deleteWord,
   deleteCategory,
 } from "../../store/actions/dictionary";
+import { useTranslation } from "react-i18next";
 
 import SearchForm from "./SearchForm";
 import AddWordForm from "./AddWordForm";
@@ -27,7 +28,10 @@ const Dictionary = ({
   deleteWord,
   deleteCategory,
 }) => {
-  useDocumentTitle("Dictionary");
+  const { t } = useTranslation();
+  const title = t("dictionary");
+  
+  useDocumentTitle(title);
 
   const [searchFilter, setSearchFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState([]);
@@ -83,7 +87,7 @@ const Dictionary = ({
   return (
     <Box py={3}>
       <Typography variant="h3" mb={3}>
-        Dictionary
+        {title}
       </Typography>
       <WithLoading>
         <Grid container spacing={4}>

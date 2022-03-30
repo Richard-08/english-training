@@ -5,6 +5,7 @@ import { getLessons } from "../../store/actions/lessons";
 import WithLoading from "../../components/common/WithLoading";
 import useDocumentTitle from "../../components/hooks/useDocumentTitle";
 import { FILTERS } from "./constants";
+import { useTranslation } from "react-i18next";
 
 import LessonItem from "./LessonItem";
 import Box from "@mui/material/Box";
@@ -14,7 +15,10 @@ import Typography from "@mui/material/Typography";
 import DropdownSearch from "../../components/common/DropdownSearch";
 
 function LessonsList({ lessons, categories, getLessons }) {
-  useDocumentTitle("Lessons");
+  const { t } = useTranslation();
+  const title = t("lessons");
+
+  useDocumentTitle(title);
 
   const [category, setCategory] = useState(null);
   const [filter, setFilter] = useState(null);
@@ -64,7 +68,7 @@ function LessonsList({ lessons, categories, getLessons }) {
 
   return (
     <Box py={3}>
-      <Typography variant="h3">Lessons</Typography>
+      <Typography variant="h3">{title}</Typography>
       <WithLoading>
         <Grid
           container
