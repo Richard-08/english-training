@@ -4,6 +4,7 @@ import { Link, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { register } from "../store/actions/auth";
 import useDocumentTitle from "../components/hooks/useDocumentTitle";
+import { useTranslation } from "react-i18next";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -16,7 +17,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 const Register = ({ isAuthenticated, register }) => {
-  useDocumentTitle("Register");
+  const { t } = useTranslation();
+  const title = t("register");
+
+  useDocumentTitle(title);
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -54,7 +58,7 @@ const Register = ({ isAuthenticated, register }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          {title}
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -105,7 +109,7 @@ const Register = ({ isAuthenticated, register }) => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            {title}
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>

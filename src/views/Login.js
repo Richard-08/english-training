@@ -4,6 +4,7 @@ import { Link, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../store/actions/auth";
 import useDocumentTitle from "../components/hooks/useDocumentTitle";
+import { useTranslation } from "react-i18next";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -16,8 +17,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 const Login = ({ login, isAuthenticated }) => {
-  useDocumentTitle("Login");
-  
+  const { t } = useTranslation();
+  const title = t("login");
+
+  useDocumentTitle(title);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -51,7 +55,7 @@ const Login = ({ login, isAuthenticated }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          {title}
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
@@ -85,7 +89,7 @@ const Login = ({ login, isAuthenticated }) => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            {title}
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
