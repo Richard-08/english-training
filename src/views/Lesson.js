@@ -4,6 +4,7 @@ import { getLesson } from "../store/actions/lessons";
 import { updateLessonStats, resetProgress } from "../store/actions/lessonStats";
 import { updateLessonSettings } from "../store/actions/lessonSettings";
 import { useParams } from "react-router-dom";
+import useDocumentTitle from "../components/hooks/useDocumentTitle";
 import ls from "../services/ls";
 
 import WithLoading from "../components/common/WithLoading";
@@ -31,6 +32,8 @@ function Lesson({
 }) {
   let { lessonId } = useParams();
   let lesson = lessons.find((lesson) => lesson.id === parseInt(lessonId));
+
+  useDocumentTitle(lesson?.name || "Lesson");
 
   useEffect(() => {
     if (!lesson?.stats || !lessonInProgress()) {
