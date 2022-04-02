@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { logout } from "../../../store/actions/auth";
-import { PAGES, LOCALES } from "./constants";
+import { LOCALES } from "./constants";
+import { ROUTES } from "../../../router/routes";
 
 import Dropdown from "../../common/Dropdown";
 import ModeToggler from "../../common/ModeToggler";
@@ -15,6 +16,9 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+
+const { dashboard, lessons, dictionary, login, register } = ROUTES;
+const PAGES = [dashboard, lessons, dictionary];
 
 const Header = ({ mode, toggleColorMode, auth, logout }) => {
   const locales = LOCALES.map((locale) => locale.name);
@@ -97,11 +101,11 @@ const Header = ({ mode, toggleColorMode, auth, logout }) => {
 
           {!isAuthenticated ? (
             <Fragment>
-              <Link to="/login">
-                <Button color="inherit">{t("login")}</Button>
+              <Link to={login.path}>
+                <Button color="inherit">{t(login.alias)}</Button>
               </Link>
-              <Link to="/register">
-                <Button color="inherit">{t("register")}</Button>
+              <Link to={register.path}>
+                <Button color="inherit">{t(register.alias)}</Button>
               </Link>
             </Fragment>
           ) : (

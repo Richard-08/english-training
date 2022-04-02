@@ -1,21 +1,3 @@
-export const PAGES = [
-  {
-    alias: "home",
-    path: "/",
-    name: "Home",
-  },
-  {
-    alias: "lessons",
-    path: "/lessons",
-    name: "Lessons",
-  },
-  {
-    alias: "dictionary",
-    path: "/dictionary",
-    name: "Dictionary",
-  },
-];
-
 export const LOCALES = [
   {
     alias: "en",

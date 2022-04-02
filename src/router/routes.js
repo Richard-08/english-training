@@ -8,7 +8,7 @@ import LessonsList from "../views/LessonsList";
 import Lesson from "../views/Lesson";
 import PrivateRoute from "../components/routing/PrivateRoute";
 
-export const PATHS = {
+export const ROUTES = {
   login: {
     alias: "login",
     path: "/login",
@@ -26,7 +26,7 @@ export const PATHS = {
   },
   lessons: {
     alias: "lessons",
-    path: "/lessons/*",
+    path: "/lessons",
     name: "Lessons",
   },
   dictionary: {
@@ -36,17 +36,19 @@ export const PATHS = {
   },
 };
 
+const { dashboard, lessons, dictionary, login, register } = ROUTES;
+
 export default [
   {
-    ...PATHS.login,
+    ...login,
     element: <Login />,
   },
   {
-    ...PATHS.register,
+    ...register,
     element: <Register />,
   },
   {
-    ...PATHS.dashboard,
+    ...dashboard,
     element: (
       <PrivateRoute>
         <Dashboard />
@@ -54,7 +56,7 @@ export default [
     ),
   },
   {
-    ...PATHS.lessons,
+    path: lessons.path + "/*",
     element: (
       <PrivateRoute>
         <Lessons />
@@ -72,7 +74,7 @@ export default [
     ],
   },
   {
-    ...PATHS.dictionary,
+    ...dictionary,
     element: (
       <PrivateRoute>
         <Dictionary />
