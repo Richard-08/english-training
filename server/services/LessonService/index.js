@@ -1,16 +1,19 @@
 const Lesson = require("../../data-access/Lesson");
-const LessonStatistics = require("../../data-access/LessonStatistics");
+const LessonStats = require("../../data-access/LessonStatistics");
+const UserStats = require("../../data-access/UserStatistics");
 const LessonSettings = require("../../data-access/LessonSettings");
 const LessonFactory = require("./LessonFactory");
 class LessonService {
   constructor(
     LessonModel,
-    LessonStatisticsModel,
+    LessonStatsModel,
+    UserStatsModel,
     LessonSettings,
     LessonFacotory
   ) {
     this.lessonModel = LessonModel;
-    this.lessonStatsModel = LessonStatisticsModel;
+    this.lessonStatsModel = LessonStatsModel;
+    this.userStatsModel = UserStatsModel;
     this.lessonSettingsModel = LessonSettings;
     this.factory = LessonFacotory;
   }
@@ -132,11 +135,19 @@ class LessonService {
       throw Error(error.message);
     }
   }
+
+  createUserStat(payload) {
+    this.userStatsModel.createUserStat({
+      ...payload,
+      date: new Date().toLocaleDateString(),
+    });
+  }
 }
 
 module.exports = new LessonService(
   Lesson,
-  LessonStatistics,
+  LessonStats,
+  UserStats,
   LessonSettings,
   LessonFactory
 );

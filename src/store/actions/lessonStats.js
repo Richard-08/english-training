@@ -1,4 +1,4 @@
-import lessonStatsService from "../../services/api/lessonStats";
+import lessonStatsService from "../../services/api/stats";
 import { tokenConfig } from "./auth";
 import { UPDATE_LESSON_STATS, RESET_PROGRESS } from "./types";
 import { returnErrors } from "./messages";

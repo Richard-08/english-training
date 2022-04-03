@@ -48,7 +48,11 @@ export default function (state = initialState, action) {
         ...state,
         data: {
           ...state.data,
-          lessons: updateLessons(state.data.lessons, action.payload),
+          lessons: updateLessons(
+            state.data.lessons,
+            action.payload.lesson_id,
+            action.payload
+          ),
         },
       };
     case RESET_PROGRESS:

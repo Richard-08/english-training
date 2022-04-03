@@ -7,4 +7,7 @@ export default {
   resetProgress(payload) {
     return service.stats.get("/reset", payload);
   },
+  getUserStats(payload) {
+    return service.stats.get("/user", payload);
+  },
 };

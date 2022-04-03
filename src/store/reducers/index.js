@@ -4,13 +4,15 @@ import errors from "./errors";
 import messages from "./messages";
 import lessons from "./lessons";
 import dictionary from "./dictionary";
-import loading from './loading';
+import loading from "./loading";
+import stats from "./stats";
 
 export default combineReducers({
   auth,
+  stats,
   errors,
-  messages,
   lessons,
-  dictionary,
   loading,
+  messages,
+  dictionary,
 });

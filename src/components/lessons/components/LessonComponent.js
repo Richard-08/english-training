@@ -36,7 +36,10 @@ export default function LessonComponent({
   };
 
   const handleFinish = () => {
-    updateStats(lesson.stats);
+    updateStats({
+      ...lesson.stats,
+      completed_tasks: lesson.settings.repetitions,
+    });
     ls.lessons.remove(lesson.id);
     navigate("/lessons");
   };

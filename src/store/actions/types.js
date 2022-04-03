@@ -30,3 +30,5 @@ export const DELETE_CATEGORY = "DELETE_CATEGORY";
 
 export const LOADING = "LOADING";
 export const LOADED = "LOADED";
+
+export const GET_USER_STATS = "GET_USER_STATS";
