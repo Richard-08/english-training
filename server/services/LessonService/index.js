@@ -3,6 +3,8 @@ const LessonStats = require("../../data-access/LessonStatistics");
 const UserStats = require("../../data-access/UserStatistics");
 const LessonSettings = require("../../data-access/LessonSettings");
 const LessonFactory = require("./LessonFactory");
+
+const { getFormattedDate } = require("../../utils/helpers");
 class LessonService {
   constructor(
     LessonModel,
@@ -47,7 +49,7 @@ class LessonService {
     let stats = await this.lessonStatsModel.getLessonStats(payload);
 
     if (!stats) {
-      let started_at = new Date().toLocaleDateString();
+      let started_at = getFormattedDate(new Date());
       let statRecord = await this.lessonStatsModel.createLessonStats({
         ...payload,
         started_at,
@@ -68,7 +70,7 @@ class LessonService {
       const data = {
         ...payload,
         progress: payload.progress ? payload.progress + 1 : 1,
-        last_visit: new Date().toLocaleDateString(),
+        last_visit: getFormattedDate(new Date()),
       };
 
       const stats_record = await this.lessonStatsModel.updateLessonStats(data);
@@ -88,7 +90,7 @@ class LessonService {
       const data = {
         ...payload,
         progress: 0,
-        started_at: new Date().toLocaleDateString(),
+        started_at: getFormattedDate(new Date()),
         last_visit: null,
       };
 
@@ -139,7 +141,7 @@ class LessonService {
   createUserStat(payload) {
     this.userStatsModel.createUserStat({
       ...payload,
-      date: new Date().toLocaleDateString(),
+      date: getFormattedDate(new Date()),
     });
   }
 }

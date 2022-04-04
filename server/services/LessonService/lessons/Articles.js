@@ -1,4 +1,4 @@
-const sentenceDivider = require("../../../utils/ sentence-divider");
+const sentenceDivider = require("../../../utils/sentence-divider");
 
 module.exports = class Articles {
   constructor(LessonModel, SentencesModel) {

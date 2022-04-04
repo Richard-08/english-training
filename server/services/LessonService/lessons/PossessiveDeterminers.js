@@ -1,4 +1,4 @@
-const sentenceDivider = require("../../../utils/ sentence-divider");
+const sentenceDivider = require("../../../utils/sentence-divider");
 const { PRONOUNS } = require("../constants");
 
 module.exports = class PossessiveDeterminers {

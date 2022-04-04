@@ -1,7 +1,7 @@
 import { GET_USER_STATS } from "../actions/types.js";
 
 const initialState = {
-  data: [],
+  data: null,
 };
 
 export default function (state = initialState, action) {
@@ -9,7 +9,7 @@ export default function (state = initialState, action) {
     case GET_USER_STATS:
       return {
         ...state,
-        data: [...action.payload],
+        data: action.payload,
       };
     default:
       return state;

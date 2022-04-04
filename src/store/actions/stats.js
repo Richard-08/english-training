@@ -1,14 +1,15 @@
-import lessonStatsService from "../../services/api/stats";
+import statsService from "../../services/api/stats";
 import { tokenConfig } from "./auth";
-import { GET_USER_STATS } from "./types";
+import { GET_USER_STATS, LOADING, LOADED } from "./types";
 import { returnErrors } from "./messages";
 
 export const getUserStats = () => (dispatch, getState) => {
+  dispatch({ type: LOADING });
   const payload = {
     ...tokenConfig(getState),
   };
 
-  lessonStatsService
+  statsService
     .getUserStats(payload)
     .then((res) => {
       if (res && !res.error) {
@@ -17,5 +18,6 @@ export const getUserStats = () => (dispatch, getState) => {
         throw res;
       }
     })
-    .catch((err) => dispatch(returnErrors(err.error)));
+    .catch((err) => dispatch(returnErrors(err.error)))
+    .finally(() => dispatch({ type: LOADED }));
 };

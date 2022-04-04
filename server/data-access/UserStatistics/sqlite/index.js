@@ -8,7 +8,10 @@ function createUserStat({ lesson_id, user_id, date, completed_tasks }) {
 }
 
 function getUserStats(user_id) {
-  return db.all(`SELECT * FROM user_statistics WHERE user_id = ?`, [user_id]);
+  return db.all(
+    `SELECT * FROM lessons LEFT JOIN user_statistics ON lessons.id = user_statistics.lesson_id WHERE user_statistics.user_id = ?;`,
+    [user_id]
+  );
 }
 
 module.exports = {
