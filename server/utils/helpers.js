@@ -24,11 +24,11 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function getRandomColor(type = "rgb") {
+function getRandomColor(min = 0, max = 255, type = "rgb") {
   if (type === "rgb") {
-    let red = getRandomNumber(0, 255);
-    let green = getRandomNumber(0, 255);
-    let blue = getRandomNumber(0, 255);
+    let red = getRandomNumber(min, max);
+    let green = getRandomNumber(min, max);
+    let blue = getRandomNumber(min, max);
     return `rgb(${red}, ${green}, ${blue})`;
   }
 }

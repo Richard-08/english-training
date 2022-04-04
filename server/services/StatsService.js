@@ -54,6 +54,34 @@ function getWeekAgregatedStat(data) {
   };
 }
 
+function getMonthAgregatedStat(data) {
+  let current_month = new Date().getMonth() + 1;
+  let set = new Set();
+  let ret = {};
+
+  data.forEach((item) => {
+    let month = parseInt(item.date.split(".")[1]);
+    if (current_month === month) {
+      set.add(item.name);
+
+      if (ret[item.date]) {
+        if (ret[item.date][item.name]) {
+          ret[item.date][item.name] += item.completed_tasks;
+        } else {
+          ret[item.date][item.name] = item.completed_tasks;
+        }
+      } else {
+        ret[item.date] = {};
+        ret[item.date][item.name] = item.completed_tasks;
+      }
+    }
+  });
+  return {
+    stat: ret,
+    set: Array.from(set),
+  };
+}
+
 function getFormattedStat({ stat, set }) {
   let labels = Object.keys(stat);
   let datasets = [];
@@ -66,7 +94,7 @@ function getFormattedStat({ stat, set }) {
     datasets.push({
       label: name,
       data,
-      backgroundColor: getRandomColor(),
+      backgroundColor: getRandomColor(150, 255),
     });
   });
 
@@ -84,10 +112,14 @@ class StatsService {
   getUserStats(id) {
     //return this.userStatsModel.getUserStats(id);
     let data = getFakeData(30);
+
     let week_data = getWeekAgregatedStat(data);
     let week_stat = getFormattedStat(week_data);
 
-    return week_stat;
+    let month_data = getMonthAgregatedStat(data);
+    let month_stat = getFormattedStat(month_data);
+
+    return { week: week_stat, month: month_stat };
   }
 }
 
