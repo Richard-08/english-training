@@ -50,11 +50,13 @@ function Dashboard({ data, getUserStats }) {
       <Box sx={{ height: "600px" }}>
         {data && <UserStatsChart data={chartData()} />}
       </Box>
-      <ToggleButtons
-        value={view}
-        data={CHART_VIEWS}
-        handleChange={handleViewChange}
-      />
+      <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
+        <ToggleButtons
+          value={view}
+          data={CHART_VIEWS}
+          handleChange={handleViewChange}
+        />
+      </Box>
     </WithLoading>
   );
 }

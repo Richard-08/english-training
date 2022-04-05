@@ -11,4 +11,8 @@ export const CHART_VIEWS = [
     id: "year",
     name: "Last year",
   },
+  {
+    id: "total",
+    name: "Total",
+  },
 ];
