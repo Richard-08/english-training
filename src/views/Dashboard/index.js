@@ -29,6 +29,16 @@ function Dashboard({ data, getUserStats }) {
   };
 
   const chartData = () => {
+    if (view === "week" || view === "month") {
+      let labels = [...data[view].labels].map((date) =>
+        date.split(".").slice(0, 2).join(".")
+      );
+      return {
+        ...data[view],
+        labels,
+      };
+    }
+
     return data[view];
   };
 
@@ -37,7 +47,9 @@ function Dashboard({ data, getUserStats }) {
       <Typography variant="h3" my={3}>
         {title}
       </Typography>
-      {data && <UserStatsChart data={chartData()} />}
+      <Box sx={{ height: "600px" }}>
+        {data && <UserStatsChart data={chartData()} />}
+      </Box>
       <ToggleButtons
         value={view}
         data={CHART_VIEWS}

@@ -1,5 +1,10 @@
-const UserStats = require("../data-access/UserStatistics");
-const { getRandomNumber, getRandomColor } = require("../utils/helpers");
+const UserStats = require("../../data-access/UserStatistics");
+const {
+  getRandomNumber,
+  getRandomColor,
+  getFormattedDate,
+} = require("../../utils/helpers");
+const { MONTHS } = require("./constants");
 
 const lessons = [
   "a/an, some, the",
@@ -11,10 +16,11 @@ const lessons = [
 function getFakeData(n) {
   let ret = [];
   for (let i = 0; i < n; i += 1) {
+    let day = getRandomNumber(1, 31);
     ret.push({
       category_id: 2,
       completed_tasks: Math.floor(Math.random() * 25),
-      date: `${getRandomNumber(20, 31)}.04.2022`,
+      date: `${day < 10 ? `0${day}` : day}.04.2022`,
       id: 4,
       lesson_id: 4,
       name: lessons[Math.floor(Math.random() * lessons.length)],
@@ -26,26 +32,40 @@ function getFakeData(n) {
   );
 }
 
+function setObjectValue(data, parent, child, value) {
+  if (data[parent]) {
+    if (data[parent][child]) {
+      data[parent][child] += value;
+    } else {
+      data[parent][child] = value;
+    }
+  } else {
+    data[parent] = {};
+    data[parent][child] = value;
+  }
+
+  return data;
+}
+
+function getLast7DaysDates() {
+  let dates = [];
+  const DAY = 86400000;
+
+  for (let i = 1; i <= 7; i += 1) {
+    dates.push(getFormattedDate(new Date(new Date().valueOf() - DAY * i)));
+  }
+
+  return dates;
+}
+
 function getWeekAgregatedStat(data) {
-  const COUNT = 7;
-  let date = 30;
+  let dates = getLast7DaysDates();
   let set = new Set();
   let ret = {};
   data.forEach((item) => {
-    let day = parseInt(item.date.split(".")[0]);
-    if (date - day <= COUNT) {
+    if (dates.includes(item.date)) {
       set.add(item.name);
-
-      if (ret[item.date]) {
-        if (ret[item.date][item.name]) {
-          ret[item.date][item.name] += item.completed_tasks;
-        } else {
-          ret[item.date][item.name] = item.completed_tasks;
-        }
-      } else {
-        ret[item.date] = {};
-        ret[item.date][item.name] = item.completed_tasks;
-      }
+      ret = setObjectValue(ret, item.date, item.name, item.completed_tasks);
     }
   });
   return {
@@ -63,17 +83,27 @@ function getMonthAgregatedStat(data) {
     let month = parseInt(item.date.split(".")[1]);
     if (current_month === month) {
       set.add(item.name);
+      ret = setObjectValue(ret, item.date, item.name, item.completed_tasks);
+    }
+  });
+  return {
+    stat: ret,
+    set: Array.from(set),
+  };
+}
 
-      if (ret[item.date]) {
-        if (ret[item.date][item.name]) {
-          ret[item.date][item.name] += item.completed_tasks;
-        } else {
-          ret[item.date][item.name] = item.completed_tasks;
-        }
-      } else {
-        ret[item.date] = {};
-        ret[item.date][item.name] = item.completed_tasks;
-      }
+function getYearAgregatedStat(data) {
+  let current_year = new Date().getFullYear();
+  let set = new Set();
+  let ret = {};
+
+  data.forEach((item) => {
+    let date = item.date.split(".");
+    let year = parseInt(date[2]);
+    if (current_year === year) {
+      let month_name = MONTHS[parseInt(date[1]) - 1];
+      set.add(item.name);
+      ret = setObjectValue(ret, month_name, item.name, item.completed_tasks);
     }
   });
   return {
@@ -119,7 +149,10 @@ class StatsService {
     let month_data = getMonthAgregatedStat(data);
     let month_stat = getFormattedStat(month_data);
 
-    return { week: week_stat, month: month_stat };
+    let year_data = getYearAgregatedStat(data);
+    let year_stat = getFormattedStat(year_data);
+
+    return { week: week_stat, month: month_stat, year: year_stat };
   }
 }
 
