@@ -5,6 +5,7 @@ const LessonSettings = require("../../data-access/LessonSettings");
 const LessonFactory = require("./LessonFactory");
 
 const { getFormattedDate } = require("../../utils/helpers");
+
 class LessonService {
   constructor(
     LessonModel,

@@ -15,11 +15,11 @@ const lessons = [
 function getFakeData(n) {
   let ret = [];
   for (let i = 0; i < n; i += 1) {
-    let day = getRandomNumber(1, 31);
+    let day = getRandomNumber(1, 29);
     ret.push({
       category_id: 2,
       completed_tasks: Math.floor(Math.random() * 25),
-      date: `${day < 10 ? `0${day}` : day}.04.2022`,
+      date: `2022-04-${day < 10 ? `0${day}` : day}`,
       id: 4,
       lesson_id: 4,
       name: lessons[Math.floor(Math.random() * lessons.length)],
@@ -57,6 +57,40 @@ function getLast7DaysDates() {
   return dates;
 }
 
+/**
+ * @description compares dates with a given accuracy
+ * @param {string | Date} date1 valid date string (2022-04-06) or Date object
+ * @param {string | Date} date2 valid date string (2022-04-06) or Date object
+ * @param {string} accuracy possible values - day, month, year
+ * @returns {boolean} true/false
+ */
+
+function isEqualDates(date1, date2, accuracy = "day") {
+  if (typeof date1 === "string") {
+    date1 = new Date(date1);
+  }
+  if (typeof date2 === "string") {
+    date2 = new Date(date2);
+  }
+
+  let day1 = date1.getDate();
+  let day2 = date2.getDate();
+
+  let month1 = date1.getMonth() + 1;
+  let month2 = date2.getMonth() + 1;
+
+  let year1 = date1.getFullYear();
+  let year2 = date2.getFullYear();
+
+  if (accuracy === "year") {
+    return year1 === year2;
+  } else if (accuracy === "month") {
+    return month1 === month2 && year1 === year2;
+  } else if (accuracy === "day") {
+    return day1 === day2 && month1 === month2 && year1 === year2;
+  }
+}
+
 function getWeekAgregatedStat(data) {
   let dates = getLast7DaysDates();
   let set = new Set();
@@ -64,7 +98,7 @@ function getWeekAgregatedStat(data) {
   dates.forEach((day) => {
     ret[day] = {};
     data.forEach((item) => {
-      if (day === item.date) {
+      if (isEqualDates(day, item.date, "day")) {
         set.add(item.name);
         ret = setObjectValue(ret, day, item.name, item.completed_tasks);
       }
@@ -77,13 +111,12 @@ function getWeekAgregatedStat(data) {
 }
 
 function getMonthAgregatedStat(data) {
-  let current_month = new Date().getMonth() + 1;
+  let current_date = new Date();
   let set = new Set();
   let ret = {};
 
   data.forEach((item) => {
-    let month = parseInt(item.date.split(".")[1]);
-    if (current_month === month) {
+    if (isEqualDates(current_date, item.date, "month")) {
       set.add(item.name);
       ret = setObjectValue(ret, item.date, item.name, item.completed_tasks);
     }
@@ -95,16 +128,14 @@ function getMonthAgregatedStat(data) {
 }
 
 function getYearAgregatedStat(data) {
-  let current_year = new Date().getFullYear();
+  let current_date = new Date();
   let set = new Set();
   let ret = {};
   MONTHS.forEach((month) => {
     ret[month] = {};
     data.forEach((item) => {
-      let date = item.date.split(".");
-      let year = parseInt(date[2]);
-      if (current_year === year) {
-        let month_name = MONTHS[parseInt(date[1]) - 1];
+      if (isEqualDates(current_date, item.date, "year")) {
+        let month_name = MONTHS[new Date(item.date).getMonth()];
         if (month === month_name) {
           set.add(item.name);
           ret = setObjectValue(
@@ -129,8 +160,7 @@ function getTotalAgregatedStat(data) {
   let ret = {};
 
   data.forEach((item) => {
-    let date = item.date.split(".");
-    let year = parseInt(date[2]);
+    let year = new Date(item.date).getFullYear();
     set.add(item.name);
     ret = setObjectValue(ret, year, item.name, item.completed_tasks);
   });

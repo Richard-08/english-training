@@ -30,9 +30,11 @@ function Dashboard({ data, getUserStats }) {
 
   const chartData = () => {
     if (view === "week" || view === "month") {
-      let labels = [...data[view].labels].map((date) =>
-        date.split(".").slice(0, 2).join(".")
-      );
+      let labels = [...data[view].labels].map((date) => {
+        /* let date_obj = new Date(date);
+        return `${date_obj.get}` */
+        return new Date(date).toLocaleDateString();
+      });
       return {
         ...data[view],
         labels,
