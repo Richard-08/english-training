@@ -33,4 +33,9 @@ export const STATS = [
     name: "Всего дней",
     unit: "дней",
   },
+  {
+    alias: "record",
+    name: "Рекорд",
+    unit: "дней",
+  },
 ];

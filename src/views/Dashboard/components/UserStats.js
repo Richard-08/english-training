@@ -16,7 +16,7 @@ export default function LessonStats({ stats }) {
         m={3}
       >
         {STATS.map((item) => (
-          <Grid item xs={2} sm={4} md={4} key={item.alias}>
+          <Grid item xs={2} sm={4} md={3} key={item.alias}>
             <Paper
               elevation={3}
               sx={{
@@ -26,12 +26,17 @@ export default function LessonStats({ stats }) {
                 flexDirection: "column",
               }}
             >
-              <Typography color="text.secondary" variant="subtitle">
+              <Typography color="text" variant="h6">
                 {item.name}
               </Typography>
-              <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                {stats[item.alias]}
-              </Typography>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography variant="h3" sx={{ fontWeight: "bold", mx: 1 }}>
+                  {stats[item.alias]}
+                </Typography>
+                <Typography color="text.secondary" variant="subtitle1">
+                  {item.unit}
+                </Typography>
+              </Box>
             </Paper>
           </Grid>
         ))}

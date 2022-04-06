@@ -35,11 +35,22 @@ class StatsService {
     let total_completed = await this.userStatsModel.getSumOfCompletedAll(id);
     let total_days = this.getTotaldays(data);
 
+    let sorted_data = Array.from(
+      new Set(
+        data
+          .sort((a, b) => new Date(a.date) - new Date(b.date))
+          .map((item) => item.date)
+      )
+    );
+    let consecutive_days = this.getMaxConsecutiveDays(sorted_data);
+
     return {
       stats: {
         today: today_completed.id,
         total: total_completed.id,
         days: total_days,
+        record: consecutive_days,
+        data: sorted_data,
       },
       week: week_stat,
       month: month_stat,
@@ -53,6 +64,26 @@ class StatsService {
       total.add(item.date);
       return total;
     }, new Set()).size;
+  }
+
+  getMaxConsecutiveDays(data) {
+    let days = [];
+    let length = data.length;
+    let count = 1;
+    for (let i = 0; i < length; i += 1) {
+      if (data[i] && data[i - 1]) {
+        let next = new Date(data[i]).getDate();
+        let prev = new Date(data[i - 1]).getDate();
+        if (next - prev === 1) {
+          count += 1;
+        } else {
+          days.push(count);
+          count = 1;
+        }
+      }
+    }
+    days.push(count);
+    return Math.max(...days);
   }
 }
 
