@@ -14,7 +14,23 @@ function getUserStats(user_id) {
   );
 }
 
+function getSumOfCompletedByDate(user_id, date) {
+  return db.run(
+    `SELECT sum(completed_tasks) FROM user_statistics WHERE date = ? AND user_id = ?`,
+    [date, user_id]
+  );
+}
+
+function getSumOfCompletedAll(user_id) {
+  return db.run(
+    `SELECT sum(completed_tasks) FROM user_statistics WHERE user_id = ?`,
+    [user_id]
+  );
+}
+
 module.exports = {
   createUserStat,
   getUserStats,
+  getSumOfCompletedByDate,
+  getSumOfCompletedAll,
 };

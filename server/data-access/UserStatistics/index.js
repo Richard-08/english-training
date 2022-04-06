@@ -1,3 +1,13 @@
-const { createUserStat, getUserStats } = require("./sqlite");
+const {
+  createUserStat,
+  getUserStats,
+  getSumOfCompletedByDate,
+  getSumOfCompletedAll,
+} = require("./sqlite");
 
-module.exports = { createUserStat, getUserStats };
+module.exports = {
+  createUserStat,
+  getUserStats,
+  getSumOfCompletedByDate,
+  getSumOfCompletedAll,
+};

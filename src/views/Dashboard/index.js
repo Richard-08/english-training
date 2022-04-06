@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getUserStats } from "../../store/actions/stats";
 import { useTranslation } from "react-i18next";
@@ -6,8 +6,9 @@ import useDocumentTitle from "../../components/hooks/useDocumentTitle";
 import WithLoading from "../../components/common/WithLoading";
 import { CHART_VIEWS } from "./contants";
 
+import UserStats from "./components/UserStats";
+import UserStatsChart from "./components/UserStatsChart";
 import ToggleButtons from "../../components/common/ToggleButtons";
-import UserStatsChart from "./UserStatsChart";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
@@ -31,8 +32,6 @@ function Dashboard({ data, getUserStats }) {
   const chartData = () => {
     if (view === "week" || view === "month") {
       let labels = [...data[view].labels].map((date) => {
-        /* let date_obj = new Date(date);
-        return `${date_obj.get}` */
         return new Date(date).toLocaleDateString();
       });
       return {
@@ -49,16 +48,21 @@ function Dashboard({ data, getUserStats }) {
       <Typography variant="h3" my={3}>
         {title}
       </Typography>
-      <Box sx={{ height: "600px" }}>
-        {data && <UserStatsChart data={chartData()} />}
-      </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
-        <ToggleButtons
-          value={view}
-          data={CHART_VIEWS}
-          handleChange={handleViewChange}
-        />
-      </Box>
+      {data && (
+        <Fragment>
+          <UserStats stats={data.stats} />
+          <Box sx={{ height: "600px" }}>
+            <UserStatsChart data={chartData()} />
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
+            <ToggleButtons
+              value={view}
+              data={CHART_VIEWS}
+              handleChange={handleViewChange}
+            />
+          </Box>
+        </Fragment>
+      )}
     </WithLoading>
   );
 }

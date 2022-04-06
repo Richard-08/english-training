@@ -16,3 +16,21 @@ export const CHART_VIEWS = [
     name: "Total",
   },
 ];
+
+export const STATS = [
+  {
+    alias: "today",
+    name: "Сегодня выполнено",
+    unit: "задач",
+  },
+  {
+    alias: "total",
+    name: "Всего выполнено",
+    unit: "задач",
+  },
+  {
+    alias: "days",
+    name: "Всего дней",
+    unit: "дней",
+  },
+];

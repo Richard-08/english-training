@@ -1,4 +1,5 @@
 const UserStats = require("../../data-access/UserStatistics");
+const { getFormattedDate } = require("../../utils/helpers");
 
 const {
   getFakeData,
@@ -11,7 +12,7 @@ class StatsService {
     this.userStatsModel = userStatsModel;
   }
 
-  getUserStats(id) {
+  async getUserStats(id) {
     //return this.userStatsModel.getUserStats(id);
     let data = getFakeData(30);
 
@@ -27,12 +28,31 @@ class StatsService {
     let total_data = getAgregatedStat(data, "total");
     let total_stat = getFormattedStat(total_data);
 
+    let today_completed = await this.userStatsModel.getSumOfCompletedByDate(
+      id,
+      getFormattedDate(new Date())
+    );
+    let total_completed = await this.userStatsModel.getSumOfCompletedAll(id);
+    let total_days = this.getTotaldays(data);
+
     return {
+      stats: {
+        today: today_completed.id,
+        total: total_completed.id,
+        days: total_days,
+      },
       week: week_stat,
       month: month_stat,
       year: year_stat,
       total: total_stat,
     };
+  }
+
+  getTotaldays(data) {
+    return data.reduce((total, item) => {
+      total.add(item.date);
+      return total;
+    }, new Set()).size;
   }
 }
 

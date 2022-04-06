@@ -1,5 +1,5 @@
 import React from "react";
-import { STAT_VALUES } from "./constants";
+import { STATS } from "../contants";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -15,8 +15,8 @@ export default function LessonStats({ stats }) {
         columns={{ xs: 1, sm: 8, md: 12 }}
         m={3}
       >
-        {STAT_VALUES.map((item) => (
-          <Grid item xs={2} sm={4} md={4} key={item.id}>
+        {STATS.map((item) => (
+          <Grid item xs={2} sm={4} md={4} key={item.alias}>
             <Paper
               elevation={3}
               sx={{
@@ -30,7 +30,7 @@ export default function LessonStats({ stats }) {
                 {item.name}
               </Typography>
               <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                {item.value(stats)}
+                {stats[item.alias]}
               </Typography>
             </Paper>
           </Grid>
