@@ -1,5 +1,6 @@
 const UserStats = require("../../data-access/UserStatistics");
 const { getFormattedDate } = require("../../utils/helpers");
+const Logger = require("../../loaders/logger");
 
 const {
   getFakeData,
@@ -8,64 +9,62 @@ const {
 } = require("./helpers");
 
 class StatsService {
-  constructor(userStatsModel) {
+  constructor(userStatsModel, Logger) {
     this.userStatsModel = userStatsModel;
+    this.logger = Logger;
   }
 
   async getUserStats(id) {
-    //return this.userStatsModel.getUserStats(id);
-    let data = getFakeData(30);
+    try {
+      //return this.userStatsModel.getUserStats(id);
+      let data = getFakeData(30);
 
-    let week_data = getAgregatedStat(data, "week");
-    let week_stat = getFormattedStat(week_data);
+      let week_stat = this.getAgregatedFormattedStats(data, "week");
+      let month_stat = this.getAgregatedFormattedStats(data, "month");
+      let year_stat = this.getAgregatedFormattedStats(data, "year");
+      let total_stat = this.getAgregatedFormattedStats(data, "total");
 
-    let month_data = getAgregatedStat(data, "month");
-    let month_stat = getFormattedStat(month_data);
+      let date = getFormattedDate(new Date());
+      let today_completed = await this.userStatsModel.getSumOfCompletedByDate(
+        id,
+        date
+      );
 
-    let year_data = getAgregatedStat(data, "year");
-    let year_stat = getFormattedStat(year_data);
+      let total_completed = await this.userStatsModel.getSumOfCompletedAll(id);
 
-    let total_data = getAgregatedStat(data, "total");
-    let total_stat = getFormattedStat(total_data);
+      let total_days = await this.userStatsModel.getUniqueOrderedDates(id);
+      let formatted_data = total_days.map((item) => item.date);
+      let consecutive_days = this.getMaxConsecutiveDays(formatted_data);
 
-    let today_completed = await this.userStatsModel.getSumOfCompletedByDate(
-      id,
-      getFormattedDate(new Date())
-    );
-    let total_completed = await this.userStatsModel.getSumOfCompletedAll(id);
-    let total_days = this.getTotaldays(data);
-
-    let sorted_data = Array.from(
-      new Set(
-        data
-          .sort((a, b) => new Date(a.date) - new Date(b.date))
-          .map((item) => item.date)
-      )
-    );
-    let consecutive_days = this.getMaxConsecutiveDays(sorted_data);
-
-    return {
-      stats: {
-        today: today_completed.id,
-        total: total_completed.id,
-        days: total_days,
-        record: consecutive_days,
-        data: sorted_data,
-      },
-      week: week_stat,
-      month: month_stat,
-      year: year_stat,
-      total: total_stat,
-    };
+      return {
+        stats: {
+          today: today_completed.id,
+          total: total_completed.id,
+          days: total_days.length,
+          record: consecutive_days,
+          dates: formatted_data,
+        },
+        week: week_stat,
+        month: month_stat,
+        year: year_stat,
+        total: total_stat,
+      };
+    } catch (error) {
+      this.logger.error(error);
+      throw new Error(error.message);
+    }
   }
 
-  getTotaldays(data) {
-    return data.reduce((total, item) => {
-      total.add(item.date);
-      return total;
-    }, new Set()).size;
+  getAgregatedFormattedStats(data, period) {
+    let agregated_data = getAgregatedStat(data, period);
+    return getFormattedStat(agregated_data);
   }
 
+  /**
+   *
+   * @param {Array} data sorted ascending and unique dates
+   * @returns {number} count of max consecutive days
+   */
   getMaxConsecutiveDays(data) {
     let days = [];
     let length = data.length;
@@ -87,4 +86,4 @@ class StatsService {
   }
 }
 
-module.exports = new StatsService(UserStats);
+module.exports = new StatsService(UserStats, Logger);

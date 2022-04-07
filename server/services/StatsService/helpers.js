@@ -95,6 +95,7 @@ function getWeekAgregatedStat(data) {
   let dates = getLast7DaysDates();
   let set = new Set();
   let ret = {};
+
   dates.forEach((day) => {
     ret[day] = {};
     data.forEach((item) => {
@@ -131,6 +132,7 @@ function getYearAgregatedStat(data) {
   let current_date = new Date();
   let set = new Set();
   let ret = {};
+
   MONTHS.forEach((month) => {
     ret[month] = {};
     data.forEach((item) => {
@@ -170,6 +172,13 @@ function getTotalAgregatedStat(data) {
     set: Array.from(set),
   };
 }
+
+/**
+ * @description formatting stats for chart data
+ * @param {Array} stat agregated stat data
+ * @param {Array} set dates set
+ * @returns {Object} {labels: [], datasets: []}
+ */
 
 function getFormattedStat({ stat, set }) {
   let labels = Object.keys(stat);

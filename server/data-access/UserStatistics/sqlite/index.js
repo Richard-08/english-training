@@ -28,9 +28,17 @@ function getSumOfCompletedAll(user_id) {
   );
 }
 
+function getUniqueOrderedDates(user_id) {
+  return db.all(
+    `SELECT DISTINCT date FROM user_statistics WHERE user_id = ? ORDER BY date ASC;`,
+    [user_id]
+  );
+}
+
 module.exports = {
   createUserStat,
   getUserStats,
   getSumOfCompletedByDate,
   getSumOfCompletedAll,
+  getUniqueOrderedDates,
 };

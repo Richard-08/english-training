@@ -3,6 +3,7 @@ const {
   getUserStats,
   getSumOfCompletedByDate,
   getSumOfCompletedAll,
+  getUniqueOrderedDates,
 } = require("./sqlite");
 
 module.exports = {
@@ -10,4 +11,5 @@ module.exports = {
   getUserStats,
   getSumOfCompletedByDate,
   getSumOfCompletedAll,
+  getUniqueOrderedDates,
 };
