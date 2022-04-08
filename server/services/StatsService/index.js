@@ -10,7 +10,6 @@ const {
   getAgregatedStat,
   getFormattedStat,
 } = require("./helpers");
-const e = require("cors");
 
 class StatsService {
   constructor(UserStats, Lesson, Logger) {
@@ -67,10 +66,25 @@ class StatsService {
     }
   }
 
+  /**
+   * @description returns formatted stat for charts
+   * @param {Array} data stats data
+   * @param {string} period stat period. Possible period - this.stat_periods
+   * @param {Array} colors lessons colors
+   * @returns {Object} {datasets: [], labels: []}
+   */
+
   getChartData(data, period, colors) {
     let agregated_data = getAgregatedStat(data, period);
     return getFormattedStat(agregated_data, colors);
   }
+
+  /**
+   *
+   * @param {Array} data stats data
+   * @param {Array} colors lessons colors
+   * @returns {Object} {week: {datasets: [], labels: []}, month: {}, year: {}, total: {}}
+   */
 
   getStatsByPeriod(data, colors) {
     let ret = {};
@@ -82,6 +96,26 @@ class StatsService {
   }
 
   getFormattedLessonsStats(stats, lessons, colors) {
+    let agregated = this.getAgregatedLessonStata(stats);
+
+    return lessons.map((lesson) => {
+      let data = agregated[lesson.name];
+      return {
+        ...lesson,
+        days: data ? data.days.size : 0,
+        tasks: data ? data.tasks : 0,
+        color: colors[lesson.name],
+      };
+    });
+  }
+
+  /**
+   *
+   * @param {Array} stats stats data
+   * @returns {Object} agregated lessons stats {lesson: {days: ['2022-04-06','2022-04-07'], tasks: 10}}
+   */
+
+  getAgregatedLessonStata(stats) {
     let agregated = {};
 
     stats.forEach((stat) => {
@@ -95,15 +129,7 @@ class StatsService {
       }
     });
 
-    return lessons.map((lesson) => {
-      let data = agregated[lesson.name];
-      return {
-        ...lesson,
-        days: data ? data.days.size : 0,
-        tasks: data ? data.tasks : 0,
-        color: colors[lesson.name],
-      };
-    });
+    return agregated;
   }
 
   /**

@@ -6,6 +6,7 @@ import useDocumentTitle from "../../components/hooks/useDocumentTitle";
 import WithLoading from "../../components/common/WithLoading";
 import { CHART_VIEWS } from "./contants";
 
+import LessonStats from "./components/LessonStats";
 import UserStats from "./components/UserStats";
 import UserStatsChart from "./components/UserStatsChart";
 import ToggleButtons from "../../components/common/ToggleButtons";
@@ -61,6 +62,7 @@ function Dashboard({ data, getUserStats }) {
               handleChange={handleViewChange}
             />
           </Box>
+          <LessonStats data={data.lessons} />
         </Fragment>
       )}
     </WithLoading>

@@ -5,5 +5,13 @@
     "login": "Log In",
     "register": "Register",
     "logout": "Logout",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "stat": {
+        "today": "Today completed",
+        "total": "Total completed",
+        "days": "Total days",
+        "record": "Record"
+    },
+    "days": "days",
+    "tasks": "tasks"
 }

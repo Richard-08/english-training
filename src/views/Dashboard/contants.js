@@ -21,21 +21,48 @@ export const STATS = [
   {
     alias: "today",
     name: "Сегодня выполнено",
-    unit: "задач",
+    unit: "tasks",
   },
   {
     alias: "total",
     name: "Всего выполнено",
-    unit: "задач",
+    unit: "tasks",
   },
   {
     alias: "days",
     name: "Всего дней",
-    unit: "дней",
+    unit: "days",
   },
   {
     alias: "record",
     name: "Рекорд",
-    unit: "дней",
+    unit: "days",
+  },
+];
+
+export const TABLE_COLS = [
+  {
+    alias: "color",
+    name: "",
+  },
+  {
+    alias: "name",
+    name: "Урок",
+  },
+  {
+    alias: "progress",
+    name: "Прогресс",
+  },
+  {
+    alias: "repetitions",
+    name: "Цель",
+  },
+  {
+    alias: "days",
+    name: "Дней практики",
+  },
+  {
+    alias: "tasks",
+    name: "Количество задач",
   },
 ];

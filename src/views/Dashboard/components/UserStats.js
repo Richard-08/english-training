@@ -1,5 +1,6 @@
 import React from "react";
 import { STATS } from "../contants";
+import { useTranslation } from "react-i18next";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -7,6 +8,8 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 
 export default function LessonStats({ stats }) {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ pb: 3 }}>
       <Grid
@@ -27,14 +30,14 @@ export default function LessonStats({ stats }) {
               }}
             >
               <Typography color="text" variant="h6">
-                {item.name}
+                {t("stat." + item.alias)}
               </Typography>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Typography variant="h3" sx={{ fontWeight: "bold", mx: 1 }}>
                   {stats[item.alias]}
                 </Typography>
                 <Typography color="text.secondary" variant="subtitle1">
-                  {item.unit}
+                  {t(item.unit)}
                 </Typography>
               </Box>
             </Paper>
