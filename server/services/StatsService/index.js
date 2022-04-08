@@ -1,17 +1,25 @@
 const UserStats = require("../../data-access/UserStatistics");
+const Lesson = require("../../data-access/Lesson");
 const { getFormattedDate } = require("../../utils/helpers");
 const Logger = require("../../loaders/logger");
+
+const { getRandomColor } = require("../../utils/helpers");
 
 const {
   getFakeData,
   getAgregatedStat,
   getFormattedStat,
 } = require("./helpers");
+const e = require("cors");
 
 class StatsService {
-  constructor(userStatsModel, Logger) {
-    this.userStatsModel = userStatsModel;
+  constructor(UserStats, Lesson, Logger) {
+    this.userStatsModel = UserStats;
+    this.lessonModel = Lesson;
+
     this.logger = Logger;
+
+    this.stat_periods = ["week", "month", "year", "total"];
   }
 
   async getUserStats(id) {
@@ -19,10 +27,16 @@ class StatsService {
       //return this.userStatsModel.getUserStats(id);
       let data = getFakeData(30);
 
-      let week_stat = this.getAgregatedFormattedStats(data, "week");
-      let month_stat = this.getAgregatedFormattedStats(data, "month");
-      let year_stat = this.getAgregatedFormattedStats(data, "year");
-      let total_stat = this.getAgregatedFormattedStats(data, "total");
+      let lessons = await this.lessonModel.getAll();
+      let lessons_colors = this.getLessonsColors(lessons);
+
+      let lessons_stats = this.getFormattedLessonsStats(
+        data,
+        lessons,
+        lessons_colors
+      );
+
+      let stats_by_periods = this.getStatsByPeriod(data, lessons_colors);
 
       let date = getFormattedDate(new Date());
       let today_completed = await this.userStatsModel.getSumOfCompletedByDate(
@@ -44,10 +58,8 @@ class StatsService {
           record: consecutive_days,
           dates: formatted_data,
         },
-        week: week_stat,
-        month: month_stat,
-        year: year_stat,
-        total: total_stat,
+        ...stats_by_periods,
+        lessons: lessons_stats,
       };
     } catch (error) {
       this.logger.error(error);
@@ -55,9 +67,43 @@ class StatsService {
     }
   }
 
-  getAgregatedFormattedStats(data, period) {
+  getChartData(data, period, colors) {
     let agregated_data = getAgregatedStat(data, period);
-    return getFormattedStat(agregated_data);
+    return getFormattedStat(agregated_data, colors);
+  }
+
+  getStatsByPeriod(data, colors) {
+    let ret = {};
+    this.stat_periods.forEach((period) => {
+      ret[period] = this.getChartData(data, period, colors);
+    });
+
+    return ret;
+  }
+
+  getFormattedLessonsStats(stats, lessons, colors) {
+    let agregated = {};
+
+    stats.forEach((stat) => {
+      if (agregated[stat.name]) {
+        agregated[stat.name]["days"].add(stat.date);
+        agregated[stat.name]["tasks"] += stat.completed_tasks;
+      } else {
+        agregated[stat.name] = {};
+        agregated[stat.name]["days"] = new Set([stat.date]);
+        agregated[stat.name]["tasks"] = stat.completed_tasks;
+      }
+    });
+
+    return lessons.map((lesson) => {
+      let data = agregated[lesson.name];
+      return {
+        ...lesson,
+        days: data ? data.days.size : 0,
+        tasks: data ? data.tasks : 0,
+        color: colors[lesson.name],
+      };
+    });
   }
 
   /**
@@ -84,6 +130,13 @@ class StatsService {
     days.push(count);
     return Math.max(...days);
   }
+
+  getLessonsColors(lessons) {
+    return lessons.reduce((total, lesson) => {
+      total[lesson.name] = getRandomColor(150, 255);
+      return total;
+    }, {});
+  }
 }
 
-module.exports = new StatsService(UserStats, Logger);
+module.exports = new StatsService(UserStats, Lesson, Logger);

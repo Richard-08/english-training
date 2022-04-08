@@ -180,7 +180,7 @@ function getTotalAgregatedStat(data) {
  * @returns {Object} {labels: [], datasets: []}
  */
 
-function getFormattedStat({ stat, set }) {
+function getFormattedStat({ stat, set }, colors) {
   let labels = Object.keys(stat);
   let datasets = [];
 
@@ -192,7 +192,7 @@ function getFormattedStat({ stat, set }) {
     datasets.push({
       label: name,
       data,
-      backgroundColor: getRandomColor(150, 255),
+      backgroundColor: colors[name],
     });
   });
 
