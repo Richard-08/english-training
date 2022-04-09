@@ -30,7 +30,7 @@ function Dashboard({ data, getUserStats }) {
     }
   };
 
-  const chartData = () => {
+  const formattedData = () => {
     if (view === "week" || view === "month") {
       let labels = [...data[view].labels].map((date) => {
         return new Date(date).toLocaleDateString();
@@ -42,6 +42,23 @@ function Dashboard({ data, getUserStats }) {
     }
 
     return data[view];
+  };
+
+  const statViews = () => {
+    return CHART_VIEWS.map((item) => {
+      return {
+        ...item,
+        name: t(item.name),
+      };
+    });
+  };
+
+  const chartData = () => {
+    let data = formattedData();
+    return {
+      ...data,
+      labels: data.labels.map((label) => t(label)),
+    };
   };
 
   return (
@@ -58,7 +75,7 @@ function Dashboard({ data, getUserStats }) {
           <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
             <ToggleButtons
               value={view}
-              data={CHART_VIEWS}
+              data={statViews()}
               handleChange={handleViewChange}
             />
           </Box>

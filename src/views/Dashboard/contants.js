@@ -47,22 +47,22 @@ export const TABLE_COLS = [
   },
   {
     alias: "name",
-    name: "Урок",
+    name: "Lesson",
   },
   {
     alias: "progress",
-    name: "Прогресс",
+    name: "Progress",
   },
   {
     alias: "repetitions",
-    name: "Цель",
+    name: "Repetitions",
   },
   {
     alias: "days",
-    name: "Дней практики",
+    name: "Days",
   },
   {
     alias: "tasks",
-    name: "Количество задач",
+    name: "Tasks",
   },
 ];

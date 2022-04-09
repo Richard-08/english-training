@@ -13,5 +13,26 @@
         "record": "Рекорд"
     },
     "days": "көн",
-    "tasks": "бирем"
+    "tasks": "бирем",
+    "January": "Гыйнвар",
+    "February": "Февраль",
+    "March": "Март",
+    "April": "Апрель",
+    "May": "Май",
+    "June": "Июнь",
+    "July": "Июль",
+    "August": "Август",
+    "September": "Сентябрь",
+    "October": "Октябрь",
+    "November": "Ноябрь",
+    "December": "Декабрь",
+    "Lesson": "Дәрес",
+    "Progress": "Алга китеш",
+    "Repetitions": "Максат",
+    "Days": "Көннәр",
+    "Tasks": "Биремнәр",
+    "Last 7 days": "Соңгы 7 көн",
+    "Last month": "Узган ай",
+    "Last year": "Үткән елда",
+    "Total": "Барлыгы"
 }

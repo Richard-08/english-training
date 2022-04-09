@@ -13,5 +13,26 @@
         "record": "Рекорд"
     },
     "days": "дней",
-    "tasks": "задач"
+    "tasks": "задач",
+    "January": "Январь",
+    "February": "Февраль",
+    "March": "Март",
+    "April": "Апрель",
+    "May": "Май",
+    "June": "Июнь",
+    "July": "Июль",
+    "August": "Август",
+    "September": "Сентябрь",
+    "October": "Октябрь",
+    "November": "Ноябрь",
+    "December": "Декабрь",
+    "Lesson": "Урок",
+    "Progress": "Прогресс",
+    "Repetitions": "Цель",
+    "Days": "Дней",
+    "Tasks": "Задач",
+    "Last 7 days": "7 дней",
+    "Last month": "Месяц",
+    "Last year": "Год",
+    "Total": "За все время"
 }

@@ -13,5 +13,26 @@
         "record": "Record"
     },
     "days": "days",
-    "tasks": "tasks"
+    "tasks": "tasks",
+    "January": "January",
+    "February": "February",
+    "March": "March",
+    "April": "April",
+    "May": "May",
+    "June": "June",
+    "July": "July",
+    "August": "August",
+    "September": "September",
+    "October": "October",
+    "November": "November",
+    "December": "December",
+    "Lesson": "Lesson",
+    "Progress": "Progress",
+    "Repetitions": "Repetitions",
+    "Days": "Days",
+    "Tasks": "Tasks",
+    "Last 7 days": "Last 7 days",
+    "Last month": "Last month",
+    "Last year": "Last year",
+    "Total": "Total"
 }

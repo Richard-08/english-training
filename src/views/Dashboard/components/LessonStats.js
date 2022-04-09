@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { TABLE_COLS } from "../contants";
+import { useTranslation } from "react-i18next";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,6 +12,8 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 
 export default function LessonStats({ data }) {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ py: 3 }}>
       <TableContainer component={Paper}>
@@ -18,7 +21,7 @@ export default function LessonStats({ data }) {
           <TableHead>
             <TableRow>
               {TABLE_COLS.map((col) => (
-                <TableCell key={col.alias}>{col.name}</TableCell>
+                <TableCell key={col.alias}>{t(col.name)}</TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -42,7 +45,7 @@ export default function LessonStats({ data }) {
                         ></Box>
                       </TableCell>
                     ) : (
-                      <TableCell>{item[col.alias]}</TableCell>
+                      <TableCell>{item[col.alias] || "-"}</TableCell>
                     )}
                   </Fragment>
                 ))}
