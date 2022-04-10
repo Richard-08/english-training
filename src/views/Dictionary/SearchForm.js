@@ -50,14 +50,7 @@ export default function SearchForm({
         )}
         renderOption={(props, option) => (
           <li {...props}>
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
+            <Box className="w-100 flex-space flex-a-center">
               {option.name}
               {option.user_id && (
                 <IconButton

@@ -2,3 +2,46 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.flex {
+  display: flex;
+}
+
+.flex-a-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-j-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-space {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-wrap-r {
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
+
+.w-100 {
+  width: 100%;
+}

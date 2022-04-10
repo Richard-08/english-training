@@ -72,7 +72,7 @@ function Dashboard({ data, getUserStats }) {
           <Box sx={{ height: "600px" }}>
             <UserStatsChart data={chartData()} />
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
+          <Box className="flex-j-center" sx={{ py: 4 }}>
             <ToggleButtons
               value={view}
               data={statViews()}

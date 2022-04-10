@@ -5,10 +5,8 @@ import Box from "@mui/material/Box";
 export default function Loader() {
   return (
     <Box
+      className="flex-center"
       sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
         p: 5,
       }}
     >

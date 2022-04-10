@@ -17,17 +17,13 @@ export default function QuizForm({
     <Box>
       <Box
         component="form"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          pt: 2,
-          pb: 2,
-        }}
+        className="flex-column"
+        sx={{ pt: 2, pb: 2 }}
         autoComplete="off"
         onSubmit={onSubmit}
       >
         {children}
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box className="flex-a-center">
           <Typography variant="h6">{progress}</Typography>
           <IconButton sx={{ ml: 1 }} onClick={resetProgress}>
             <RestartAltIcon />

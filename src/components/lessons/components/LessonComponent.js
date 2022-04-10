@@ -71,15 +71,7 @@ export default function LessonComponent({
 
   return (
     <Box>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap-reverse",
-          pb: 4,
-        }}
-      >
+      <Box className="flex-space flex-a-center flex-wrap-r" sx={{ pb: 4 }}>
         <LessonNav links={NAV_LINKS} currentPath={currentPath} />
         <LessonControls handleControl={handleControl} />
         <LessonSettings
