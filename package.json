@@ -1,67 +1,27 @@
 {
-  "name": "enlish-training",
-  "version": "0.1.0",
+  "name": "english-training",
+  "version": "1.0.0",
+  "description": "https://github.com/facebook/create-react-app",
+  "main": "index.js",
+  "private": true,
   "scripts": {
-    "start": "PORT=3000 react-scripts start & node server/index.js",
-    "dev": "PORT=3000 react-scripts start & nodemon server/index.js",
-    "server": "nodemon server/index.js",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "postinstall": "node ./scripts/install-packages.js",
+    "build": "node ./scripts/build.js",
+    "start": "node ./scripts/start.js",
+    "dev": "node ./scripts/dev.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Richard-08/english-training.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Richard-08/english-training/issues"
+  },
+  "homepage": "https://github.com/Richard-08/english-training#readme",
   "dependencies": {
-    "@emotion/react": "^11.7.1",
-    "@emotion/styled": "^11.6.0",
-    "@mui/icons-material": "^5.2.5",
-    "@mui/material": "^5.2.4",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.25.0",
-    "bcrypt": "^5.0.1",
-    "chart.js": "^3.7.1",
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.2",
-    "express-validator": "^6.14.0",
-    "i18next": "^21.6.14",
-    "jsonwebtoken": "^8.5.1",
-    "notistack": "^2.0.3",
-    "query-string": "^7.1.1",
-    "react": "^17.0.2",
-    "react-chartjs-2": "^4.0.1",
-    "react-dom": "^17.0.2",
-    "react-i18next": "^11.16.2",
-    "react-redux": "^7.2.6",
-    "react-router-dom": "^6.1.1",
-    "react-scripts": "5.0.0",
-    "redux": "^4.1.2",
-    "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.4.1",
-    "sqlite3": "^5.0.2",
-    "uuid": "^8.3.2",
-    "web-vitals": "^2.1.2",
-    "winston": "^3.4.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "execa": "5.1.1"
   }
 }
