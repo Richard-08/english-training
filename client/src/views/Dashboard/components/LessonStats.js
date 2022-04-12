@@ -15,7 +15,7 @@ export default function LessonStats({ data }) {
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ py: 3 }}>
+    <Box sx={{ py: 4 }}>
       <TableContainer component={Paper}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

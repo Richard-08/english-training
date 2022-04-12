@@ -69,15 +69,15 @@ function Dashboard({ data, getUserStats }) {
       {data && (
         <Fragment>
           <UserStats stats={data.stats} />
-          <Box sx={{ height: "600px" }}>
-            <UserStatsChart data={chartData()} />
-          </Box>
           <Box className="flex-j-center" sx={{ py: 4 }}>
             <ToggleButtons
               value={view}
               data={statViews()}
               handleChange={handleViewChange}
             />
+          </Box>
+          <Box sx={{ height: "600px" }}>
+            <UserStatsChart data={chartData()} />
           </Box>
           <LessonStats data={data.lessons} />
         </Fragment>
