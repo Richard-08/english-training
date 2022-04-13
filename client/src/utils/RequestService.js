@@ -1,7 +1,7 @@
 export default class RequestService {
-  constructor({ baseURL, headers }) {
-    this.baseURL = baseURL || "";
-    this.headers = headers || {};
+  constructor(config) {
+    this.baseURL = (config && config.baseURL) || "";
+    this.headers = (config && config.headers) || {};
   }
 
   getUrl(url, params) {
@@ -9,7 +9,11 @@ export default class RequestService {
       return this.baseURL + url + "?" + new URLSearchParams(params).toString();
     }
 
-    return this.baseURL + url;
+    if (url) {
+      return this.baseURL + url;
+    }
+
+    return this.baseURL;
   }
 
   mergeConfig(payload) {
