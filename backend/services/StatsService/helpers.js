@@ -1,6 +1,6 @@
 const {
   getRandomNumber,
-  getRandomColor,
+  getRandomRGB,
   getFormattedDate,
 } = require("../../utils/helpers");
 const { MONTHS } = require("./constants");

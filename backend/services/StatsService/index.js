@@ -3,7 +3,7 @@ const Lesson = require("../../data-access/Lesson");
 const { getFormattedDate } = require("../../utils/helpers");
 const Logger = require("../../loaders/logger");
 
-const { getRandomColor } = require("../../utils/helpers");
+const { getRandomRGB } = require("../../utils/helpers");
 
 const {
   getFakeData,
@@ -159,7 +159,7 @@ class StatsService {
 
   getLessonsColors(lessons) {
     return lessons.reduce((total, lesson) => {
-      total[lesson.name] = getRandomColor(150, 255);
+      total[lesson.name] = getRandomRGB(150, 255);
       return total;
     }, {});
   }
