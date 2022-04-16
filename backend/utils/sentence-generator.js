@@ -1,3 +1,5 @@
+const {getRandomNumber} = require('./helpers');
+
 const PRONOUNS = [
   {
     en: "i",
@@ -86,10 +88,6 @@ const GRAMMAR = [
 const RU_ENDINGS = ["ть", "ться"];
 const RU_VOWELS = ["а", "о", "у", "и", "ы", "э", "е", "ё", "ю", "я"];
 const EN_VOWELS = ["a", "e", "i", "o", "u", "y"];
-
-function getRandomNumber(min, max) {
-  return Math.floor(Math.random() * (max + 1 - min) + min);
-}
 
 function isInThirdPerson(pronoun) {
   return (
