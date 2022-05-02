@@ -1,4 +1,5 @@
 import authService from "../../services/api/auth";
+import userService from "../../services/api/user";
 import { returnErrors } from "./messages";
 import {
   USER_LOADING,
@@ -16,7 +17,7 @@ export const loadUser = () => (dispatch, getState) => {
 
   const payload = tokenConfig(getState);
 
-  authService
+  userService
     .getUser(payload)
     .then((res) => {
       if (res && !res.error) {

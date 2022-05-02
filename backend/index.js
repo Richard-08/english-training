@@ -20,6 +20,10 @@ async function startServer() {
       Logger.error(err);
       process.exit(1);
     });
+
+  return app;
 }
 
-startServer();
+const app = startServer();
+
+module.exports = app;

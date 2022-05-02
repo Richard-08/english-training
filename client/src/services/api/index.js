@@ -3,6 +3,7 @@ import { BACK_URL } from "./constants";
 
 export default [
   { name: "auth", url: "auth" },
+  { name: "user", url: "user" },
   { name: "lessons", url: "lessons" },
   { name: "dictionary", url: "dictionary" },
   { name: "stats", url: "stats" },

@@ -15,8 +15,13 @@ function findUserByEmail(email) {
   return db.get(`SELECT * FROM users WHERE email = ?`, [email]);
 }
 
+function deleteUserByEmail(email) {
+  return db.run(`DELETE FROM users WHERE email = ?`, [email]);
+}
+
 module.exports = {
   create,
   findUserById,
   findUserByEmail,
+  deleteUserByEmail
 };

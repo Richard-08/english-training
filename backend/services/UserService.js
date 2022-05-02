@@ -8,6 +8,10 @@ class UserService {
   getUserById(id) {
     return this.userModel.findUserById(id);
   }
+
+  deleteUserByEmail(email) {
+    return this.userModel.deleteUserByEmail(email);
+  }
 }
 
 module.exports = new UserService(User);

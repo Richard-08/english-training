@@ -3,24 +3,11 @@ const { Router } = require("express");
 const authMiddleware = require("../../middleware/auth");
 
 const AuthService = require("../../services/AuthService");
-const UserService = require("../../services/UserService");
 
 const router = Router();
 
 module.exports = (app) => {
   app.use("/auth", router);
-
-  router.get("/user", authMiddleware, async (req, res) => {
-    try {
-      const user = await UserService.getUserById(req.user.id);
-      if (!user) {
-        throw new Error("User not found");
-      }
-      res.send(user);
-    } catch (error) {
-      return res.status(400).json({ error: { message: error.message } });
-    }
-  });
 
   router.post(
     "/register",

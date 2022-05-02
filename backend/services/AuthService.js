@@ -39,7 +39,7 @@ class AuthService {
       }
     } catch (error) {
       this.logger.error(error);
-      throw new Error(error);
+      throw new Error(error.message);
     }
   }
 
@@ -61,7 +61,7 @@ class AuthService {
       return { user, token };
     } catch (error) {
       this.logger.error(error);
-      throw new Error(error);
+      throw new Error(error.message);
     }
   }
 

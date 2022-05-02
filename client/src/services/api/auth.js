@@ -10,7 +10,4 @@ export default {
   logout(payload) {
     return service.auth.post("/logout", payload);
   },
-  getUser(payload) {
-    return service.auth.get("/user", payload);
-  },
 };
