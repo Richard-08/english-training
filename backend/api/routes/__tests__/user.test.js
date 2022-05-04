@@ -1,15 +1,10 @@
-const bcrypt = require("bcrypt");
 const request = require("supertest");
 const startServer = require("../../../index");
 const User = require("../../../data-access/User");
-const AuthService = require("../../../services/AuthService");
+const { createAndLoginUser } = require("./helpers");
+const { USER } = require("./constants");
 
 const API_PREFIX = "/api/user";
-const USER = {
-  username: "Username",
-  email: "test@mail.com",
-  password: "password",
-};
 
 describe("API - user", () => {
   let user;
@@ -17,16 +12,9 @@ describe("API - user", () => {
 
   beforeEach(async () => {
     try {
-      const server = await startServer;
-
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(USER.password, salt);
-      user = await User.create({
-        ...USER,
-        password: hashedPassword,
-      });
-
-      auth = await AuthService.signIn(USER.email, USER.password);
+      let result = await createAndLoginUser();
+      user = result.user;
+      auth = result.auth;
     } catch (error) {
       throw new Error(error);
     }

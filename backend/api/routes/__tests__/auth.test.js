@@ -1,13 +1,9 @@
 const request = require("supertest");
 const startServer = require("../../../index");
 const User = require("../../../data-access/User");
+const { USER } = require("./constants");
 
 const PREFIX = "/api/auth";
-const USER = {
-  username: "Username",
-  email: "test@mail.com",
-  password: "password",
-};
 
 describe("API - auth", () => {
   test("POST /register should return registered USER and TOKEN", async () => {
