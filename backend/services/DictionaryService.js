@@ -49,7 +49,6 @@ class DictionaryService {
         throw new Error("The word already exists");
       } else {
         const isValidWord = await this.validateWord(en, category);
-
         if (isValidWord) {
           const dictionaryRecord = await this.dictionaryModel.addWord({
             en,
