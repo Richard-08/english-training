@@ -27,10 +27,6 @@ describe("API - /dictionary", () => {
       server = await startServer;
       user = await createUser();
       auth = await loginUser();
-      category = await Dictionary.addCategory({
-        name: TEST_CATEGORY,
-        user_id: user.id,
-      });
     } catch (error) {
       throw new Error(error);
     }
@@ -53,21 +49,95 @@ describe("API - /dictionary", () => {
     expect(Array.isArray(response.body.categories)).toBeTruthy();
   });
 
-  test("POST /add with should return dictionary word id", async () => {
-    const response = await request(server)
-      .post(API_PREFIX + "/add")
-      .set("Authorization", `Token ${auth.token}`)
-      .send({
+  test("POST /add should return word id", async () => {
+    try {
+      category = await Dictionary.addCategory({
+        name: TEST_CATEGORY,
         user_id: user.id,
-        category: {
-          ...category,
+      });
+
+      const response = await request(server)
+        .post(API_PREFIX + "/add")
+        .set("Authorization", `Token ${auth.token}`)
+        .send({
           user_id: user.id,
-        },
+          category: {
+            ...category,
+            user_id: user.id,
+          },
+          ...TEST_WORD,
+        });
+      word = response.body;
+      expect(response.status).toEqual(200);
+      expect(response.body.id).toBeDefined();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  });
+
+  test("DELETE /delete should return success", async () => {
+    try {
+      category = await Dictionary.addCategory({
+        name: TEST_CATEGORY,
+        user_id: user.id,
+      });
+
+      const word = await Dictionary.addWord({
+        user_id: user.id,
+        category_id: category.id,
         ...TEST_WORD,
       });
-    word = response.body;
+      const response = await request(server)
+        .delete(API_PREFIX + "/delete")
+        .set("Authorization", `Token ${auth.token}`)
+        .send({ user_id: user.id, id: word.id });
+      expect(response.status).toEqual(200);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  });
+
+  test("GET /categories should return categories data", async () => {
+    const response = await request(server)
+      .get(API_PREFIX + "/")
+      .set("Authorization", `Token ${auth.token}`);
     expect(response.status).toEqual(200);
-    expect(response.body.id).toBeDefined();
+    expect(response.body.categories).toBeDefined();
+    expect(Array.isArray(response.body.categories)).toBeTruthy();
+  });
+
+  test("POST /categories/add should return category id", async () => {
+    try {
+      const response = await request(server)
+        .post(API_PREFIX + "/categories/add")
+        .set("Authorization", `Token ${auth.token}`)
+        .send({
+          name: TEST_CATEGORY,
+          user_id: user.id,
+        });
+      category = response.body;
+      expect(response.status).toEqual(200);
+      expect(response.body.id).toBeDefined();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  });
+
+  test("DELETE /categories/delete should return success", async () => {
+    try {
+      category = await Dictionary.addCategory({
+        name: TEST_CATEGORY,
+        user_id: user.id,
+      });
+
+      const response = await request(server)
+        .delete(API_PREFIX + "/categories/delete")
+        .set("Authorization", `Token ${auth.token}`)
+        .send({ user_id: user.id, id: category.id });
+      expect(response.status).toEqual(200);
+    } catch (error) {
+      throw new Error(error.message);
+    }
   });
 
   afterEach(async () => {
