@@ -35,9 +35,17 @@ function getUniqueOrderedDates(user_id) {
   );
 }
 
+function deleteUserStats({ lesson_id, user_id }) {
+  return db.run(
+    `DELETE FROM user_statistics WHERE lesson_id = ? AND user_id = ?`,
+    [lesson_id, user_id]
+  );
+}
+
 module.exports = {
   createUserStat,
   getUserStats,
+  deleteUserStats,
   getSumOfCompletedByDate,
   getSumOfCompletedAll,
   getUniqueOrderedDates,

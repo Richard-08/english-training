@@ -32,9 +32,18 @@ function resetLessonStats(payload) {
   );
 }
 
+function deleteLessonStats({ lesson_id, user_id }) {
+  return db.run(
+    `DELETE FROM lessons_statistics WHERE lesson_id = ? AND user_id = ?`,
+    [lesson_id, user_id]
+  );
+}
+
+
 module.exports = {
   getLessonStats,
   createLessonStats,
   updateLessonStats,
   resetLessonStats,
+  deleteLessonStats,
 };

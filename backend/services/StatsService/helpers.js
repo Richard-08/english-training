@@ -19,7 +19,7 @@ function getFakeData(n) {
     ret.push({
       category_id: 2,
       completed_tasks: Math.floor(Math.random() * 25),
-      date: `2022-04-${day < 10 ? `0${day}` : day}`,
+      date: `2022-05-${day < 10 ? `0${day}` : day}`,
       id: 4,
       lesson_id: 4,
       name: lessons[Math.floor(Math.random() * lessons.length)],

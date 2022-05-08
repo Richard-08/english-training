@@ -3,6 +3,7 @@ const {
   createLessonStats,
   updateLessonStats,
   resetLessonStats,
+  deleteLessonStats,
 } = require("./sqlite");
 
 module.exports = {
@@ -10,4 +11,5 @@ module.exports = {
   createLessonStats,
   updateLessonStats,
   resetLessonStats,
+  deleteLessonStats,
 };

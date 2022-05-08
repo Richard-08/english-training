@@ -24,8 +24,16 @@ function updateLessonSettings(payload) {
   );
 }
 
+function deleteLessonSettings({ lesson_id, user_id }) {
+  return db.run(
+    `DELETE FROM lessons_settings WHERE lesson_id = ? AND user_id = ?`,
+    [lesson_id, user_id]
+  );
+}
+
 module.exports = {
   getLessonSettings,
   createLessonSettings,
   updateLessonSettings,
+  deleteLessonSettings,
 };
