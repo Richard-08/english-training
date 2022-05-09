@@ -4,6 +4,7 @@ const { getFormattedDate } = require("../../utils/helpers");
 const Logger = require("../../loaders/logger");
 
 const { getRandomRGB } = require("../../utils/helpers");
+const { STAT_PERIODS } = require("./constants");
 
 const {
   getFakeData,
@@ -18,7 +19,7 @@ class StatsService {
 
     this.logger = Logger;
 
-    this.stat_periods = ["week", "month", "year", "total"];
+    this.stat_periods = STAT_PERIODS;
   }
 
   async getUserStats(id) {

@@ -13,6 +13,9 @@ const MONTHS = [
   "December",
 ];
 
+const STAT_PERIODS = ["week", "month", "year", "total"];
+
 module.exports = {
   MONTHS,
+  STAT_PERIODS
 };

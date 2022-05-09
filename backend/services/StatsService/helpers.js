@@ -220,4 +220,5 @@ module.exports = {
   getFakeData,
   getAgregatedStat,
   getFormattedStat,
+  getLast7DaysDates,
 };
