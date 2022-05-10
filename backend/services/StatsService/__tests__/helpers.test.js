@@ -6,6 +6,16 @@ const {
 } = require("../helpers");
 const { MONTHS } = require("../constants");
 const { MOCK_DATA } = require("./constants");
+const { getRandomRGB } = require("../../../utils/helpers");
+
+function getLessonsColors(lessons) {
+  return lessons.reduce((total, lesson) => {
+    total[lesson.name] = getRandomRGB(150, 255);
+    return total;
+  }, {});
+}
+
+const colors = getLessonsColors(MOCK_DATA);
 
 describe("getAgregatedStat tests", () => {
   test("Should return stats for the week", () => {
@@ -14,13 +24,9 @@ describe("getAgregatedStat tests", () => {
 
     expect(stat).toBeDefined();
     expect(Object.keys(stat)).toEqual(week_dates);
-    expect(stat["2022-05-02"]).toEqual({ "Lesson 2": 10 });
-    expect(stat["2022-05-05"]).toEqual({ "Lesson 1": 7 });
-    expect(stat["2022-05-08"]).toEqual({});
 
     expect(set).toBeDefined();
     expect(Array.isArray(set)).toBeTruthy();
-    expect(set).toEqual(["Lesson 2", "Lesson 3", "Lesson 1"]);
   });
 
   test("Should return stats for the month", () => {
@@ -73,5 +79,84 @@ describe("getAgregatedStat tests", () => {
     expect(set).toBeDefined();
     expect(Array.isArray(set)).toBeTruthy();
     expect(set).toEqual(["Lesson 1", "Lesson 2", "Lesson 3"]);
+  });
+});
+
+describe("getFormattedStat tests", () => {
+  test("Should return formatted data for the week", () => {
+    const stat = getAgregatedStat(MOCK_DATA, "week");
+    const { labels, datasets } = getFormattedStat(stat, colors);
+    const week_dates = getLast7DaysDates();
+
+    expect(labels).toBeDefined();
+    expect(labels).toEqual(week_dates);
+
+    expect(datasets).toBeDefined();
+    expect(Array.isArray(datasets)).toBeTruthy();
+    expect(datasets[0].label).toBeDefined();
+    expect(typeof datasets[0].label).toEqual("string");
+    expect(datasets[0].data).toBeDefined();
+    expect(Array.isArray(datasets[0].data)).toBeTruthy();
+    expect(datasets[0].backgroundColor).toBeDefined();
+    expect(typeof datasets[0].backgroundColor).toEqual("string");
+  });
+
+  test("Should return formatted data for the month", () => {
+    const stat = getAgregatedStat(MOCK_DATA, "month");
+    const { labels, datasets } = getFormattedStat(stat, colors);
+
+    expect(labels).toBeDefined();
+    expect(labels).toEqual(
+      Array.from(
+        MOCK_DATA.reduce((total, item) => {
+          total.add(item.date);
+          return total;
+        }, new Set())
+      )
+    );
+
+    expect(datasets).toBeDefined();
+    expect(Array.isArray(datasets)).toBeTruthy();
+    expect(datasets[0].label).toBeDefined();
+    expect(typeof datasets[0].label).toEqual("string");
+    expect(datasets[0].data).toBeDefined();
+    expect(Array.isArray(datasets[0].data)).toBeTruthy();
+    expect(datasets[0].backgroundColor).toBeDefined();
+    expect(typeof datasets[0].backgroundColor).toEqual("string");
+  });
+
+  test("Should return formatted data for the year", () => {
+    const stat = getAgregatedStat(MOCK_DATA, "year");
+    const { labels, datasets } = getFormattedStat(stat, colors);
+
+    expect(labels).toBeDefined();
+    expect(labels).toEqual(MONTHS);
+
+    expect(datasets).toBeDefined();
+    expect(Array.isArray(datasets)).toBeTruthy();
+    expect(datasets[0].label).toBeDefined();
+    expect(typeof datasets[0].label).toEqual("string");
+    expect(datasets[0].data).toBeDefined();
+    expect(Array.isArray(datasets[0].data)).toBeTruthy();
+    expect(datasets[0].backgroundColor).toBeDefined();
+    expect(typeof datasets[0].backgroundColor).toEqual("string");
+  });
+
+  test("Should return total formatted data", () => {
+    const stat = getAgregatedStat(MOCK_DATA, "total");
+    const { labels, datasets } = getFormattedStat(stat, colors);
+
+    expect(labels).toBeDefined();
+    expect(Array.isArray(labels)).toBeTruthy();
+    expect(labels).toContain("2022");
+
+    expect(datasets).toBeDefined();
+    expect(Array.isArray(datasets)).toBeTruthy();
+    expect(datasets[0].label).toBeDefined();
+    expect(typeof datasets[0].label).toEqual("string");
+    expect(datasets[0].data).toBeDefined();
+    expect(Array.isArray(datasets[0].data)).toBeTruthy();
+    expect(datasets[0].backgroundColor).toBeDefined();
+    expect(typeof datasets[0].backgroundColor).toEqual("string");
   });
 });
