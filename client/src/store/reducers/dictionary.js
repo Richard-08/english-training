@@ -42,7 +42,7 @@ export default function (state = initialState, action) {
     case ADD_CATEGORY:
       return {
         ...state,
-        dictionary: [...state.categories, action.payload],
+        categories: [...state.categories, action.payload],
       };
     case DELETE_CATEGORY:
       return {
