@@ -9,7 +9,7 @@ module.exports = (app) => {
 
   router.get("/", authMiddleware, async (req, res) => {
     try {
-      const lessons = await LessonService.getLessons();
+      const lessons = await LessonService.getLessons(req.user.id);
       const categories = await LessonService.getLessonsCategories();
       res.json({ lessons, categories });
     } catch (error) {

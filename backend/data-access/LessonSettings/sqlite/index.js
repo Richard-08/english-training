@@ -7,6 +7,10 @@ function getLessonSettings({ lesson_id, user_id }) {
   );
 }
 
+function getUserLessonsSettings(user_id) {
+  return db.all(`SELECT * FROM lessons_settings WHERE user_id = ?`, [user_id]);
+}
+
 function createLessonSettings(payload) {
   let { lesson_id, user_id } = payload;
 
@@ -36,4 +40,5 @@ module.exports = {
   createLessonSettings,
   updateLessonSettings,
   deleteLessonSettings,
+  getUserLessonsSettings,
 };

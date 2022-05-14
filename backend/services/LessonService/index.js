@@ -21,8 +21,25 @@ class LessonService {
     this.factory = LessonFacotory;
   }
 
-  getLessons() {
-    return this.lessonModel.getAll();
+  async getLessons(user_id) {
+    let lessons = await this.lessonModel.getAll();
+    let lessons_stats = await this.lessonStatsModel.getUserLessonsStats(
+      user_id
+    );
+    let lessons_settings =
+      await this.lessonSettingsModel.getUserLessonsSettings(user_id);
+    return lessons.map((lesson) => {
+      let stats =
+        lessons_stats.find((stat) => lesson.id === stat.lesson_id) || {};
+      let settings =
+        lessons_settings.find((sett) => lesson.id === sett.lesson_id) || {};
+
+      return {
+        ...lesson,
+        stats,
+        settings,
+      };
+    });
   }
 
   getLessonsCategories() {

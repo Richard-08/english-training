@@ -1,9 +1,7 @@
 const db = require("../../../db/sqlite/Database");
 
 function getAll() {
-  return db.all(
-    "SELECT * FROM lessons LEFT JOIN lessons_statistics ON lessons.id = lessons_statistics.lesson_id LEFT JOIN lessons_settings ON lessons.id = lessons_settings.lesson_id;"
-  );
+  return db.all(`SELECT * FROM lessons`);
 }
 
 function getLessonById(id) {

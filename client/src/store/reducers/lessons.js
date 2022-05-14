@@ -60,11 +60,9 @@ export default function (state = initialState, action) {
         ...state,
         data: {
           ...state.data,
-          lessons: updateLessons(
-            state.data.lessons,
-            action.payload.lesson_id,
-            action.payload
-          ),
+          lessons: updateLessons(state.data.lessons, action.payload.lesson_id, {
+            stats: action.payload,
+          }),
         },
         currentLessons: updateLessons(
           state.currentLessons,
@@ -79,11 +77,9 @@ export default function (state = initialState, action) {
         ...state,
         data: {
           ...state.data,
-          lessons: updateLessons(
-            state.data.lessons,
-            action.payload.lesson_id,
-            action.payload
-          ),
+          lessons: updateLessons(state.data.lessons, action.payload.lesson_id, {
+            settings: action.payload,
+          }),
         },
         currentLessons: updateLessons(
           state.currentLessons,

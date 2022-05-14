@@ -7,6 +7,12 @@ function getLessonStats({ lesson_id, user_id }) {
   );
 }
 
+function getUserLessonsStats(user_id) {
+  return db.all("SELECT * FROM lessons_statistics WHERE user_id = ?", [
+    user_id,
+  ]);
+}
+
 function createLessonStats(payload) {
   let { lesson_id, user_id, started_at } = payload;
 
@@ -39,11 +45,11 @@ function deleteLessonStats({ lesson_id, user_id }) {
   );
 }
 
-
 module.exports = {
   getLessonStats,
   createLessonStats,
   updateLessonStats,
   resetLessonStats,
   deleteLessonStats,
+  getUserLessonsStats,
 };
